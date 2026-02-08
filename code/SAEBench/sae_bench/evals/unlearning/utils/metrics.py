@@ -141,16 +141,14 @@ def calculate_MCQ_metrics(
         choices_list = [
             choices_list[i] for i in question_subset if i < len(choices_list)
         ]
-    # import ipdb;ipdb.set_trace()
     # changing prompt_format
     print()
     if model.cfg.model_name in ["gemma-2-9b", "gemma-2-2b-it", "gemma-2-2b"]: #["gemma-2-9b-it", "gemma-2-2b-it"]:
         prompt_format = "GEMMA_INST_FORMAT"
-    # CODE ADDED  liubo
-    #-----
+
     elif model.cfg.model_name == "gpt2":
         prompt_format = None
-    #-----
+
     else:
         raise Exception("Model prompt format not found.")
 
@@ -255,12 +253,10 @@ def get_output_probs_abcd(model, prompts, batch_size=2, n_batches=100, verbose=T
     ]
     if model.cfg.model_name in spaces_and_single_models:
         answer_strings = ["A", "B", "C", "D", " A", " B", " C", " D"]
-    # CODE changed liubo
-    # ------
-    # 增加了modelname "gpt2" 硬编码
+
     elif model.cfg.model_name in ["Mistral-7B-v0.1","gpt2"]:
         answer_strings = ["A", "B", "C", "D"]
-    # ------
+
     else:
         raise Exception("Model name not hardcoded in this function.")
 
@@ -280,20 +276,11 @@ def get_output_probs_abcd(model, prompts, batch_size=2, n_batches=100, verbose=T
                 prompt_batch, padding_side="right", prepend_bos=False
             ).to(model.cfg.device)
 
-            # CODE changed liubo
-            #
-            # *original code*
-            # assert (token_batch == model.tokenizer.bos_token_id).sum().item() == len(
-            #         token_batch
-            #     )
-            # *******
-            # ------
-            # gpt2 模型不使用BOS作为每个句子的开头
+
             if model.cfg.model_name not in ["gpt2"]:
                 assert (token_batch == model.tokenizer.bos_token_id).sum().item() == len(
                     token_batch
                 )
-            # -------
 
             token_lens = [
                 len(model.to_tokens(x, prepend_bos=False)[0]) for x in prompt_batch
@@ -344,7 +331,7 @@ def convert_wmdp_data_to_prompt(
         choices = [choices[i] for i in permute_choices]
 
     answers = r"".join([item for pair in zip(pre_answers, choices) for item in pair])
-    # import ipdb;ipdb.set_trace()
+
     if prompt_format is None:
         if without_question:
             prompt = r"".join([answers, post_answers])[
@@ -693,7 +680,6 @@ def calculate_metrics_list(
 
     # First get baseline metrics and ensure that target question ids exist
     baseline_metrics = {}
-    # import ipdb;ipdb.set_trace()
     for dataset_name in [x for x in dataset_names if x != "loss_added"]:
         # Ensure that target question ids exist
         save_target_question_ids(model, mcq_batch_size, artifacts_folder, dataset_name)
@@ -871,9 +857,7 @@ def save_target_question_ids(
         permutations=all_permutations,  # type: ignore
         without_question=True,
     )
-    #import ipdb;ipdb.set_trace()
-    # find all permutations correct
-    ### 错误 这里all_types 全为空  ！！
+
     all_types = {
         "correct": (correct_ids := _find_all_permutation_correct_ans(metrics)),
         "correct-iff-question": _find_correct_iff_question(
@@ -898,8 +882,6 @@ def save_target_question_ids(
 
 
 def _find_all_permutation_correct_ans(metrics):
-    # 空值
-    # import ipdb;ipdb.set_trace()
     each_question_acc = metrics["is_correct"].reshape(-1, 24)
     questions_correct = each_question_acc.sum(axis=1) == 24
     correct_question_id = np.where(questions_correct)[0]

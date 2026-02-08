@@ -1,20 +1,3 @@
-import os
-os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
-
-
-import huggingface_hub.file_download as hf_download
-original_hf_hub_download = hf_download.hf_hub_download
-
-def hf_hub_download_mirror(*args, **kwargs):
-    """强制使用 hf-mirror 的包装函数"""
-    if 'endpoint' not in kwargs:
-        kwargs['endpoint'] = 'https://hf-mirror.com'
-    print(f"[HF-Mirror] 使用镜像下载: {kwargs.get('filename', args[1] if len(args) > 1 else 'unknown')}")
-    return original_hf_hub_download(*args, **kwargs)
-
-hf_download.hf_hub_download = hf_hub_download_mirror
-import huggingface_hub
-huggingface_hub.hf_hub_download = hf_hub_download_mirror
 import argparse
 import gc
 import os
@@ -96,14 +79,13 @@ def run_eval(
             print(f"Skipping {sae_release}_{sae_id} as results already exist")
             continue
         
-        # 评估不同K时，对下游任务影响
         k_sparse_probing_results = run_k_sparse_probing_experiment(
             model=model,
             sae=sae,
             layer=sae.cfg.hook_layer,
             sae_name=f"{sae_release}_{sae_id}",
             force=force_rerun,
-            max_k_value=config.max_k_value,     # 最大K值 最多探测k个latent
+            max_k_value=config.max_k_value,     
             f1_jump_threshold=config.f1_jump_threshold,
             prompt_template=config.prompt_template,
             prompt_token_pos=config.prompt_token_pos,
@@ -133,7 +115,6 @@ def run_eval(
             )
             break
 
-        # 检测特征吸收
         raw_df = run_feature_absortion_experiment(
             model=model,
             sae=sae,
@@ -168,7 +149,7 @@ def run_eval(
                 eval_result_details.append(
                     AbsorptionResultDetail(
                         first_letter=letter,  # type: ignore
-                        # CODE Changed  将最终分数修改为 1 - absorption score
+
                         mean_absorption_fraction=row["mean_absorption_fraction"],  # type: ignore
                         full_absorption_rate=row["full_absorption_rate"],  # type: ignore
                         num_full_absorption=row["num_full_absorption"],  # type: ignore
@@ -182,7 +163,7 @@ def run_eval(
             eval_config=config,
             eval_id=eval_instance_id,
             datetime_epoch_millis=int(datetime.now().timestamp() * 1000),
-            eval_result_metrics=AbsorptionMetricCategories(     # 两种 Absorption score 
+            eval_result_metrics=AbsorptionMetricCategories(     
                 mean=AbsorptionMeanMetrics(
                     mean_absorption_fraction_score=statistics.mean(
                         mean_absorption_fractions
@@ -480,13 +461,6 @@ if __name__ == "__main__":
 
     from sae_lens import SAE, HookedSAETransformer
     from transformers import AutoTokenizer, AutoModelForCausalLM
-    #local_model_path = "/home/liubo/.cache/huggingface/hub/models--google--gemma-2-2b/snapshots/c5ebcd40d208330abc697524c919956e692655cf"
-    # model_name = "gemma-2-9b"
-    # if "9b" in model_name:
-    #     local_model_path = "/home/liubo/.cache/huggingface/hub/models--google--gemma-2-9b/snapshots/33c193028431c2fde6c6e51f29e6f17b60cbfac6"
-    # elif "2b" in model_name:
-    #     local_model_path = "/home/liubo/.cache/huggingface/hub/models--google--gemma-2-2b/snapshots/c5ebcd40d208330abc697524c919956e692655cf"
-
     device = "cuda:0"
     # model = AutoModelForCausalLM.from_pretrained(
     #     local_model_path,
@@ -497,12 +471,11 @@ if __name__ == "__main__":
     layers=[19]
     for i in tqdm(layers):
         sae_per_layer[f"layer_{i}"] = SAE.from_pretrained(
-            release="gemma-scope-9b-pt-res-canonical",  # <- Release name
-            sae_id=f"layer_{i}/width_16k/canonical",  # <- SAE id (not always a hook point!)
+            release="gemma-scope-9b-pt-res-canonical",  
+            sae_id=f"layer_{i}/width_16k/canonical", 
             device=device,#'cpu',
         )[0]
         sae_per_layer[f"layer_{i}"].fold_W_dec_norm() 
-    print(f"✓ 成功加载 {len(sae_per_layer)} 个 SAE 模型")
     
     eval_folder="eval_results_gemma_scope_9b"
     random_seed = 42
@@ -518,8 +491,8 @@ if __name__ == "__main__":
     for layer in layers:
         sae = sae_per_layer[f"layer_{layer}"]
         repo_id = sae_name#"0.0-8ef-750k" ,
-        filename = f"layer_{layer}/width_16k/canonical"  #f"resid_post_layer_{layer}/trainer_0/ae.pt"
-                    
+        filename = f"layer_{layer}/width_16k/canonical"  
+        
         selected_saes = [(f"{repo_id}_{filename}", sae)] 
         output_folder = eval_folder+"/"+"absorption"
         os.makedirs(output_folder, exist_ok=True)
@@ -543,8 +516,3 @@ if __name__ == "__main__":
             )
             print(output_folder)
             print("..absorption evaluation finished..")
-
-
-
-
-    # cd /home/liubo/miniconda3/envs/saebench/lib/python3.10/site-packages/sae_bench/

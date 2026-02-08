@@ -589,69 +589,6 @@ def arg_parser():
     return parser
 
 
-# if __name__ == "__main__":
-#     """python evals/mdl/main.py \
-#     --sae_regex_pattern "sae_bench_pythia70m_sweep_standard_ctx128_0712" \
-#     --sae_block_pattern "blocks.4.hook_resid_post__trainer_10" \
-#     --model_name pythia-70m-deduped """
-#     # logger.remove()
-#     # logger.add(sys.stdout, level="INFO")
-
-#     # args = arg_parser().parse_args()
-#     # device = general_utils.setup_environment()
-
-#     # start_time = time.time()
-
-#     # config, selected_saes = create_config_and_selected_saes(args)
-
-#     #print(selected_saes)
-
-#     # create output folder
-    
-#     os.makedirs(".", exist_ok=True)
-
-#     import sae_bench.custom_saes.topk_sae as topk_sae
-#     repo_id = "0.0-8ef-600kk-hsic-coff-100inChunk"
-#     filename = "blocks.8.hook_resid_post/ae.pt"
-#     layer = 8
-
-#     device = "cuda" if torch.cuda.is_available() else "cpu"
-#     dtype = torch.float32
-#     llm_dtype = torch.bfloat16
-
-
-#     model_name = "openai-community/gpt2"
-#     hook_name = f"blocks.{layer}.hook_resid_post"
-#     sae = topk_sae.load_dictionary_learning_topk_sae(
-#         repo_id,
-#         filename,
-#         model_name,
-#         device,  # type: ignore
-#         dtype,
-#         layer=layer,
-#         local_dir="tranformed_sae"
-#     )
-#     filename = filename.replace("ae.pt","")
-#     selected_saes = [(f"{repo_id}_{filename}", sae)] 
-
-
-#     config = MDLEvalConfig(
-#         k_values=[None],  # type: ignore
-#         # num_bins_values=[8, 12, 16, 32, 64, 128],
-#         num_bins_values=[8, 16, 32, 64],
-#         # num_bins_values=[8],
-#         mse_epsilon_threshold=0.2,
-#         model_name=model_name,
-#     )
-#     logger.info(config)
-
-#     results_dict = run_eval(
-#         config,
-#         selected_saes,
-#         device,
-#         output_path="/home/liubo/workspace/SAEBench-main/eval_results/mdl",
-#         #force_rerun,
-#     )
 
 if __name__ == "__main__":
     # logger.remove()
@@ -665,7 +602,7 @@ if __name__ == "__main__":
     # config, selected_saes = create_config_and_selected_saes(args)
     import os
     import sae_bench.custom_saes.topk_sae as topk_sae
-    target_dir = "/home/liubo/workspace/SAEBench-main/transformed_sae"
+    target_dir = ""
     for _,dirnames,filename in os.walk(target_dir):
         for sae_name in dirnames:
             if "500k-hsic" not in sae_name:
@@ -708,7 +645,7 @@ if __name__ == "__main__":
                 config,
                 selected_saes,
                 device,
-                output_path="/home/liubo/workspace/SAEBench-main/eval_results/mdl",
+                output_path="/mdl",
                 #force_rerun,
             )
         break

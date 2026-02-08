@@ -106,7 +106,6 @@ def _get_sae_acts(
         batch_acts.append(acts.cpu())
     return torch.cat(batch_acts)
 
-# 训练探针模型
 def train_k_sparse_probes(
     sae: SAE,
     train_labels: list[tuple[str, int]],  # list of (token, letter number) pairs

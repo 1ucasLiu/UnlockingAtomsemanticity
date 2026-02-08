@@ -29,7 +29,7 @@ image_path = os.path.join(eval_path, "images")
 if not os.path.exists(image_path):
     os.makedirs(image_path)
 
-repo_id = "0.0-8ef-650k" #"0.0-8ef-600kk-hsic-coff-100inChunk"
+repo_id = ""
 filename = "blocks.8.hook_resid_post/ae.pt"
 layer = 8
 
@@ -53,7 +53,6 @@ sae_filename = filename.replace("ae.pt","")
 selected_saes = [(f"{repo_id}_{sae_filename}", sae)] 
 output_path ="eval_results/mdl"
 eval_results = {}
-#import ipdb;ipdb.set_trace()
 for sae_release, sae_object_or_id in selected_saes:
     sae_id, sae, sparsity = general_utils.load_and_format_sae(
         sae_release, sae_object_or_id, device

@@ -31,41 +31,9 @@ TRAINER_MARKERS = {
     "gated": "d",
 
     "fvu-hsic":"D",
-    "l2_loss_hsic":"s",
-    "nce":"v",
-    "standard-nce":"v",
-    "gemma":"o",
-    "gemma-s":"o",
-    "gemma-s-n":"o",
-    "standard-hsic":"s",
-
-    "1fvu_hsic":"D",
-    "5fvu_hsic":"D",
-    
-
-
-
-
-    "fvu_only_100M":"v",
-    "10fvu_hsic_100M":"v",
-    "100fvu_only_100M":"v",
-    "100fvu_hsic_100M":"d",
-    "10fvu_feature_cos_sim_100M":"s",
-    "100fvu_feature_cos_sim_100M":"o",
-    "100fvu_hsic_beforetopk_100M":"o",
-    "100fvu_hsic_feature_100M":"o",
-    "100fvu_hsic_sample_100M":"o",
-    "100fvu_hsic_sample_block_100M":"o",
-    "100fvu_hsic_layer17_100M":"o",
-    "100fvu_cos_100M":"o",
-    
-    "100fvu_hsic_feature_200M":"o",
-    "100fvu_hsic_sample_200M":"o",
-    
     "100fvu_hsic_500M":"d",
-    "fvu_only_200M":"d",
 
-    "10fvu_hsic_BatchTopK_500M":"X",#"orange",
+    "10fvu_hsic_BatchTopK_500M":"X",
     # batchTopK
     "fvu_only_BatchTopK_500M":"s",
     "100fvu_hsic_BatchTopK_500M":"s",
@@ -80,9 +48,8 @@ TRAINER_COLORS = {
     "standard": "pink",
 
     "standard-nce":"#ffc0cb",
-    "standard-hsic":"#ffb3b3", #浅红色
-    # CODE CHANGED 
-    # 这项工作只讨论topk 
+    "standard-hsic":"#ffb3b3", 
+
     "standard_april_update": "blue",
     "jumprelu": "orange",
     "topk": "green",
@@ -90,38 +57,13 @@ TRAINER_COLORS = {
     "p_anneal": "red",
     "matryoshka_batch_topk": "brown",
     "gated": "purple",
-    ####
-
     "nce":"orange",
-    
-    "gemma":"green",
-    "gemma-s":"blue",    # 蓝色
-    "gemma-s-n":"#00008b", # 深蓝色
-    
+
     "l2_only":"green",
 
-    "fvu_only_100M":"red",
-    "10fvu_hsic_100M":"purple",
-    "100fvu_hsic_100M":"green",
-    
-    "10fvu_feature_cos_sim_100M":"brown",
-    "100fvu_hsic_beforetopk_100M":"brown",
-    
-    "100fvu_hsic_layer17_100M":"green",
-    "100fvu_cos_100M":"brown",
-    
-    "100fvu_hsic_feature_100M":"green",
-    "100fvu_hsic_sample_100M":"blue",
-    "100fvu_hsic_sample_block_100M":"green",
-    "100fvu_hsic_feature_200M":"green",
-    "100fvu_hsic_sample_200M":"blue",
-    "fvu_only_200M":"red",
-    
-    "10fvu_hsic_500M":"orange",#"orange",
- 
+    "10fvu_hsic_500M":"orange",
     # batchTopK
     "10fvu_hsic_BatchTopK_500M":"orange",
-
     "fvu_only_BatchTopK_500M":(2/255,48/255,74/255),
     "100fvu_hsic_BatchTopK_500M":(33/255,158/255,188/255),
     # TopK
@@ -141,48 +83,14 @@ TRAINER_LABELS = {
     "p_anneal": "Standard with P-Annealing",
     "matryoshka_batch_topk": "Matryoshka Batch TopK",
     "gated": "Gated",
-    "fvu":"Fvu",
-    "nce":"Nce-0.3",
-    "hsic":"HSIC-100",
-    "gemma":"Gemma",
-    "gemma-s":"Gemma-s",
-    "gemma-s-n":"Gemma-s-n",
-    "standard-nce":"Standard-nce",
-    "standard-hsic":"Standard-hsic",
-
-
-    "10fvu_hsic_100M":"10hsic_100M",
-    "100fvu_only_100M":"100hsic_100M",
-    "100fvu_hsic_100M":"100hsic_100M",
-    "100fvu_hsic_beforetopk_100M":"fvu_100hsic_beforetopk_100M",
-    "10fvu_feature_cos_sim_100M":"fvu_10cos_sim_100M",
-    "100fvu_feature_cos_sim_100M":"fvu_100cos_sim_100M",
     
-    "100fvu_hsic_layer17_100M":"fvu_100hsic_layer17_100M",
-    "100fvu_cos_100M":"fvu_100cos_100M",
-    
-    "100fvu_hsic_feature_100M":"fvu_100hsic_feature_100M",
-    "100fvu_hsic_sample_100M":"fvu_100hsic_sample_100M",
-    "100fvu_hsic_sample_block_100M":"fvu_100hsic_sample_block_100M",
-    "100fvu_hsic_feature_200M":"fvu_100hsic_feature_200M",
-    "100fvu_hsic_sample_200M":"fvu_100hsic_sample_200M",
-       
-    "fvu_only_100M":"fvu_only_100M",
-    "fvu_only_200M":"fvu_only_200M",
-
     # batchTopK
-  
-    "10fvu_hsic_BatchTopK_500M":"fvu_10hsic_BatchTopK_500M",#"orange",
-
-    
+    "10fvu_hsic_BatchTopK_500M":"fvu_10hsic_BatchTopK_500M",
     "fvu_only_BatchTopK_500M":"Batch Top-K",
     "100fvu_hsic_BatchTopK_500M":"Batch Top-K + HSIC",
     # TopK
     "fvu_only_500M":"Top-K",
     "100fvu_hsic_500M":"Top-K + HSIC",
-
-
-
 
 }
 
@@ -283,7 +191,7 @@ def plot_results(
     baseline_sae_path: str | None = None,
     baseline_label: str | None = None,
 ):
-    #import ipdb;ipdb.set_trace()
+
     eval_results = get_eval_results(eval_filenames)
     core_results = get_core_results(core_filenames)
 
@@ -319,7 +227,6 @@ def plot_results(
     #     output_filename=f"{image_base_name}_3var.png",
     #     trainer_markers=trainer_markers,
     # )
-    #import ipdb;ipdb.set_trace()
     #title_2var = f"{title_prefix}L0 vs {custom_metric_name}"
     titles = {'Absorption':"Feature Absorption",
               'SCR':"SCR",
@@ -448,7 +355,6 @@ def plot_best_of_ks_results(
         baseline_label=baseline_label,
     )
 
-# 修改横纵坐标名
 def get_custom_metric_key_and_name(
     eval_path: str, k: int | None = None
 ) -> tuple[str, str]:
@@ -456,12 +362,6 @@ def get_custom_metric_key_and_name(
         custom_metric = f"tpp_threshold_{k}_total_metric"
         custom_metric_name =f"TPP Top {k} Metric"
         
-        # intended_diff 第一项
-        # custom_metric = f"tpp_threshold_{k}_intended_diff_only"
-        # custom_metric_name = f"TPP Top {k} intended_diff_only"
-        # avg_unintended 第二项
-        # custom_metric = f"tpp_threshold_{k}_unintended_diff_only"
-        # custom_metric_name = f"TPP Top {k} unintended_diff_only"
     elif "scr" in eval_path:
         custom_metric = f"scr_metric_threshold_{k}"
         custom_metric_name = f"SCR Top {k} Metric"
@@ -469,9 +369,6 @@ def get_custom_metric_key_and_name(
         custom_metric = f"sae_top_{k}_test_accuracy"
         custom_metric_name = f"Sparse Probing Top {k} Test Accuracy"
     elif "absorption" in eval_path:
-        # custom_metric = "mean_absorption_fraction_score"    # 实际指README中的第一种分数
-        # custom_metric_name = "Mean Absorption fraction Score" 
-
         custom_metric ="mean_full_absorption_score"
         custom_metric_name = "Mean Full Absorption Score"
     elif "autointerp" in eval_path:
@@ -480,11 +377,10 @@ def get_custom_metric_key_and_name(
     elif "unlearning" in eval_path:
         custom_metric = "unlearning_score"
         custom_metric_name = "Unlearning Score"
-    elif "core" in eval_path:   # 改为画nmse
+    elif "core" in eval_path:
         custom_metric = "ce_loss_score"
         custom_metric_name = "Loss Recovered"
-        # custom_metric = "nmse"
-        # custom_metric_name = "NMSE"
+
     elif "ravel" in eval_path:
         custom_metric = "disentanglement_score"
         custom_metric_name = "Ravel "
@@ -533,7 +429,6 @@ def get_eval_results(eval_filenames: list[str]) -> dict[str, dict]:
     """eval_filenames is assumed to be a list of filenames of this format:
     {sae_release}_{sae_id}_eval_results.json"""
     eval_results = {}
-    #import ipdb;ipdb.set_trace()
     for filepath in eval_filenames:
         if not os.path.exists(filepath):
             print(f"File not found: {filepath}")
@@ -575,7 +470,7 @@ def get_eval_results(eval_filenames: list[str]) -> dict[str, dict]:
             # core has nested evaluation metrics, so we flatten them out here
             core_results = single_sae_results["eval_result_metrics"]
             eval_results[results_key] = {}
-            #import ipdb;ipdb.set_trace()
+
             for parent_key, child_dict in core_results.items():
                 for metric_key, value in child_dict.items():
                     eval_results[results_key][metric_key] = value
@@ -595,27 +490,15 @@ def get_eval_results(eval_filenames: list[str]) -> dict[str, dict]:
         else:
             eval_results[results_key]["train_tokens"] = 1e-6
 
-        #import ipdb;ipdb.set_trace()
-        # filepath 0.3-8ef-750k_blocks.8.hook_resid_post__custom_sae_eval_results
-    
         loss_type = filepath.split("/")[-1].split("-")[0]
 
-        # if "feature" in filename:
-        #     loss_type+="_feature"
-        # elif "sample" in filename:
-        #     loss_type+="_sample"
-
-        #
         if "5.0e+08" in filename:
             loss_type+="_500M"
         if "1.0e+08" in filename :
             loss_type = loss_type+"_100M"
         if "2.0e+08" in filename :
             loss_type = loss_type+"_200M"
-        #import ipdb;ipdb.set_trace()
 
-
-        #import ipdb;ipdb.set_trace()
         eval_results[results_key]["loss_type"] = loss_type
 
     return eval_results
@@ -655,7 +538,6 @@ def find_eval_results_files(folders: list[str]) -> list[str]:
         list[str]: A list of full file paths containing 'eval_results.json'.
     """
     result_files = []
-    #import ipdb;ipdb.set_trace()
     for folder in folders:
         for root, dirs, files in os.walk(folder):
             for file in files:
@@ -917,9 +799,6 @@ def plot_2var_graph(
             l0_values = [p[0] for p in points]
             custom_metric_values = [p[1] for p in points]
             
-            
-
-            # 设置坐标轴标签字体
             ax.xaxis.label.set_size(30)
             ax.yaxis.label.set_size(30)
             # Add connecting line
@@ -928,18 +807,15 @@ def plot_2var_graph(
                 custom_metric_values,
                 color=trainer_colors[trainer],
                 # linestyle="-",
-                # CODE Changed LB
                 linestyle="--" if  "fvu_only" in trainer else "-",
                 alpha=0.5,
                 linewidth=1.7,  
                 zorder=1,  # Ensure lines are plotted behind points
             )
-        ax.tick_params(axis='both', which='major', labelsize=26)  # 刻度数字
+        ax.tick_params(axis='both', which='major', labelsize=26) 
 
-        # 设置坐标轴标签字体
         ax.xaxis.label.set_size(36)
         ax.yaxis.label.set_size(30)
-
 
         # Plot data points
         ax.scatter(
@@ -985,7 +861,7 @@ def plot_2var_graph(
 
     ax.title.set_fontsize(36)
     # x log
-    #ax.set_xscale("log",base=2)    # log值为横坐标  
+    #ax.set_xscale("log",base=2)   
 
     ax.set_xscale("log", base=10)
 
@@ -999,12 +875,10 @@ def plot_2var_graph(
 
     # Place legend outside the plot on the right
     #ax.legend(handles, labels, loc="center left", bbox_to_anchor=(1, 0.5))
-    
-    # CODE CHANGED 新增：按 label 字典序排序图例
+ 
     handles, labels = zip(*sorted(zip(handles, labels), key=lambda t: t[1]))
     ax.legend(handles, labels, loc="center left", bbox_to_anchor=(1, 0.5))
-    # ----
-    
+
     # Set axis limits
     if xlims:
         ax.set_xlim(*xlims)
@@ -1018,7 +892,6 @@ def plot_2var_graph(
     plt.tight_layout()
 
     # Save and show the plot
-    #import ipdb;ipdb.set_trace()
     if output_filename:
         plt.savefig(output_filename, bbox_inches="tight")
 
@@ -1163,7 +1036,7 @@ def plot_2var_graph_K_l0(
     
     trainer_colors = TRAINER_COLORS
     trainer_markers = TRAINER_MARKERS
-    #import ipdb;ipdb.set_trace()
+
     trainer_markers, trainer_colors = update_trainer_markers_and_colors(
         results, trainer_markers, trainer_colors
     )
@@ -1235,7 +1108,7 @@ def plot_2var_graph_K_l0(
     ax.set_title(title)
 
     # x log
-    #ax.set_xscale("log",base=2)    # log值为横坐标  
+    #ax.set_xscale("log",base=2)    
     # from matplotlib.ticker import LogLocator, LogFormatter
     import numpy as np
     from matplotlib.ticker import FixedLocator, FuncFormatter

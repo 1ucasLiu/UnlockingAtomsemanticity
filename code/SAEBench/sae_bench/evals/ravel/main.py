@@ -679,7 +679,7 @@ if __name__ == "__main__":
     import sae_bench.custom_saes.topk_sae as topk_sae
     random_seed = 42
     output_folder = "eval_results/ravel"
-    repo_id = "fvu-8ef-50k"
+    repo_id = ""
     filename = "blocks.8.hook_resid_post/ae.pt"
     layer = 8
 
@@ -698,7 +698,7 @@ if __name__ == "__main__":
         device,  # type: ignore
         dtype,
         layer=layer,
-        local_dir="transformed_sae"
+        local_dir=""
     )
     selected_saes = [(f"{repo_id}_{filename}", sae)] 
 

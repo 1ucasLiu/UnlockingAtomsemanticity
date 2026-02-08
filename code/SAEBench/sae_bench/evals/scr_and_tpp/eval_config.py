@@ -114,14 +114,12 @@ class ScrAndTppEvalConfig(BaseEvalConfig):
 
     column1_vals_lookup: dict[str, list[tuple[str, str]]] = Field(
         default_factory=lambda: {
-            # 人物简介 + 职业 + 性别
             "LabHC/bias_in_bios_class_set1": [
                 ("professor", "nurse"),
                 ("architect", "journalist"),
                 ("surgeon", "psychologist"),
                 ("attorney", "teacher"),
             ],
-            # 用户评论 + 产品类别 + 评分
             "canrager/amazon_reviews_mcauley_1and5": [
                 ("Books", "CDs_and_Vinyl"),
                 ("Software", "Electronics"),

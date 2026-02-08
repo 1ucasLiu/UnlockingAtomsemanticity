@@ -25,7 +25,7 @@ def plot_results(
 
     with open(filepath) as f:
         eval_results = json.load(f)
-    import ipdb;ipdb.set_trace()
+
     sae_releases = eval_results["custom_eval_config"]["sae_releases"]
 
     sae_data = {"basic_eval_results": {}, "sae_config_dictionary_learning": {}}

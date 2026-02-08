@@ -560,7 +560,7 @@ if __name__ == "__main__":
     dataset_name = "Skylion007/openwebtext"
     exclude_special_tokens_from_reconstruction = True
 
-    repo_id = "gemma-2-2b-400k-500Mbtransformed" #"fvu-8ef-550k"    #
+    repo_id = "gemma-2-2b" 
     filename = "blocks.8.hook_resid_post/ae.pt"
     layer = 8
 
@@ -569,7 +569,7 @@ if __name__ == "__main__":
     llm_dtype = torch.bfloat16
 
 
-    model_name = "google/gemma-2-2b" #"openai-community/gpt2"    # 
+    model_name = "google/gemma-2-2b" 
     hook_name = f"blocks.{layer}.hook_resid_post"
 
     sae = topk_sae.load_dictionary_learning_topk_sae(
@@ -579,7 +579,7 @@ if __name__ == "__main__":
         device,  # type: ignore
         dtype,
         layer=layer,
-        local_dir="transformed_sae"
+        local_dir=""
     )
     filename=filename.replace("ae.pt","_")
     selected_saes = [(f"{repo_id}_{filename}", sae)] 

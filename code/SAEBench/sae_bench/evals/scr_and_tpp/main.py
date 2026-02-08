@@ -245,13 +245,12 @@ def get_probe_test_accuracy(
     perform_scr: bool,
 ) -> dict[str, float]:
     test_accuracies = {}
-    # tpp probe 训练
+    # tpp probe 
     for class_name in all_class_list:
         test_acts, test_labels = probe_training.prepare_probe_data(
             all_activations, class_name, perform_scr=perform_scr
         )
 
-        # 测试probe二分类准确率
         test_acc_probe = probe_training.test_probe_gpu(
             test_acts,
             test_labels,
@@ -313,7 +312,6 @@ def perform_feature_ablations(
 ) -> dict[str, dict[int, dict[str, float]]]:
     ablated_class_accuracies = {}
     for ablated_class_name in chosen_classes:
-        # import ipdb;ipdb.set_trace()
         ablated_class_accuracies[ablated_class_name] = {}
         for top_n in top_n_values:
             selected_features_F = select_top_n_features(
@@ -361,8 +359,7 @@ def get_scr_plotting_dict(
     dir1_acc = llm_clean_accs[dir1_class_name]
     dir2_acc = llm_clean_accs[dir2_class_name]
     # dirs
-    # 判断消除不同对象带来的偏见
-    # dir=1 消除性别 ； dir =2 消除职业
+
     for dir in dirs:
         if dir == 1:
             ablated_probe_class_id = "male / female"
@@ -390,8 +387,7 @@ def get_scr_plotting_dict(
                 scr_score = 0
             else:
                 scr_score = (changed_acc - original_acc) / (clean_acc - original_acc)
-            # if scr_score<0:
-            #     import ipdb;ipdb.set_trace()
+
             print(
                 f"dir: {dir}, original_acc: {original_acc}, clean_acc: {clean_acc}, changed_acc: {changed_acc}, scr_score: {scr_score}"
             )
@@ -439,7 +435,7 @@ def create_tpp_plotting_dict(
         for threshold in class_accuracies[class_name]:
             # Intended differences
             intended_patched_acc = class_accuracies[class_name][threshold][class_name]
-            intended_diff = intended_clean_acc - intended_patched_acc   # 正常准确率-消融后准确率   对目标类的影响
+            intended_diff = intended_clean_acc - intended_patched_acc  
 
             # Unintended differences for this threshold
             unintended_diffs = []
@@ -451,12 +447,12 @@ def create_tpp_plotting_dict(
                 unintended_patched_acc = class_accuracies[class_name][threshold][
                     unintended_class
                 ]
-                unintended_diff = unintended_clean_acc - unintended_patched_acc # 对非目标类的识别准确率影响
+                unintended_diff = unintended_clean_acc - unintended_patched_acc 
                 unintended_diffs.append(unintended_diff)
 
-            avg_unintended = sum(unintended_diffs) / len(unintended_diffs)  # 对非目标类的平均影响 
-            avg_diff = intended_diff - avg_unintended   # 该阈值下 TPP 分数
-            # import ipdb;ipdb.set_trace()
+            avg_unintended = sum(unintended_diffs) / len(unintended_diffs)  
+            avg_diff = intended_diff - avg_unintended  
+
             # Store with original key format
             class_metrics[f"tpp_threshold_{threshold}_total_metric"] = avg_diff
             class_metrics[f"tpp_threshold_{threshold}_intended_diff_only"] = (
@@ -492,10 +488,7 @@ def get_dataset_activations(
     column1_vals: tuple[str, str] | None = None,
     column2_vals: tuple[str, str] | None = None,
 ) -> tuple[dict[str, torch.Tensor], dict[str, torch.Tensor]]:
-    """
-    LB: BLD - ( batch, sequence length, hidden dimension)
-    """
-    #import ipdb;ipdb.set_trace()
+
     train_data, test_data = dataset_creation.get_train_test_data(
         dataset_name,
         config.perform_scr,
@@ -505,12 +498,12 @@ def get_dataset_activations(
         column1_vals,
         column2_vals,
     )
-    #import ipdb;ipdb.set_trace()
+
     if not config.perform_scr:
         train_data = dataset_utils.filter_dataset(train_data, chosen_classes)
         test_data = dataset_utils.filter_dataset(test_data, chosen_classes)
 
-    train_data = dataset_utils.tokenize_data_dictionary(    # 序列化
+    train_data = dataset_utils.tokenize_data_dictionary(   
         train_data,
         model.tokenizer,  # type: ignore
         config.context_length,
@@ -581,7 +574,7 @@ def run_eval_single_dataset(
 
     activations_path = os.path.join(artifacts_folder, activations_filename)
     probes_path = os.path.join(artifacts_folder, probes_filename)
-    #import ipdb;ipdb.set_trace()
+
     if not os.path.exists(activations_path):
         if config.lower_vram_usage:
             model = model.to(device)  # type: ignore
@@ -609,7 +602,7 @@ def run_eval_single_dataset(
 
         torch.set_grad_enabled(True)
 
-        llm_probes, llm_test_accuracies = probe_training.train_probe_on_activations(    # 训练探针模型
+        llm_probes, llm_test_accuracies = probe_training.train_probe_on_activations(    
             all_meaned_train_acts_BD,
             all_meaned_test_acts_BD,
             select_top_k=None,
@@ -715,7 +708,7 @@ def run_eval_single_sae(
             column1_vals_list = config.column1_vals_lookup[dataset_name]
             for column1_vals in column1_vals_list:
                 run_name = f"{dataset_name}_scr_{column1_vals[0]}_{column1_vals[1]}"
-                # probe原版和消融特定类别后的准确率
+
                 raw_results, llm_clean_accs = run_eval_single_dataset(
                     dataset_name,
                     config,
@@ -748,7 +741,7 @@ def run_eval_single_sae(
                 artifacts_folder,
                 save_activations,
             )
-            # import ipdb;ipdb.set_trace()
+
             processed_results, per_class_results = create_tpp_plotting_dict(
                 raw_results,  # type: ignore
                 llm_clean_accs,
@@ -758,7 +751,7 @@ def run_eval_single_sae(
 
             averaging_names.append(run_name)
 
-    # 对多个结果做算数平均
+
     results_dict = general_utils.average_results_dictionaries(
         dataset_results, averaging_names
     )
@@ -1090,74 +1083,6 @@ def arg_parser():
 
 
 # Use this code snippet to use custom SAE objects
-# if __name__ == "__main__":
-#     import sae_bench.custom_saes.topk_sae as topk_sae
-
-#     start_time = time.time()
-
-#     perform_scr=False
-
-
-#     random_seed = 42
-
-
-#     import os
-#     import sae_bench.custom_saes.topk_sae as topk_sae
-#     target_dir = "/home/liubo/workspace/SAEBench-main/transformed_sae"
-#     for _,dirnames,filename in os.walk(target_dir):
-#         for sae_name in dirnames:
-#             repo_id = sae_name #"0.0-8ef-600kk-hsic-coff-100inChunk"
-#             filename = "blocks.8.hook_resid_post/ae.pt"
-#             layer = 8
-
-#             device = "cuda" if torch.cuda.is_available() else "cpu"
-#             dtype = torch.float32
-#             llm_dtype = torch.bfloat16
-
-
-#             model_name = "openai-community/gpt2"
-#             hook_name = f"blocks.{layer}.hook_resid_post"
-#             sae = topk_sae.load_dictionary_learning_topk_sae(
-#                 repo_id,
-#                 filename,
-#                 model_name,
-#                 device,  # type: ignore
-#                 dtype,
-#                 layer=layer,
-#                 local_dir="transformed_sae"
-#             )
-#             filename = filename.replace("ae.pt","")
-#             selected_saes = [(f"{repo_id}_{filename}", sae)] 
-    
-
-#             config = ScrAndTppEvalConfig(
-#                 random_seed=random_seed,
-#                 model_name=model_name,
-#                 perform_scr=False #perform_scr,
-#             )
-
-
-#             config.llm_batch_size = 16 #activation_collection.LLM_NAME_TO_BATCH_SIZE[config.model_name]
-#             config.llm_dtype = torch.bfloat16
-#             # create output folder
-#             output_folder="eval_results/tpp"
-#             os.makedirs(output_folder, exist_ok=True)
-
-#             # run the evaluation on all selected SAEs
-#             results_dict = run_eval(
-#                 config,
-#                 selected_saes,
-#                 device,
-#                 output_path="eval_results/tpp",
-#                 force_rerun=True,
-#                 clean_up_activations=False,
-#                 save_activations=True,
-#             )
-
-#             end_time = time.time()
-
-#             print(f"Finished evaluation in {end_time - start_time} seconds")
-
 
 
 if __name__ == "__main__":
@@ -1175,7 +1100,7 @@ if __name__ == "__main__":
     import sae_bench.custom_saes.topk_sae as topk_sae
 
 
-    repo_id = "fvu_only-64k-gemma-2-2b-resid_post_layer_8-5.0e+08-20250809_1943" #"0.0-8ef-600kk-hsic-coff-100inChunk"
+    repo_id = "fvu_only-64k-gemma-2-2b-resid_post_layer_8-5.0e+08-20250809_1943" 
     layer = 8
 
     filename = f"resid_post_layer_{layer}/trainer_{0}/ae.pt"
@@ -1187,7 +1112,6 @@ if __name__ == "__main__":
 
     model_name = "google/gemma-2-2b" #"openai-community/gpt2"
 
-    #sae = topk_sae.TopKSAE(d_in=768,d_sae=768*8,k=200,model_name=model_name,hook_layer=layer,device=device,dtype=dtype)
     sae = topk_sae.load_dictionary_learning_topk_sae(
         repo_id,
         filename,
@@ -1195,7 +1119,7 @@ if __name__ == "__main__":
         device,  # type: ignore
         dtype,
         layer=layer,
-        local_dir="dictionary_learning_saes/GEMMA" #"transformed_sae"
+        local_dir="dictionary_learning_saes/sae" 
     )
     filename = filename.replace("ae.pt","")
     selected_saes = [(f"{repo_id}_{filename}", sae)] 

@@ -171,7 +171,7 @@ class AutoInterp:
             self.latents = cfg.latents
         else:
             assert self.cfg.n_latents is not None
-            #import ipdb;ipdb.set_trace()
+
             sparsity *= cfg.total_tokens
             alive_latents = (
                 torch.nonzero(sparsity > self.cfg.dead_latent_threshold)
@@ -803,7 +803,7 @@ if __name__ == "__main__":
         device="cuda",  # type: ignore
         dtype=torch.float32,
         layer=8,
-        local_dir="final_saes_dictionary_learning/500M/hsic" #"transformed_sae"
+        local_dir="" 
     )
     filename = filename.replace("ae.pt","")
     selected_saes = [(f"{repo_id}_{filename}", sae)] 

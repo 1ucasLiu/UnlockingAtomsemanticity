@@ -88,14 +88,13 @@ def load_dictionary_learning_relu_sae(
     local_dir: str = "downloaded_saes",
 ) -> ReluSAE:
     assert "ae.pt" in filename
-    # 本地文件
+
     import os
-    #import ipdb;ipdb.set_trace()
     whole_name = repo_id+"/"+filename
     path_to_params = os.path.join(local_dir, whole_name)
 
     pt_params = torch.load(path_to_params, map_location=torch.device("cpu"))
-    #import ipdb;ipdb.set_trace()
+
     config_filename = whole_name.replace("ae.pt", "config.json")
     # path_to_params = hf_hub_download(
     #     repo_id=repo_id,

@@ -70,18 +70,13 @@ class FeatureAbsorptionCalculator:
     batch_size: int = 10
     topk_feats: int = 10
 
-    # lb: 计算Absorption分数与阈值设置
-    # 注，可能涉及参数修改
-    # the cosine similarity between the top projecting feature and the probe must be at least this high to count as absorption (full absorption only)
-    # lb: 某个latent在probe方向上投影到达阈值，认为probe代表的语义被该latent完全吸收了
-    full_absorption_probe_cos_sim_threshold: float = 0.025  # 原参数为0.025
+
+    full_absorption_probe_cos_sim_threshold: float = 0.025  
     # the cosine similarity between each potential absorbing latent and the probe must be at least this high to count as absorption (absorption fraction only)
-    absorption_fraction_probe_cos_sim_threshold: float = 0.1    # 大于该值认为是 潜在的可能发生特征吸收的latent -> 最后得到一个latent集合
+    absorption_fraction_probe_cos_sim_threshold: float = 0.1   
     # the total probe projection of the potential absorbing latents must contribute at least this much to the probe projection to count as absorption (both absorption metrics)
-    # 吸收 latent 的整体投影贡献至少要占 probe 的总投影量的 40%     
     probe_projection_proportion_threshold: float = 0.4
     # the maximum number of latents that can be considered to collectively compensate for the reduced activation of a potentially absorbed latent (absorption fraction only)
-    # 最多几个latent联合吸收一个probe
     absorption_fraction_max_absorbing_latents: int = 3
 
     def _build_prompts(self, words: list[str]) -> list[SpellingPrompt]:
@@ -145,7 +140,7 @@ class FeatureAbsorptionCalculator:
         prompts = self._build_prompts(words)
         self._validate_prompts_are_same_length(prompts)
         results: list[WordAbsorptionResult] = []
-        # 计算 probe 方向与 SAE decoder的余弦相似度    
+ 
         cos_sims = (
             torch.nn.functional.cosine_similarity(
                 probe_direction.to(sae.device), sae.W_dec, dim=-1
@@ -154,7 +149,7 @@ class FeatureAbsorptionCalculator:
             .cpu()
         )
         hook_point = f"blocks.{layer}.hook_resid_post"
-        for batch_prompts in batchify(prompts, batch_size=self.batch_size): # 对应的 SAE 激活和 probe 投影
+        for batch_prompts in batchify(prompts, batch_size=self.batch_size): 
             batch_acts = self.model.run_with_cache(
                 [p.base for p in batch_prompts],
                 names_filter=[hook_point],
@@ -163,7 +158,7 @@ class FeatureAbsorptionCalculator:
             batch_sae_probe_projections = batch_sae_acts * cos_sims.to(
                 batch_sae_acts.device
             )
-            batch_probe_projections = batch_acts @ probe_direction.to(      # 条件2 投影 
+            batch_probe_projections = batch_acts @ probe_direction.to(      
                 device=batch_sae_acts.device, dtype=batch_sae_acts.dtype
             )
             for i, prompt in enumerate(tqdm(batch_prompts, disable=not show_progress)):
@@ -173,7 +168,7 @@ class FeatureAbsorptionCalculator:
 
                 ### calculate absorption_fraction ###
 
-                # GT probe proj of main feats   # main feature在 probe 方向的投影大小
+                # GT probe proj of main feats   
                 main_feats_probe_proj = (
                     torch.sum(sae_act_probe_proj[main_feature_ids]).cpu().item()
                 )
@@ -182,39 +177,39 @@ class FeatureAbsorptionCalculator:
                 potential_absorbers_mask = torch.ones(
                     sae_act_probe_proj.size(0), dtype=torch.bool
                 )
-                potential_absorbers_mask[main_feature_ids] = False  # 排除主特征
+                potential_absorbers_mask[main_feature_ids] = False  
                 potential_absorbers_mask &= (
-                    cos_sims >= self.absorption_fraction_probe_cos_sim_threshold    # 潜在的可能发生特征吸收的latent；  余弦大于阈值   语义方向一致
+                    cos_sims >= self.absorption_fraction_probe_cos_sim_threshold    
                 )
                 potential_absorbers_mask &= sae_act_probe_proj > 0
                 potential_absorbers_probe_proj = sae_act_probe_proj[
                     potential_absorbers_mask
                 ]
-                # 选出最具有吸收能力的潜在latent
+
                 top_potential_absorbers_probe_proj = (
                     potential_absorbers_probe_proj.topk(
                         k=min(
-                            self.absorption_fraction_max_absorbing_latents, # 预设最大吸收数量(前10个latent)
-                            potential_absorbers_probe_proj.numel(), #满足条件的latent数量
+                            self.absorption_fraction_max_absorbing_latents, 
+                            potential_absorbers_probe_proj.numel(), 
                         )
                     ).values
                 )
-                # 计算上述满足条件latent 在probe上总投影数量
+
                 top_potential_absorbers_total_probe_proj = (
                     torch.sum(top_potential_absorbers_probe_proj).cpu().item()
                 )
 
-                # final absorption_fraction calculation  吸收分数的判定逻辑
+                # final absorption_fraction calculation 
                 top_potential_absorbers_probe_proj_proportion = (
                     top_potential_absorbers_total_probe_proj / act_probe_proj
                 )
                 if (
-                    main_feats_probe_proj >= act_probe_proj     # 自己特征的投影大于总投影，main latent已经完全解释了所有信号，无特征吸收
+                    main_feats_probe_proj >= act_probe_proj     
                     or top_potential_absorbers_probe_proj_proportion
                     < self.probe_projection_proportion_threshold
                 ):
                     absorption_fraction = 0.0
-                elif main_feats_probe_proj <= 0.0:  # main feature 在probe 投影小于0， 说明main feature 完全不起解释作用，特征吸收
+                elif main_feats_probe_proj <= 0.0:  
                     absorption_fraction = 1.0
                 else:
                     unaccounted_probe_proj = act_probe_proj - main_feats_probe_proj
@@ -223,11 +218,7 @@ class FeatureAbsorptionCalculator:
                     )
                     absorption_fraction = absorption_probe_proj / (
                         absorption_probe_proj + main_feats_probe_proj
-                    )   # 论文公式中的 absorption score
-                    
-                    
-                    # import ipdb;ipdb.set_trace()
-                    # absorption_fraction = 1- absorption_fraction
+                    )             
                     
                     absorption_fraction = np.clip(absorption_fraction, 0.0, 1.0)
 

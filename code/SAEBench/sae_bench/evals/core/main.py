@@ -1,25 +1,3 @@
-# fmt: off
-# flake8: noqa: E501
-# fmt: on
-# ===== 第一步：在导入任何库之前，强制使用 hf-mirror =====
-import os
-os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
-
-
-import huggingface_hub.file_download as hf_download
-original_hf_hub_download = hf_download.hf_hub_download
-
-def hf_hub_download_mirror(*args, **kwargs):
-    """强制使用 hf-mirror 的包装函数"""
-    if 'endpoint' not in kwargs:
-        kwargs['endpoint'] = 'https://hf-mirror.com'
-    print(f"[HF-Mirror] 使用镜像下载: {kwargs.get('filename', args[1] if len(args) > 1 else 'unknown')}")
-    return original_hf_hub_download(*args, **kwargs)
-
-hf_download.hf_hub_download = hf_hub_download_mirror
-import huggingface_hub
-huggingface_hub.hf_hub_download = hf_hub_download_mirror
-
 import argparse
 import gc
 import logging
@@ -167,7 +145,6 @@ def run_evals(
         "sparsity": {},
         "token_stats": {},
     }
-    #import ipdb;ipdb.set_trace()
     if eval_config.compute_kl or eval_config.compute_ce_loss:
         assert eval_config.n_eval_reconstruction_batches > 0
         reconstruction_metrics = get_downstream_reconstruction_metrics(
@@ -248,9 +225,7 @@ def run_evals(
                 {
                     "l0": sparsity_variance_metrics["l0"],
                     "l1": sparsity_variance_metrics["l1"],
-                    # CODE ADDED Liubo
-                    #"sae_k":sparsity_variance_metrics['sae_k']
-                    # ----
+
                 }
             )
 
@@ -594,12 +569,7 @@ def get_sparsity_and_variance_metrics(
             l1 = flattened_sae_feature_acts.sum(dim=-1)
             metric_dict["l0"].append(l0)
             metric_dict["l1"].append(l1)
-            # CODE_ADDED Liubo
-            #import ipdb;ipdb.set_trace()
-            # k_list = [sae.k]*len(l0)
-            # sae_k_tensor = torch.tensor([k_list],dtype=l1.dtype)
-            # metric_dict['sae_k'].append(sae.k)
-            # --------
+
         if compute_variance_metrics:
             resid_sum_of_squares = (
                 (flattened_sae_input - flattened_sae_out).pow(2).sum(dim=-1)
@@ -1019,7 +989,7 @@ def calculate_misc_metrics(feature_metrics: dict[str, torch.Tensor]) -> dict:
         normalized_freq_over_10_percent = (norm_sum_10 / total_sum).item()
     else:
         normalized_freq_over_10_percent = 0.0
-    #import ipdb;ipdb.set_trace()
+
     return {
         "average_max_encoder_cosine_sim": average_max_encoder_cosine_sim,
         "average_max_decoder_cosine_sim": average_max_decoder_cosine_sim,
@@ -1107,9 +1077,7 @@ def multiple_evals(
                 
             # del current_model  # type: ignore
             # current_model_str = sae.cfg.model_name
-            # import ipdb;ipdb.set_trace()
             # current_model = load_model()
-
 
             try:
                 del current_model  # type: ignore
@@ -1121,9 +1089,7 @@ def multiple_evals(
 
         assert current_model is not None  # type: ignore
 
-        
-        #try:
-            # 有一个类型错误
+    
    
         # Create a CoreEvalConfig for this specific evaluation
         core_eval_config = CoreEvalConfig(
@@ -1531,18 +1497,17 @@ if __name__ == "__main__":
 
     from sae_lens import SAE, HookedSAETransformer
     from transformers import AutoTokenizer, AutoModelForCausalLM
-    #local_model_path = "/home/liubo/.cache/huggingface/hub/models--google--gemma-2-2b/snapshots/c5ebcd40d208330abc697524c919956e692655cf"
     sae_per_layer = {}
     layers = [i for i in range(40,42)]
     device="cuda"
     for i in tqdm(layers):
         sae_per_layer[f"layer_{i}"] = SAE.from_pretrained(
-            release="gemma-scope-9b-pt-res-canonical",  # <- Release name
-            sae_id=f"layer_{i}/width_16k/canonical",  # <- SAE id (not always a hook point!)
+            release="gemma-scope-9b-pt-res-canonical",  
+            sae_id=f"layer_{i}/width_16k/canonical",  
             device=device,#'cpu',
         )[0]
         sae_per_layer[f"layer_{i}"].fold_W_dec_norm() 
-    print(f"✓ 成功加载 {len(sae_per_layer)} 个 SAE 模型")
+
     
     eval_folder="eval_results_gemma_scope_9b"
     random_seed = 42
@@ -1556,8 +1521,7 @@ if __name__ == "__main__":
     for layer in layers:
         sae = sae_per_layer[f"layer_{layer}"]
         repo_id = sae_name#"0.0-8ef-750k" ,
-        filename = f"layer_{layer}/width_16k/canonical"  #f"resid_post_layer_{layer}/trainer_0/ae.pt"
-                    
+        filename = f"layer_{layer}/width_16k/canonical"  
         selected_saes = [(f"{repo_id}_{filename}", sae)] 
         output_folder=eval_folder+"/"+"core"
         print("**",output_folder)

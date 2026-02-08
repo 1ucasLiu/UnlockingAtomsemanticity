@@ -135,8 +135,6 @@ def load_and_format_sae(
     sae_release_or_unique_id: str, sae_object_or_sae_lens_id: str | SAE, device: str
 ) -> tuple[str, SAE, torch.Tensor | None] | None:
     """Handle both pretrained SAEs (identified by string) and custom SAEs (passed as objects)"""
-    # 注： 具体检查这段代码是如何判断customsae的
-    #import ipdb;ipdb.set_trace()
     if isinstance(sae_object_or_sae_lens_id, str):
         sae, _, sparsity = SAE.from_pretrained(
             release=sae_release_or_unique_id,
@@ -149,8 +147,6 @@ def load_and_format_sae(
         sae = sae_object_or_sae_lens_id
         sae_id = "custom_sae"
         sparsity = None
-        # original
-        # check_decoder_norms(sae.W_dec.data)    ###
 
     return sae_id, sae, sparsity
 

@@ -87,38 +87,8 @@ class BaseSAE(nn.Module, ABC):
 
         if torch.allclose(norms, torch.ones_like(norms), atol=tolerance):
             return True
-        else:
-            #import ipdb;ipdb.set_trace()
-            max_diff = torch.max(torch.abs(norms - torch.ones_like(norms)))
-            print(f"Decoder weights are not normalized. Max diff: {max_diff.item()}")
-           
-            print("执行归一化操作...")
-            
-            # 添加归一化逻辑
-            # 1. 避免除以零 - 将零范数替换为1
-            safe_norms = torch.where(norms == 0, torch.ones_like(norms), norms)
-            
-            # 2. 执行归一化
-            normalized_W_dec = self.W_dec / safe_norms[:, None]
-            
-            # 3. 检查归一化结果
-            normalized_norms = torch.norm(normalized_W_dec, dim=1)
-            normalized_diff = torch.max(torch.abs(normalized_norms - torch.ones_like(normalized_norms)))
-            print(f"归一化后最大差异: {normalized_diff.item()}")
-            
-            # 4. 更新权重矩阵
-            self.W_dec.data.copy_(normalized_W_dec)
-            
-            # 5. 验证归一化是否成功
-            final_norms = torch.norm(self.W_dec, dim=1)
-            if torch.allclose(final_norms, torch.ones_like(final_norms), atol=tolerance):
-                print("归一化成功完成")
-                return True
-            else:
-                print("警告: 归一化后仍未能满足精度要求")
-                import ipdb; ipdb.set_trace()
-                return False
-            #return False
+
+        return False
 
     @torch.no_grad()
     def test_sae(self, model_name: str):

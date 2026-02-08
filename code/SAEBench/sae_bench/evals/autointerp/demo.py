@@ -33,7 +33,7 @@ sae = topk_sae.load_dictionary_learning_topk_sae(
     device="cuda",  # type: ignore
     dtype=torch.float32,
     layer=8,
-    local_dir="final_saes_dictionary_learning/500M/hsic" #"transformed_sae"
+    local_dir="hsic" #"transformed_sae"
 )
 filename = filename.replace("ae.pt","")
 selected_saes = [(f"{repo_id}_{filename}", sae)] 

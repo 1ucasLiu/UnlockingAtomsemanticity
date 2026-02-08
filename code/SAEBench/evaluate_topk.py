@@ -52,7 +52,7 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
             device,  # type: ignore
             dtype,
             layer=layer,
-            local_dir=sae_local_dir#"transformed_sae"
+            local_dir=sae_local_dir
         )
     elif sae_type == "batchTopk":
         # TopK
@@ -63,7 +63,7 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
             device,  # type: ignore
             dtype,
             layer=layer,
-            local_dir=sae_local_dir#"transformed_sae"
+            local_dir=sae_local_dir
         )
     filename = filename.replace("ae.pt","")
     selected_saes = [(f"{repo_id}_{filename}", sae)] 
@@ -76,7 +76,6 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
         for sae_name, sae in selected_saes :
             sae.cfg.dtype = "bfloat16"
             
-        # 强制要求联网?
         core.multiple_evals(
             selected_saes=selected_saes ,
             n_eval_reconstruction_batches=n_eval_reconstruction_batches,
@@ -121,12 +120,12 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
             perform_scr=True,
         )
 
-        config.llm_batch_size = 1 #Gemma 会oom # 16 
+        config.llm_batch_size = 1 
         config.llm_dtype = torch.bfloat16
         # create output folder
         os.makedirs(output_folder, exist_ok=True)
 
-        # # run the evaluation on all selected SAEs
+        # run the evaluation on all selected SAEs
         _ = scr_and_tpp.run_eval(
             config,
             selected_saes,
@@ -148,7 +147,7 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
             perform_scr=False,
         )
 
-        config.llm_batch_size = 1 #Gemma 会oom # 16 
+        config.llm_batch_size = 1 
         config.llm_dtype = torch.bfloat16
         # create output folder
         os.makedirs(output_folder, exist_ok=True)
@@ -268,38 +267,23 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
             )  # type: ignore
         except Exception as e:
             print(f"Wrong!/n  {e}")
-# unlearning  WARNING: We recommend running this eval on instruct tuned models  推荐使用2b-it 
 
-#评估自己训练的sae
-layer = 4 # 25 #25 #16 #8
-#rootdir ="sae_9b" #
+layer = 4 
 rootdir = "sae_2b/fvu_hsic_full_hsic/topk_layer4"
-#"sae_2b/fvu_hsic_full_hsic/topk_layer8/k1024_other_saes/final_choice"
-#"/home/liubo/workspace/dictionary_learning/9b_layer25"
-#"/home/liubo/workspace/dictionary_learning/9b_layer25"
-#"sae_2b/fvu_hsic_full_hsic/topk_layer16"
+
 for _,dirnames,filenames in os.walk(rootdir):
     for sae_name in dirnames:
-        print("$$$$ ",sae_name)
-        if 'BatchTopK'    in sae_name:
-            continue
-
-        if "10fvu_nce-1024k-gemma-2-2b-resid_post_layer_4-5.0e+08-20260105_1710" not in sae_name:
-            continue
-
+        print(" ",sae_name)
         evaluate(repo_id = sae_name,#"0.0-8ef-750k" ,
                 filename =  f"resid_post_layer_{layer}/trainer_0/ae.pt",   #
                 layer = layer,
                 model_name = "google/gemma-2-2b",#"openai-community/gpt2",   # 
                 sae_local_dir=rootdir,
-                sae_type='topk',#  'topk',#'batchTopk',# 
-                eval_folder ="eval_results_2b_layer4-1024k",#"eval_results/",#"eval_results_gemma-final/500M",#"eval_results_gemma-final/500M",#"eval_results/Topk-new-test/Layer17-1003",  #   "eval_results_relu" , #"eval_results",# "eval_results_normlized2" ,#
-                eval_types =['autointerp'],#['tpp','scr','core',"absorption",'sparse_probing','ravel','unlearning'],# ["core","absorption",'sparse_probing','ravel','unlearning'], #unlearning
+                sae_type='topk',#  ['topk','batchTopk']
+                eval_folder ="eval_results_2b_layer4-1024k",
+                eval_types =['tpp','scr','core',"absorption",'sparse_probing','ravel','unlearning'],
                 device = "cuda" if torch.cuda.is_available() else "cpu",
                 dtype = torch.float32,#
                 llm_dtype = torch.bfloat16)
     
     break
-
-#100fvu_hsic-1024k-feature-gemma-2-2b-resid_post_layer_17-5.0e+08-20250930_1621_resid_post_layer_17_trainer_0__custom_sae_eval_results
-#100fvu_hsic_feature-1024k-gemma-2-2b-resid_post_layer_17-5.0e+08-20250930_1621

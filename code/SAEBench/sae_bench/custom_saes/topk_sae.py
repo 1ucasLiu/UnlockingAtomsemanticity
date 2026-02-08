@@ -130,12 +130,11 @@ def load_dictionary_learning_topk_sae(
     #     local_dir=local_dir,
     # )
 
-    # 本地文件
     whole_name = repo_id+"/"+filename
     path_to_params = os.path.join(local_dir, whole_name)
 
     pt_params = torch.load(path_to_params, map_location=torch.device("cpu"))
-    #import ipdb;ipdb.set_trace()
+
     config_filename = whole_name.replace("ae.pt", "config.json")
     # path_to_config = hf_hub_download(
     #     repo_id=repo_id,
@@ -144,7 +143,6 @@ def load_dictionary_learning_topk_sae(
     #     local_dir=local_dir,
     # )
 
-    # 本地加载
     path_to_config = os.path.join(local_dir, config_filename)
     with open(path_to_config) as f:
         config = json.load(f)
@@ -211,7 +209,6 @@ def load_dictionary_learning_topk_sae(
     else:
         raise ValueError(f"Unknown trainer class: {config['trainer']['trainer_class']}")
 
-    # CODE 
     normalized = sae.check_decoder_norms()
     if not normalized:
         #sae.normalize_decoder()

@@ -1,0 +1,550 @@
+import os
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+
+
+import huggingface_hub.file_download as hf_download
+original_hf_hub_download = hf_download.hf_hub_download
+
+def hf_hub_download_mirror(*args, **kwargs):
+    """强制使用 hf-mirror 的包装函数"""
+    if 'endpoint' not in kwargs:
+        kwargs['endpoint'] = 'https://hf-mirror.com'
+    print(f"[HF-Mirror] 使用镜像下载: {kwargs.get('filename', args[1] if len(args) > 1 else 'unknown')}")
+    return original_hf_hub_download(*args, **kwargs)
+
+hf_download.hf_hub_download = hf_hub_download_mirror
+import huggingface_hub
+huggingface_hub.hf_hub_download = hf_hub_download_mirror
+import argparse
+import gc
+import os
+import statistics
+import time
+from dataclasses import asdict
+from datetime import datetime
+
+import pandas as pd
+import torch
+from sae_lens import SAE
+from tqdm import tqdm
+from transformer_lens import HookedTransformer
+
+from sae_bench.evals.absorption.eval_config import AbsorptionEvalConfig
+from sae_bench.evals.absorption.eval_output import (
+    EVAL_TYPE_ID_ABSORPTION,
+    AbsorptionEvalOutput,
+    AbsorptionMeanMetrics,
+    AbsorptionMetricCategories,
+    AbsorptionResultDetail,
+)
+from sae_bench.evals.absorption.feature_absorption import (
+    run_feature_absortion_experiment,
+)
+from sae_bench.evals.absorption.k_sparse_probing import run_k_sparse_probing_experiment
+from sae_bench.sae_bench_utils import (
+    activation_collection,
+    general_utils,
+    get_eval_uuid,
+    get_sae_bench_version,
+    get_sae_lens_version,
+)
+from sae_bench.sae_bench_utils.sae_selection_utils import get_saes_from_regex
+
+
+def run_eval(
+    config: AbsorptionEvalConfig,
+    selected_saes: list[tuple[str, SAE]] | list[tuple[str, str]],
+    device: str,
+    output_path: str,
+    force_rerun: bool = False,
+):
+    torch.set_grad_enabled(True)
+    """
+    selected_saes is a list of either tuples of (sae_lens release, sae_lens id) or (sae_name, SAE object)
+    """
+
+    if "gemma" not in config.model_name:
+        print(
+            "\n\n\nWARNING: We recommend running this eval on LLMS >= 2B parameters\n\n\n"
+        )
+
+    eval_instance_id = get_eval_uuid()
+    sae_lens_version = get_sae_lens_version()
+    sae_bench_commit_hash = get_sae_bench_version()
+
+    results_dict = {}
+
+    llm_dtype = general_utils.str_to_dtype(config.llm_dtype)
+
+    model = HookedTransformer.from_pretrained_no_processing(
+        config.model_name, device=device, dtype=llm_dtype
+    )
+
+    for sae_release, sae_object_or_id in tqdm(
+        selected_saes, desc="Running SAE evaluation on all selected SAEs"
+    ):
+        sae_id, sae, sparsity = general_utils.load_and_format_sae(
+            sae_release, sae_object_or_id, device
+        )  # type: ignore
+        sae = sae.to(device=device, dtype=llm_dtype)
+
+        sae_result_path = general_utils.get_results_filepath(
+            output_path, sae_release, sae_id
+        )
+
+        if os.path.exists(sae_result_path) and not force_rerun:
+            print(f"Skipping {sae_release}_{sae_id} as results already exist")
+            continue
+        
+        # 评估不同K时，对下游任务影响
+        k_sparse_probing_results = run_k_sparse_probing_experiment(
+            model=model,
+            sae=sae,
+            layer=sae.cfg.hook_layer,
+            sae_name=f"{sae_release}_{sae_id}",
+            force=force_rerun,
+            max_k_value=config.max_k_value,     # 最大K值 最多探测k个latent
+            f1_jump_threshold=config.f1_jump_threshold,
+            prompt_template=config.prompt_template,
+            prompt_token_pos=config.prompt_token_pos,
+            device=device,
+            k_sparse_probe_l1_decay=config.k_sparse_probe_l1_decay,
+            k_sparse_probe_batch_size=config.k_sparse_probe_batch_size,
+            k_sparse_probe_num_epochs=config.k_sparse_probe_num_epochs,
+        )
+
+        # Save k_sparse_probing_results as a separate JSON
+        artifacts_folder = os.path.join("artifacts", "absorption")
+        os.makedirs(artifacts_folder, exist_ok=True)
+        k_sparse_probing_file = f"{sae_release}_{sae_id}_k_sparse_probing.json"
+        k_sparse_probing_file = k_sparse_probing_file.replace("/", "_")
+        k_sparse_probing_path = os.path.join(artifacts_folder, k_sparse_probing_file)
+        os.makedirs(os.path.dirname(k_sparse_probing_path), exist_ok=True)
+        k_sparse_probing_results.to_json(
+            k_sparse_probing_path, orient="records", indent=4
+        )
+
+        # check we have enough first-letter features to evaluate absorption
+        if (
+            k_sparse_probing_results["f1_probe"] > config.min_GT_probe_f1
+        ).sum() < config.min_feats_for_eval:
+            print(
+                f"\n\n\nCannot evaluate absorption due to insufficent first-letter features detected in model: {config.model_name}\n\n\n"
+            )
+            break
+
+        # 检测特征吸收
+        raw_df = run_feature_absortion_experiment(
+            model=model,
+            sae=sae,
+            layer=sae.cfg.hook_layer,
+            sae_name=f"{sae_release}_{sae_id}",
+            force=force_rerun,
+            max_k_value=config.max_k_value,
+            feature_split_f1_jump_threshold=config.f1_jump_threshold,
+            prompt_template=config.prompt_template,
+            prompt_token_pos=config.prompt_token_pos,
+            batch_size=config.llm_batch_size,
+            device=device,
+        )
+        agg_df = _aggregate_results_df(raw_df)
+
+        # aggregate results and produce the output
+        mean_absorption_fractions = []
+        full_absorption_rates = []
+        num_split_features = []
+        eval_result_details = []
+        for _, row in agg_df.iterrows():
+            letter = row["letter"]
+            if (
+                k_sparse_probing_results[
+                    k_sparse_probing_results["letter"] == row["letter"]
+                ]["f1_probe"].item()
+                > config.min_GT_probe_f1
+            ):
+                mean_absorption_fractions.append(row["mean_absorption_fraction"])
+                full_absorption_rates.append(row["full_absorption_rate"])
+                num_split_features.append(row["num_split_feats"])
+                eval_result_details.append(
+                    AbsorptionResultDetail(
+                        first_letter=letter,  # type: ignore
+                        # CODE Changed  将最终分数修改为 1 - absorption score
+                        mean_absorption_fraction=row["mean_absorption_fraction"],  # type: ignore
+                        full_absorption_rate=row["full_absorption_rate"],  # type: ignore
+                        num_full_absorption=row["num_full_absorption"],  # type: ignore
+                        num_probe_true_positives=row["num_probe_true_positives"],  # type: ignore
+                        num_split_features=row["num_split_feats"],  # type: ignore
+                    )
+                )
+
+        eval_output = AbsorptionEvalOutput(
+            eval_type_id=EVAL_TYPE_ID_ABSORPTION,
+            eval_config=config,
+            eval_id=eval_instance_id,
+            datetime_epoch_millis=int(datetime.now().timestamp() * 1000),
+            eval_result_metrics=AbsorptionMetricCategories(     # 两种 Absorption score 
+                mean=AbsorptionMeanMetrics(
+                    mean_absorption_fraction_score=statistics.mean(
+                        mean_absorption_fractions
+                    ),
+                    mean_full_absorption_score=statistics.mean(full_absorption_rates),
+                    mean_num_split_features=statistics.mean(num_split_features),
+                    std_dev_absorption_fraction_score=statistics.stdev(
+                        mean_absorption_fractions
+                    ),
+                    std_dev_full_absorption_score=statistics.stdev(
+                        full_absorption_rates
+                    ),
+                    std_dev_num_split_features=statistics.stdev(num_split_features),
+                )
+            ),
+            eval_result_details=eval_result_details,
+            sae_bench_commit_hash=sae_bench_commit_hash,
+            sae_lens_id=sae_id,
+            sae_lens_release_id=sae_release,
+            sae_lens_version=sae_lens_version,
+            sae_cfg_dict=asdict(sae.cfg),
+        )
+
+        results_dict[f"{sae_release}_{sae_id}"] = asdict(eval_output)
+
+        eval_output.to_json_file(sae_result_path, indent=2)
+
+        gc.collect()
+        torch.cuda.empty_cache()
+
+    return results_dict
+
+
+def _aggregate_results_df(
+    df: pd.DataFrame,
+) -> pd.DataFrame:
+    agg_df = (
+        df[["letter", "absorption_fraction", "is_full_absorption"]]
+        .groupby(["letter"])
+        .sum()
+        .reset_index()
+        .merge(
+            df[["letter", "num_probe_true_positives", "split_feats"]]
+            .groupby(["letter"])
+            .agg(
+                {
+                    "num_probe_true_positives": "mean",
+                    "split_feats": lambda x: x.iloc[
+                        0
+                    ],  # Take the first split_feats list for each letter
+                }
+            )
+            .reset_index()
+        )
+    )
+    agg_df["num_split_feats"] = agg_df["split_feats"].apply(len)
+    agg_df["mean_absorption_fraction"] = (
+        agg_df["absorption_fraction"] / agg_df["num_probe_true_positives"]
+    )
+    agg_df["num_full_absorption"] = agg_df["is_full_absorption"]
+    agg_df["full_absorption_rate"] = (
+        agg_df["num_full_absorption"] / agg_df["num_probe_true_positives"]
+    )
+    return agg_df
+
+
+def arg_parser():
+    default_config = AbsorptionEvalConfig()
+
+    parser = argparse.ArgumentParser(description="Run absorption evaluation")
+    parser.add_argument(
+        "--random_seed",
+        type=int,
+        default=default_config.random_seed,
+        help="Random seed",
+    )
+    parser.add_argument("--model_name", type=str, required=True, help="Model name")
+    parser.add_argument(
+        "--f1_jump_threshold",
+        type=float,
+        default=default_config.f1_jump_threshold,
+        help="F1 jump threshold",
+    )
+    parser.add_argument(
+        "--max_k_value",
+        type=int,
+        default=default_config.max_k_value,
+        help="Maximum k value",
+    )
+    parser.add_argument(
+        "--prompt_template",
+        type=str,
+        default=default_config.prompt_template,
+        help="Prompt template",
+    )
+    parser.add_argument(
+        "--prompt_token_pos",
+        type=int,
+        default=default_config.prompt_token_pos,
+        help="Prompt token position",
+    )
+    parser.add_argument(
+        "--sae_regex_pattern",
+        type=str,
+        required=True,
+        help="Regex pattern for SAE selection",
+    )
+    parser.add_argument(
+        "--sae_block_pattern",
+        type=str,
+        required=True,
+        help="Regex pattern for SAE block selection",
+    )
+    parser.add_argument(
+        "--output_folder",
+        type=str,
+        default="eval_results/absorption",
+        help="Output folder",
+    )
+    parser.add_argument(
+        "--llm_batch_size",
+        type=int,
+        default=None,
+        help="Batch size for LLM. If None, will be populated using LLM_NAME_TO_BATCH_SIZE",
+    )
+    parser.add_argument(
+        "--llm_dtype",
+        type=str,
+        default=None,
+        choices=[None, "float32", "float64", "float16", "bfloat16"],
+        help="Data type for LLM. If None, will be populated using LLM_NAME_TO_DTYPE",
+    )
+    parser.add_argument(
+        "--k_sparse_probe_l1_decay",
+        type=float,
+        default=default_config.k_sparse_probe_l1_decay,
+        help="L1 decay for k-sparse probes.",
+    )
+    parser.add_argument(
+        "--k_sparse_probe_batch_size",
+        type=float,
+        default=default_config.k_sparse_probe_batch_size,
+        help="L1 decay for k-sparse probes.",
+    )
+
+    parser.add_argument(
+        "--force_rerun", action="store_true", help="Force rerun of experiments"
+    )
+
+    return parser
+
+
+def create_config_and_selected_saes(
+    args,
+) -> tuple[AbsorptionEvalConfig, list[tuple[str, str]]]:
+    config = AbsorptionEvalConfig(
+        random_seed=args.random_seed,
+        f1_jump_threshold=args.f1_jump_threshold,
+        max_k_value=args.max_k_value,
+        prompt_template=args.prompt_template,
+        prompt_token_pos=args.prompt_token_pos,
+        model_name=args.model_name,
+        k_sparse_probe_l1_decay=args.k_sparse_probe_l1_decay,
+        k_sparse_probe_batch_size=args.k_sparse_probe_batch_size,
+    )
+
+    if args.llm_batch_size is not None:
+        config.llm_batch_size = args.llm_batch_size
+    else:
+        config.llm_batch_size = activation_collection.LLM_NAME_TO_BATCH_SIZE[
+            config.model_name
+        ]
+
+    if args.llm_dtype is not None:
+        config.llm_dtype = args.llm_dtype
+    else:
+        config.llm_dtype = activation_collection.LLM_NAME_TO_DTYPE[config.model_name]
+
+    if args.random_seed is not None:
+        config.random_seed = args.random_seed
+
+    selected_saes = get_saes_from_regex(args.sae_regex_pattern, args.sae_block_pattern)
+    assert len(selected_saes) > 0, "No SAEs selected"
+
+    releases = set([release for release, _ in selected_saes])
+
+    print(f"Selected SAEs from releases: {releases}")
+
+    for release, sae in selected_saes:
+        print(f"Sample SAEs: {release}, {sae}")
+
+    return config, selected_saes
+
+
+# if __name__ == "__main__":
+#     """
+#     python evals/absorption/main.py \
+#     --sae_regex_pattern "sae_bench_pythia70m_sweep_standard_ctx128_0712" \
+#     --sae_block_pattern "blocks.4.hook_resid_post__trainer_10" \
+#     --model_name pythia-70m-deduped
+#     """
+#     args = arg_parser().parse_args()
+
+#     device = general_utils.setup_environment()
+
+#     start_time = time.time()
+
+#     config, selected_saes = create_config_and_selected_saes(args)
+#     # create output folder
+#     os.makedirs(args.output_folder, exist_ok=True)
+
+#     # run the evaluation on all selected SAEs
+#     results_dict = run_eval(
+#         config, selected_saes, device, args.output_folder, args.force_rerun
+#     )
+
+#     end_time = time.time()
+
+#     print(f"Finished evaluation in {end_time - start_time:.2f} seconds")
+
+
+# Use this code snippet to use custom SAE objects
+# if __name__ == "__main__":
+#     import sae_bench.custom_saes.identity_sae as identity_sae
+#     import sae_bench.custom_saes.topk_sae as topk_sae
+
+#     """
+#     python evals/absorption/main.py
+#     """
+#     start_time = time.time()
+
+#     random_seed = 42
+#     output_folder = "eval_results/absorption"
+
+#     batch_size_prompts = 16
+#     n_eval_reconstruction_batches = 20
+#     n_eval_sparsity_variance_batches = 20
+#     context_size = 128
+#     dataset_name = "Skylion007/openwebtext"
+#     exclude_special_tokens_from_reconstruction = True
+
+#     repo_id = "0.3nce-8ef-300k"
+#     filename = "blocks.8.hook_resid_post/ae.pt"
+#     # repo_id = "standard_400k"
+#     # filename = "resid_post_layer_8/trainer_0/ae.pt"
+#     layer = 8
+
+#     device = "cuda" if torch.cuda.is_available() else "cpu"
+#     dtype = torch.float32
+#     llm_dtype = torch.bfloat16
+
+
+#     model_name = "openai-community/gpt2"
+
+
+#     sae = topk_sae.load_dictionary_learning_topk_sae(
+#         repo_id,
+#         filename,
+#         model_name,
+#         device,  # type: ignore
+#         dtype,
+#         layer=layer,
+#         local_dir="transformed_sae" # "mySAE/dictionary_learning"#
+#     )
+#     selected_saes = [(f"{repo_id}_{filename}", sae)] 
+
+#     config = AbsorptionEvalConfig(
+#         random_seed=random_seed,
+#         model_name=model_name,
+#     )
+
+#     config.llm_batch_size = 16 #activation_collection.LLM_NAME_TO_BATCH_SIZE[config.model_name]
+#     config.llm_dtype = torch.bfloat16
+#     #config.llm_dtype = activation_collection.LLM_NAME_TO_DTYPE[config.model_name]
+
+#     # create output folder
+#     os.makedirs(output_folder, exist_ok=True)
+
+#     # run the evaluation on all selected SAEs
+#     results_dict = run_eval(
+#         config,
+#         selected_saes,
+#         device,
+#         output_folder,
+#         force_rerun=True,
+#     )
+
+#     end_time = time.time()
+
+#     print(f"Finished evaluation in {end_time - start_time} seconds")
+
+
+if __name__ == "__main__":
+
+
+    from sae_lens import SAE, HookedSAETransformer
+    from transformers import AutoTokenizer, AutoModelForCausalLM
+    #local_model_path = "/home/liubo/.cache/huggingface/hub/models--google--gemma-2-2b/snapshots/c5ebcd40d208330abc697524c919956e692655cf"
+    # model_name = "gemma-2-9b"
+    # if "9b" in model_name:
+    #     local_model_path = "/home/liubo/.cache/huggingface/hub/models--google--gemma-2-9b/snapshots/33c193028431c2fde6c6e51f29e6f17b60cbfac6"
+    # elif "2b" in model_name:
+    #     local_model_path = "/home/liubo/.cache/huggingface/hub/models--google--gemma-2-2b/snapshots/c5ebcd40d208330abc697524c919956e692655cf"
+
+    device = "cuda:0"
+    # model = AutoModelForCausalLM.from_pretrained(
+    #     local_model_path,
+    #     torch_dtype=torch.float16,
+    #     #attn_implementation="flash_attention_2",
+    #     ).to(device)
+    sae_per_layer = {}
+    layers=[19]
+    for i in tqdm(layers):
+        sae_per_layer[f"layer_{i}"] = SAE.from_pretrained(
+            release="gemma-scope-9b-pt-res-canonical",  # <- Release name
+            sae_id=f"layer_{i}/width_16k/canonical",  # <- SAE id (not always a hook point!)
+            device=device,#'cpu',
+        )[0]
+        sae_per_layer[f"layer_{i}"].fold_W_dec_norm() 
+    print(f"✓ 成功加载 {len(sae_per_layer)} 个 SAE 模型")
+    
+    eval_folder="eval_results_gemma_scope_9b"
+    random_seed = 42
+    batch_size_prompts = 16
+    n_eval_reconstruction_batches = 20
+    n_eval_sparsity_variance_batches = 20
+    context_size = 128
+    llm_dtype = torch.bfloat16
+    exclude_special_tokens_from_reconstruction = True
+    sae_name="gemma-scope-9b-pt-res-canonical"
+    model_name = "google/gemma-2-9b"
+
+    for layer in layers:
+        sae = sae_per_layer[f"layer_{layer}"]
+        repo_id = sae_name#"0.0-8ef-750k" ,
+        filename = f"layer_{layer}/width_16k/canonical"  #f"resid_post_layer_{layer}/trainer_0/ae.pt"
+                    
+        selected_saes = [(f"{repo_id}_{filename}", sae)] 
+        output_folder = eval_folder+"/"+"absorption"
+        os.makedirs(output_folder, exist_ok=True)
+        for _, sae in selected_saes :
+            sae.cfg.dtype = "bfloat16"
+            
+            
+            os.makedirs(output_folder, exist_ok=True)
+            config = AbsorptionEvalConfig(
+                random_seed=random_seed,
+                model_name=model_name,
+            )
+            config.llm_batch_size = 16 
+            config.llm_dtype = torch.bfloat16
+            _ = run_eval(
+                config,
+                selected_saes,
+                device,
+                output_folder,
+                force_rerun=True,
+            )
+            print(output_folder)
+            print("..absorption evaluation finished..")
+
+
+
+
+    # cd /home/liubo/miniconda3/envs/saebench/lib/python3.10/site-packages/sae_bench/

@@ -1,0 +1,100 @@
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1.  should marry a non-mormon in the<< first>><< place>><<.>> the reality is  │
+│           │ that it happens. instead, 2. • But should he<< even>><< be>><< talking>><< about>> Cheryl<< at>><< all>><<?>> I mean,    │
+│           │ we’ve all experienced a 3.  remind myself why<< the>><< heck>><< I>><< started>><< this>><< in>><< the>><< first>><<     │
+│           │ place>>.↵.↵Sharing my story.↵ 4.  me make the decision to<< get>><< married>><< in>><< the>><< first>><< place>><<.>> I  │
+│           │ was very torn because I also was born 5. re less likely to<< initiate>>...<<activities>>...<<to>><< begin>><<            │
+│           │ with>><<.>><eos>﻿<?xml version="1.0" 6.  sunglasses would prevent the cataracts↵in the<< first>><< place>><< (>>these are │
+│           │ pretty much all UV<< induced>><<).>> Education 7. , if the idea<< of>> `control' were<< discarded>><<                    │
+│           │ altogether>><<,>><< and>> we were to say merely that the apparent 8.  proportion of patients do<< not>><< respond>><<    │
+│           │ to>> IFX<< at>><< all>><< whereas>> a significant proportion will lose<< response>> over time \[ 9.  really<< the>><<    │
+│           │ problem>> I tried to solve<< in>> the<< first>><< place>><<,>> it just turned out to be a graph database 10. '<<t>><<    │
+│           │ want>><< to>><< work>> with unprojected data<< at>><< all>><< unless>> there is some specific reasons like finding an or │
+│           │ 11.  some of the reform varieties, which are almost UU<< anyways>>, but certainly conservative and orthodox).↵↵And come  │
+│           │ 12.  Michael Jackson’s name? You don’t<< even>><< bother>><< answering>> simple customer service questions about the     │
+│           │ event<<,>> 13.  of . . . government . .↵ . service<< itself>>." Id. at 2546 ( 14. .↵↵It will set him on a path he<<      │
+│           │ never>> imagined, introduce him to new friends and even aliens 15.  for free?↵- I don't really<< want>> to sell this as  │
+│           │ a database technology, but rather                                                                                        │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on phrases indicating initial conditions beginnings or reluctance often starting with in the first │
+│           │ place or at all                                                                                                          │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                         │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    36.750 │ should marry a non-mormon in the<< first>><< place>><<.>> the reality is that it happens. instead,                                               │
+│    36.250 │ • But should he<< even>><< be>><< talking>><< about>> Cheryl<< at>><< all>><<?>> I mean, we’ve all experienced a                                 │
+│    35.750 │ remind myself why<< the>><< heck>><< I>><< started>><< this>><< in>><< the>><< first>><< place>>.↵.↵Sharing my story.↵                           │
+│    34.750 │ me make the decision to<< get>><< married>><< in>><< the>><< first>><< place>><<.>> I was very torn because I also was born                      │
+│    32.500 │ re less likely to<< initiate>>...<<activities>>...<<to>><< begin>><< with>><<.>><eos>﻿<?xml version="1.0"                                         │
+│    32.250 │ sunglasses would prevent the cataracts↵in the<< first>><< place>><< (>>these are pretty much all UV<< induced>><<).>> Education                  │
+│    30.250 │ , if the idea<< of>> `control' were<< discarded>><< altogether>><<,>><< and>> we were to say merely that the apparent                            │
+│    27.625 │ proportion of patients do<< not>><< respond>><< to>> IFX<< at>><< all>><< whereas>> a significant proportion will lose<< response>> over time \[ │
+│    27.125 │ really<< the>><< problem>> I tried to solve<< in>> the<< first>><< place>><<,>> it just turned out to be a graph database                        │
+│    26.875 │ '<<t>><< want>><< to>><< work>> with unprojected data<< at>><< all>><< unless>> there is some specific reasons like finding an or                │
+│    15.625 │ some of the reform varieties, which are almost UU<< anyways>>, but certainly conservative and orthodox).↵↵And come                               │
+│     6.156 │ Michael Jackson’s name? You don’t<< even>><< bother>><< answering>> simple customer service questions about the event<<,>>                       │
+│     3.031 │ of . . . government . .↵ . service<< itself>>." Id. at 2546 (                                                                                    │
+│     1.891 │ .↵↵It will set him on a path he<< never>> imagined, introduce him to new friends and even aliens                                                 │
+│     1.812 │ for free?↵- I don't really<< want>> to sell this as a database technology, but rather                                                            │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "5, 6, 10, 14". Try not to be overly specific in your interpretation of the explanation. If you think there are no  │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on phrases indicating initial conditions beginnings or reluctance often       │
+│           │ starting with in the first place or at all.  Here are the examples:  1.  said federal legislation should seek to         │
+│           │ dismantle that outdated process altogether.↵↵“That’s a 19 2. <bos> WHY I started this whole thing in the first place. I  │
+│           │ realize all that I’ve accomplished. 3. , claimed that the change in the law occasioned by the Supreme Court's decision   │
+│           │ in United States v. 4. $ is recurrent $\Rightarrow \rho_{xx} = 1$ where $\rho_{xy}\equiv 5.                              │
+│           │ android:layout_weight="1"↵        android:orientation="vertical">↵↵        <TextView 6.                                  │
+│           │ (instancetype)initWithFromAnyone;↵↵///↵/// Initializes union class with tag state of "other". 7. , whereas missense      │
+│           │ mutations are presumed to be probable pathogenic variants based on results of prediction software for evaluation of 8.   │
+│           │ not bring criminal↵↵  charges and that the witness himself did not stand to gain as a↵↵  result 9. &{Z_{j-1,             │
+│           │ \theta}^{(x)} \over \E(Z_{j 10.  in the work as installed, and the record is that Enders did, in fact, start-up 11.  the │
+│           │ multiple url scheme above isn't even needed, just↵a smart responder associated with the 5 12.  the managers had          │
+│           │ announced the stock sale before filing a registration statement with the SEC, a violation of the law 13.  typically 12   │
+│           │ (for the LHS)↵or 4 (for the RHS). That's 14.  Bob Brown | THE SWELLESLEY REPORT↵↵Enriching Fabric of Their Lives↵↵Lauren │
+│           │ Johnston says                                                                                                            │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 2, 6, 10                                                                                                                 │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                                               │
+├───────────┼───────────┼──────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    28.000 │ Y         │              │ said federal legislation should seek to dismantle that outdated process altogether.↵↵“That’s a 19                                      │
+│    36.750 │ Y         │ Y            │ <bos> WHY I started this whole thing in the first place. I realize all that I’ve accomplished.                                         │
+│     0.000 │           │              │ , claimed that the change in the law occasioned by the Supreme Court's decision in United States v.                                    │
+│     0.000 │           │              │ $ is recurrent $\Rightarrow \rho_{xx} = 1$ where $\rho_{xy}\equiv                                                                      │
+│     0.000 │           │              │ android:layout_weight="1"↵        android:orientation="vertical">↵↵        <TextView                                                   │
+│     0.000 │           │ Y            │ (instancetype)initWithFromAnyone;↵↵///↵/// Initializes union class with tag state of "other".                                          │
+│     0.000 │           │              │ , whereas missense mutations are presumed to be probable pathogenic variants based on results of prediction software for evaluation of │
+│     5.906 │ Y         │              │ not bring criminal↵↵  charges and that the witness himself did not stand to gain as a↵↵  result                                        │
+│     0.000 │           │              │ &{Z_{j-1, \theta}^{(x)} \over \E(Z_{j                                                                                                  │
+│     0.000 │           │ Y            │ in the work as installed, and the record is that Enders did, in fact, start-up                                                         │
+│    13.938 │ Y         │              │ the multiple url scheme above isn't even needed, just↵a smart responder associated with the 5                                          │
+│     0.000 │           │              │ the managers had announced the stock sale before filing a registration statement with the SEC, a violation of the law                  │
+│     0.000 │           │              │ typically 12 (for the LHS)↵or 4 (for the RHS). That's                                                                                  │
+│     0.000 │           │              │ Bob Brown | THE SWELLESLEY REPORT↵↵Enriching Fabric of Their Lives↵↵Lauren Johnston says                                               │
+└───────────┴───────────┴──────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

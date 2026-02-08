@@ -1,0 +1,302 @@
+Summary table:
+┌──────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────────────────────────┬─────────────────┬──────────┐
+│   latent │ explanation                                                                                                                                     │ predictions                  │ correct seqs    │    score │
+├──────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────────────────────────┼─────────────────┼──────────┤
+│     8816 │ names, titles, and miscellaneous information found in a variety of contexts                                                                     │ [3, 11, 13]                  │ [1, 4, 7, 14]   │ 0.5      │
+│     8652 │ conditional statements using words like 'provided that', 'as long as', and 'if'                                                                 │ [2, 11]                      │ [7, 9, 12, 13]  │ 0.571429 │
+│     9055 │ references, author names, and technical content in academic documents                                                                           │ [1, 3, 6, 8, 10]             │ [2, 3, 8, 10]   │ 0.785714 │
+│     8122 │ words related to the concept of a <<library>>                                                                                                   │ [4, 7, 14]                   │ [4, 7, 11, 14]  │ 0.928571 │
+│     9149 │ words and phrases related to reminders or being reminded                                                                                        │ []                           │ [1, 5, 10, 14]  │ 0.714286 │
+│     8791 │ military units, ranks, and divisions in various armed forces                                                                                    │ [7, 13]                      │ [5, 7, 12, 13]  │ 0.857143 │
+│     8710 │ words related to excavation, artifacts, fossils, and archaeological findings                                                                    │ [3, 10]                      │ [3, 10, 11, 13] │ 0.857143 │
+│     8888 │ mentions of rivers, water bodies, and related terms like "river," "stream," and "waterway."                                                     │ [1, 5]                       │ [1, 5, 6, 7]    │ 0.857143 │
+│     9152 │ mentions of the National Institutes of Health, awards, and related academic institutions                                                        │ [11, 13]                     │ [3, 8, 9, 13]   │ 0.714286 │
+│     8722 │ citations, references, and technical terms commonly found in academic and scientific writing                                                    │ [1, 3, 5, 7, 9, 13]          │ [4, 5, 9, 14]   │ 0.571429 │
+│     9159 │ the concept of "land" and related terms like "banks", "water", "ownership", and "rates of change"                                               │ [6, 7, 12]                   │ [6, 7, 11, 12]  │ 0.928571 │
+│    10674 │ verbs related to social media interactions, such as "like," "flag," and "share."                                                                │ [4, 6, 14]                   │ [1, 4, 6, 14]   │ 0.928571 │
+│     9651 │ the concept of "iterating" or "iteration" in programming and related contexts                                                                   │ [4, 11]                      │ [4, 6, 11, 12]  │ 0.857143 │
+│     9526 │ URLs with video identifiers and legal or technical terms related to exceptions and exclusions                                                   │ [1, 13]                      │ [1, 2, 5, 13]   │ 0.857143 │
+│    11081 │ references to personal communication and experiences, focusing on individual anecdotes and interactions                                         │ [2, 4, 5, 12, 13]            │ [2, 3, 5, 7]    │ 0.642857 │
+│    11201 │ references to specific trails, roads, or routes, often associated with geographical locations                                                   │ [3, 8, 14]                   │ [3, 4, 7, 8]    │ 0.785714 │
+│    10382 │ discussions about relationships, inappropriate behavior, investigations, legal arguments, and military service                                  │ []                           │ [3, 5, 11, 12]  │ 0.714286 │
+│    11322 │ HTML/XML-like tags, attributes, and specific punctuation patterns within documents                                                              │ [2, 6, 11, 14]               │ [1, 6, 11, 14]  │ 0.857143 │
+│    11815 │ scientific terms related to various parasites, diseases, and immunological responses                                                            │ [1, 4, 9, 11]                │ [1, 4, 9, 14]   │ 0.857143 │
+│    11693 │ text related to programming languages, specifically focusing on types, methods, parameters, and syntax in statically-typed languages like Java  │ [6, 9, 14]                   │ [3, 6, 13, 14]  │ 0.785714 │
+│    10357 │ references to "children" and related activities, interventions, or characteristics                                                              │ [1, 4, 10, 11]               │ [1, 4, 10, 11]  │ 1        │
+│      873 │ sentences where the word pair "As you" or similar phrases appear frequently                                                                     │ [6, 10, 11]                  │ [6, 8, 10, 14]  │ 0.785714 │
+│    12007 │ percentages and numerical data related to various medical or research conditions                                                                │ [2, 4, 11, 12]               │ [2, 4, 11, 12]  │ 1        │
+│    11913 │ instances of text enclosed by double angle brackets                                                                                             │ []                           │ [2, 3, 4, 7]    │ 0.714286 │
+│    12183 │ words with the substring "l" or similar patterns in proper nouns or names                                                                       │ [3, 8, 9]                    │ [3, 4, 8, 10]   │ 0.785714 │
+│      823 │ words related to being poor or disadvantaged, including expressions of surprise                                                                 │ [11, 13]                     │ [5, 6, 11, 13]  │ 0.857143 │
+│    12486 │ terms related to companies, businesses, materials, enchanting professions, locations on Earth, census data, and software development            │ [1, 6]                       │ [2, 4, 7, 8]    │ 0.571429 │
+│      981 │ phrases involving "risk" and its connection to health conditions or consequences                                                                │ [7, 8, 14]                   │ [7, 8, 10, 14]  │ 0.928571 │
+│     1047 │ words that suggest reasoning, evaluation, or logical discussion                                                                                 │ [2, 5, 7, 11, 12]            │ [2, 7, 11, 12]  │ 0.928571 │
+│    12456 │ the concept of providing advice, strategies, and suggestions through tips and techniques                                                        │ []                           │ [1, 2, 8, 13]   │ 0.714286 │
+│    12502 │ terms related to short-term memory, passwords, intelligence, Navy, Membership, and fitness                                                      │ [9, 10]                      │ [9, 10, 11, 12] │ 0.857143 │
+│    12508 │ concepts related to career planning, aspirations, interests, strengths, and life goals                                                          │ [3, 10, 14]                  │ [1, 7, 13, 14]  │ 0.642857 │
+│     1508 │ place names, legal cases, and specific food-related terms like "potatoes" and "garlic."                                                         │ [2, 10]                      │ [1, 2, 10, 12]  │ 0.857143 │
+│    13020 │ words related to muscles, movement, and physical impairments                                                                                    │ [3, 5, 8, 13]                │ [5, 8, 9, 13]   │ 0.857143 │
+│     1429 │ the word "advantage" and related concepts like "benefit" in various contexts                                                                    │ [3, 6, 10]                   │ [3, 4, 6, 10]   │ 0.928571 │
+│    13202 │ years and numbers in various dates and figures mentioned in the text                                                                            │ [1, 12, 14]                  │ [2, 6, 7, 14]   │ 0.642857 │
+│     1057 │ email-related words and identifiers such as "Kevin Knight," "email," and domain names                                                           │ [9, 13]                      │ [6, 7, 13, 14]  │ 0.714286 │
+│     1839 │ words related to wildlife, including "mosquitoes," "virus," and "itchiness."                                                                    │ [10, 12]                     │ [2, 9, 10, 12]  │ 0.857143 │
+│    13144 │ a mix of technical terms, symbols, and fragmentary expressions often related to complex data or legal terminology                               │ [1, 3, 5, 7, 10, 14]         │ [2, 3, 5, 13]   │ 0.571429 │
+│    11902 │ Activates on conspiracy theories involving political figures, elite groups, propaganda, and manipulation in society                             │ [6, 9, 13]                   │ [2, 6, 7, 9]    │ 0.785714 │
+│     2176 │ words related to positive outcomes, benefits, and rewards                                                                                       │ [2, 6]                       │ [2, 4, 6, 10]   │ 0.857143 │
+│     2592 │ text related to employment discrimination laws and discrimination in the workplace                                                              │ [4, 10, 11, 13]              │ [4, 10, 11, 13] │ 1        │
+│    13804 │ mentions related to lymph nodes and their conditions, such as metastases and prophylaxis                                                        │ [10, 11]                     │ [2, 5, 10, 11]  │ 0.857143 │
+│    13883 │ the phrase "along the" and related geographical or directional concepts                                                                         │ [10, 14]                     │ [1, 9, 10, 14]  │ 0.857143 │
+│    13906 │ the phrase "found in" or variations of it                                                                                                       │ [1, 2, 7, 8, 10, 11]         │ [1, 8, 10, 11]  │ 0.857143 │
+│    14097 │ the concept of "never-ending" or "uninterrupted" actions/events/situations                                                                      │ [3, 4, 6, 13]                │ [2, 3, 4, 13]   │ 0.857143 │
+│    14781 │ the phrase "What is" and related rhetorical questions                                                                                           │ [7, 12]                      │ [1, 7, 12, 13]  │ 0.857143 │
+│     2287 │ the word "8" and related symbols/strings in technical or structured data contexts                                                               │ [3, 12]                      │ [3, 4, 12, 13]  │ 0.857143 │
+│     2624 │ mentions of financial terms such as "dividend yield" and "stock price"                                                                          │ []                           │ [4, 5, 7, 8]    │ 0.714286 │
+│     3083 │ words related to genuineness, authenticity, and sincerity in various contexts                                                                   │ [6]                          │ [5, 6, 8, 9]    │ 0.785714 │
+│     2859 │ medical or biological terms, especially related to thyroid, iodine, and anatomical locations                                                    │ [4, 11, 12]                  │ [3, 4, 11, 12]  │ 0.928571 │
+│     3184 │ references to information sources, contacts, and software files in various contexts                                                             │ [1, 5, 6, 9]                 │ [1, 6, 11, 13]  │ 0.714286 │
+│    15211 │ mentions of individuals involved in legal or workplace disputes, often related to sexual harassment                                             │ [6, 13]                      │ [3, 6, 8, 11]   │ 0.714286 │
+│     2347 │ programming-related terms and code syntax, especially C++ keywords and symbols like "include," "boost," and "initializer."                      │ [1, 14]                      │ [1, 7, 9, 10]   │ 0.714286 │
+│    14919 │ technical terms, code snippets, and specific names/abbreviations                                                                                │ [1, 2, 3, 4, 7, 8, 14]       │ [2, 3, 5, 9]    │ 0.5      │
+│    15098 │ phrases or words related to statements, declarations, or formal communications, often with quotes                                               │ [10, 11, 14]                 │ [2, 8, 10, 14]  │ 0.785714 │
+│    15117 │ descriptions of clothing items and accessories, such as necklines, belts, and hair                                                              │ [4, 9]                       │ [4, 7, 9, 13]   │ 0.857143 │
+│    16768 │ the phrase "at least" and similar expressions indicating a minimum or baseline                                                                  │ [2, 4, 5, 10]                │ [2, 4, 5, 10]   │ 1        │
+│     3052 │ various technical, metadata, and formatting elements like timestamps, labels, and property information                                          │ [1, 4, 7, 9, 10, 12, 13, 14] │ [3, 9, 12, 14]  │ 0.571429 │
+│     3326 │ text indicating encouragement, action, comparison, causation, or emphasis                                                                       │ [5, 7, 6, 9]                 │ [2, 4, 10, 13]  │ 0.428571 │
+│    16631 │ the substring "amp" or related forms, often associated with amplification or similar concepts                                                   │ [2]                          │ [2, 3, 8, 11]   │ 0.785714 │
+│    16430 │ words related to "support" and related concepts like "feedback," "resources," or "validation."                                                  │ [5, 9, 14]                   │ [5, 6, 11, 14]  │ 0.785714 │
+│     3665 │ instances of abbreviations or acronyms within text, specifically when they are denoted using the "<" and ">" symbols                            │ [2, 4, 7, 8, 12]             │ [7, 11, 12, 13] │ 0.642857 │
+│     3366 │ terms related to specialized fields, institutions, and technical concepts across various disciplines                                            │ [2, 3, 8, 9, 10, 13]         │ [1, 3, 5, 13]   │ 0.571429 │
+│    17581 │ words related to "crisis," "strike," and "shock," often in contexts of negative or impactful situations                                         │ [2, 10, 11, 14]              │ [1, 2, 9, 10]   │ 0.714286 │
+│     3375 │ mentions of "snow," "NMDA receptor," "LTD," and related scientific terms                                                                        │ [9, 12, 14]                  │ [2, 9, 12, 14]  │ 0.928571 │
+│    17651 │ text related to <<cloning>> and <<inserting>> genetic material into vectors                                                                     │ [8, 10]                      │ [2, 6, 8, 12]   │ 0.714286 │
+│     4108 │ code-related syntax, especially involving symbols like "+", "<<", ">>", and specific technical keywords                                         │ [2, 3, 11]                   │ [2, 3, 5, 11]   │ 0.928571 │
+│    17952 │ descriptions of large quantities of data and their processing over networks or systems                                                          │ [3, 12]                      │ [1, 3, 10, 12]  │ 0.857143 │
+│    18335 │ text related to the <<current state/situation>> or <<current management/plan>>, including discussions on sustainability and existing conditions │ [3, 5, 11]                   │ [2, 5, 11, 14]  │ 0.785714 │
+│     4555 │ the word "at" in various contexts, often linked to locations, times, or events                                                                  │ [1, 4, 5, 7, 11, 12, 14]     │ [1, 5, 7, 12]   │ 0.785714 │
+│     4595 │ the substring "ethe" and related forms or fragments of words                                                                                    │ [2, 6, 10]                   │ [1, 2, 4, 14]   │ 0.642857 │
+│     4598 │ words related to religion, beliefs, spirituality, and values in various contexts                                                                │ [1, 9, 13, 14]               │ [6, 9, 13, 14]  │ 0.857143 │
+│    17741 │ text involving loud sounds or noises                                                                                                            │ [9, 10, 14]                  │ [2, 9, 10, 14]  │ 0.928571 │
+│     5260 │ the substring "<<|>>" and similar symbols used in technical or tabular contexts                                                                 │ [2, 13, 14]                  │ [2, 5, 13, 14]  │ 0.928571 │
+│    18173 │ words and phrases related to honesty, confession, or admitting something                                                                        │ [9]                          │ [1, 6, 9, 12]   │ 0.785714 │
+│     4705 │ the concept of "role" in various contexts, often in relation to biological, functional, or social processes                                     │ [4, 11]                      │ [4, 6, 9, 11]   │ 0.857143 │
+│     5638 │ words related to demonstrating or showing something                                                                                             │ [11, 12]                     │ [4, 7, 9, 11]   │ 0.714286 │
+│     5123 │ terms related to engine components, particularly intake valves, combustion chambers, and piston engines                                         │ [3, 4]                       │ [2, 3, 4, 6]    │ 0.857143 │
+│     5384 │ references, citations, and mathematical notation or symbols                                                                                     │ [1, 2, 3, 4, 6, 12]          │ [1, 4, 11, 12]  │ 0.714286 │
+│     6551 │ technical terms and specific identifiers like acronyms, NASA references, and technical document structures                                      │ [3, 5, 7, 10]                │ [2, 3, 8, 12]   │ 0.571429 │
+│     7004 │ the concept of wearing specific branded or politically charged shirts                                                                           │ [2, 10]                      │ [3, 4, 5, 10]   │ 0.714286 │
+│     7092 │ words related to technical or specialized terms, especially in mathematics, science, and technology                                             │ [2, 3, 5, 6, 8, 11]          │ [1, 2, 6, 11]   │ 0.714286 │
+│    17938 │ the word "like" and similar expressions of comparison or analogy                                                                                │ [1, 14]                      │ [1, 2, 10, 14]  │ 0.857143 │
+│     5359 │ phrases containing the word "findings" or related concepts like "study" or "results"                                                            │ [7, 8, 14]                   │ [4, 6, 7, 8]    │ 0.785714 │
+│     6335 │ words related to "profession" or "professional" contexts, especially in references to careers or occupations                                    │ [1, 3, 5, 12]                │ [1, 3, 5, 11]   │ 0.857143 │
+│     6901 │ the phrase "so far" in various contexts                                                                                                         │ [11, 13]                     │ [1, 3, 11, 13]  │ 0.857143 │
+│     7260 │ variations of the word "reject" or "rejection" in legal or formal contexts                                                                      │ [5, 8, 14]                   │ [2, 5, 8, 14]   │ 0.928571 │
+│     7233 │ the word "barrier" and related concepts, particularly in contexts discussing obstacles or challenges                                            │ [7, 11]                      │ [3, 4, 7, 11]   │ 0.857143 │
+│      213 │ variations of the word "loss" or related concepts, like losing something or inactivation                                                        │ [5, 11]                      │ [5, 9, 11, 13]  │ 0.857143 │
+│     7201 │ legal terms and citations, including references to statutes, cases, and legal procedures                                                        │ [10]                         │ [1, 4, 8, 14]   │ 0.642857 │
+│     7505 │ technical terms related to precision, measurement, and positioning in various contexts                                                          │ [3, 4, 13]                   │ [2, 3, 12, 13]  │ 0.785714 │
+│     8065 │ text about learning new skills or information, particularly related to hands-on practical activities                                            │ [1, 2, 4, 10, 14]            │ [1, 2, 10, 13]  │ 0.785714 │
+│     7661 │ words related to sharing or exchanging experiences, information, or resources                                                                   │ [8, 11]                      │ [4, 8, 11, 13]  │ 0.857143 │
+│     7223 │ the word "public" and related concepts such as announcements, events, or shared information                                                     │ [8]                          │ [2, 7, 8, 14]   │ 0.785714 │
+│     6950 │ code snippets and technical documentation involving syntax, variables, and commands in programming contexts                                     │ [2, 5, 8, 13]                │ [2, 5, 10, 13]  │ 0.857143 │
+│     7543 │ words related to investments, injections, and related technical terms or concepts                                                               │ [3, 10, 13]                  │ [2, 3, 10, 13]  │ 0.928571 │
+│     8062 │ technical, scientific, or media-related terms and references in structured formats like numbers and dates                                       │ [1, 4, 6, 7, 9, 10, 11, 14]  │ [3, 8, 9, 13]   │ 0.285714 │
+│     7352 │ words related to health, nutrition, and making healthy choices or meals                                                                         │ [1, 8, 12]                   │ [1, 8, 12, 14]  │ 0.928571 │
+│     7666 │ names with the pattern "<<ibn>>" in historical and administrative contexts                                                                      │ [6, 7]                       │ [5, 6, 7, 14]   │ 0.857143 │
+└──────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────────────────────────┴─────────────────┴──────────┘
+
+Worst scoring idx 8062, score = 0.2857142857142857
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1. .S), USA. 1<<1>>0<<(>><<4>><<1>>):<<1>><<6>><<5>><<1>><<4>>-<<9>>, 2.  BET │
+│           │ SLOT BONUS<< ★>><< >><<1>>,5<<0>>0<< SUB>><<SCR>><<IB>><<ERS>><< ★>><< I>> must admit, I got 3.  Vol<<.>> A<<            │
+│           │ >><<1>><<3>>, No<<.>><< >><<5>><<,>><< May>><< >>199<<6>><<.>>↵The 4. } refinable functions. ,                           │
+│           │ 51<<(>><<4>>):<<5>>49–5<<6>><<3>>,  5.  Appl. Phys. Lett. <<6>>9<<(>><<7>>), (<<1>>9<<9>><<6>>); B. A 6. <<eline>>;<<    │
+│           │ ABC>>'s 20<</>><<2>><<0>> and Night<<line>>; and<< CBS>>'s CBS News 7.  Technol<<.>> B, Vol<<.>><<                       │
+│           │ >><<1>><<3>><<(>><<4>>), pp. <<1>><<4>>8<<4>>-1 8.  of America, vol<<.>><< >><<8>>7,<< no>><<.>><< >><<2>><<3>><<,>>     │
+│           │ pp<<.>> <<9>><<2>><<8>> 9. << >><<2>><<3>><<,>> pp<<.>> <<9>><<2>><<8>><<0>><<–>><<9>><<2>>8<<4>>, 19<<9>> 10.           │
+│           │ vol<<.>><< >><<9>>3,<< no>><<.>><< >><<2>><<4>><<,>> pp<<.>> <<1>><<3>><<4>><<5>><<3>><<–>> 11.  Association (ASA),      │
+│           │ serving<< as>> second vice<< chairman>> of<< the>> ASA's<< board>><< of>> directors, vice-<<chair>> 12. .↵↵Ed Chernoff   │
+│           │ then stated that in Casey<< Anthony>> case media pundits offered their interpretation of the evidence 13.  content       │
+│           │ presented thereon. Accordingly, finding ways to enhance<< user>> experience and<< satisfaction>> continues to be a       │
+│           │ priority.↵ 14.  a<< dataset>> with two partitions, seven instances and four<< features>>.↵↵-   *Feature broadcasting*.   │
+│           │ Because features 15.  psychosocial support. Alcohol Care Management was delivered in-<<person>> or by telephone within   │
+│           │ the primary care clinic. The                                                                                             │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on technical, scientific, or media-related terms and references in structured formats like numbers │
+│           │ and dates.                                                                                                               │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                              │
+├───────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     5.656 │ .S), USA. 1<<1>>0<<(>><<4>><<1>>):<<1>><<6>><<5>><<1>><<4>>-<<9>>,                                                                    │
+│     5.250 │ BET SLOT BONUS<< ★>><< >><<1>>,5<<0>>0<< SUB>><<SCR>><<IB>><<ERS>><< ★>><< I>> must admit, I got                                      │
+│     5.125 │ Vol<<.>> A<< >><<1>><<3>>, No<<.>><< >><<5>><<,>><< May>><< >>199<<6>><<.>>↵The                                                       │
+│     4.938 │ } refinable functions. , 51<<(>><<4>>):<<5>>49–5<<6>><<3>>,                                                                           │
+│     4.844 │ Appl. Phys. Lett. <<6>>9<<(>><<7>>), (<<1>>9<<9>><<6>>); B. A                                                                         │
+│     4.781 │ <<eline>>;<< ABC>>'s 20<</>><<2>><<0>> and Night<<line>>; and<< CBS>>'s CBS News                                                      │
+│     4.656 │ Technol<<.>> B, Vol<<.>><< >><<1>><<3>><<(>><<4>>), pp. <<1>><<4>>8<<4>>-1                                                            │
+│     4.562 │ of America, vol<<.>><< >><<8>>7,<< no>><<.>><< >><<2>><<3>><<,>> pp<<.>> <<9>><<2>><<8>>                                              │
+│     4.562 │ << >><<2>><<3>><<,>> pp<<.>> <<9>><<2>><<8>><<0>><<–>><<9>><<2>>8<<4>>, 19<<9>>                                                       │
+│     4.500 │ vol<<.>><< >><<9>>3,<< no>><<.>><< >><<2>><<4>><<,>> pp<<.>> <<1>><<3>><<4>><<5>><<3>><<–>>                                           │
+│     1.836 │ Association (ASA), serving<< as>> second vice<< chairman>> of<< the>> ASA's<< board>><< of>> directors, vice-<<chair>>                │
+│     1.539 │ .↵↵Ed Chernoff then stated that in Casey<< Anthony>> case media pundits offered their interpretation of the evidence                  │
+│     1.414 │ content presented thereon. Accordingly, finding ways to enhance<< user>> experience and<< satisfaction>> continues to be a priority.↵ │
+│     1.320 │ a<< dataset>> with two partitions, seven instances and four<< features>>.↵↵-   *Feature broadcasting*. Because features               │
+│     1.047 │ psychosocial support. Alcohol Care Management was delivered in-<<person>> or by telephone within the primary care clinic. The         │
+└───────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "3, 4, 10, 14". Try not to be overly specific in your interpretation of the explanation. If you think there are no  │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on technical, scientific, or media-related terms and references in structured │
+│           │ formats like numbers and dates.  Here are the examples:  1. type="table"}), QUAD was associated with a lower mortality   │
+│           │ (adjusted hazard ratio \[aHR\] 2.  people of their freedoms and opportunities.↵↵This isn't going to be easy, but it's 3. │
+│           │ component("sandbox_services") {↵     public_deps += [ ":sandbox_services_headers" 4.  (solid lines) and the polynomial   │
+│           │ B-splines (dashed lines) for $\alpha$ ranging from 5. -centic tablets, but the iPad is so much more versatile. I can't   │
+│           │ imagine Fires establishing 6. ref-type="fig"}a and the dashed box in Figure [1](#F1){ref- 7. 5 knt) to a few hundred     │
+│           │ nucleotides. Furthermore, circulating HBV RNAs, also heterogeneous in length, 8. 161/JAHA.117.007026.)290 9.             │
+│           │ https://books.google.ca/books?isbn=981443480 10. 7\] for non‐QUAD), QUAD was associated with a lower total mortality in  │
+│           │ Kaplan--Meier 11. 33 ± 0.021 μM Si ml^−1^ hour^−1 12.  was undertaken. Initially, five spectra were randomly chosen and  │
+│           │ excluded from the training set and used then as the 13.              \-                   This study↵                    │
+│           │ Nonsense         c.1477C\>T           p 14. :1982 in sports in Georgia (U.S. state)↵Category:19                          │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 1, 4, 6, 7, 9, 10, 11, 14                                                                                                │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                             │
+├───────────┼───────────┼──────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │ Y            │ type="table"}), QUAD was associated with a lower mortality (adjusted hazard ratio \[aHR\]                            │
+│     0.000 │           │              │ people of their freedoms and opportunities.↵↵This isn't going to be easy, but it's                                   │
+│     1.094 │ Y         │              │ component("sandbox_services") {↵     public_deps += [ ":sandbox_services_headers"                                    │
+│     0.000 │           │ Y            │ (solid lines) and the polynomial B-splines (dashed lines) for $\alpha$ ranging from                                  │
+│     0.000 │           │              │ -centic tablets, but the iPad is so much more versatile. I can't imagine Fires establishing                          │
+│     0.000 │           │ Y            │ ref-type="fig"}a and the dashed box in Figure [1](#F1){ref-                                                          │
+│     0.000 │           │ Y            │ 5 knt) to a few hundred nucleotides. Furthermore, circulating HBV RNAs, also heterogeneous in length,                │
+│     4.500 │ Y         │              │ 161/JAHA.117.007026.)290                                                                                             │
+│     4.812 │ Y         │ Y            │ https://books.google.ca/books?isbn=981443480                                                                         │
+│     0.000 │           │ Y            │ 7\] for non‐QUAD), QUAD was associated with a lower total mortality in Kaplan--Meier                                 │
+│     0.000 │           │ Y            │ 33 ± 0.021 μM Si ml^−1^ hour^−1                                                                                      │
+│     0.000 │           │              │ was undertaken. Initially, five spectra were randomly chosen and excluded from the training set and used then as the │
+│     2.172 │ Y         │              │ \-                   This study↵                Nonsense         c.1477C\>T           p                              │
+│     0.000 │           │ Y            │ :1982 in sports in Georgia (U.S. state)↵Category:19                                                                  │
+└───────────┴───────────┴──────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Best scoring idx 10357, score = 1.0
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1. t have moral values in common.↵↵that the<< children>><< of>> interfaith    │
+│           │ marriages should, obviously,<< be>> raised 2.  the intervention. The same youth worker also informed the<< children>>    │
+│           │ about the intervention and monitored the progress of the intervention 3. -------------↵↵Note: *N* = number of<<          │
+│           │ children>>. PA = physical activity.↵↵ijerph- 4.  were performed at home, or in the neighbourhood.<< Children>> and       │
+│           │ parents participated in the intervention voluntarily. Based on 5.  and more. But how does that translate to the<<        │
+│           │ children>>?↵↵I have to go back to my original 6.  of a sports club (77.9%).<< Children>> preferred active activities     │
+│           │ slightly more (mean score:  7.  The Female Factory, procreation is big business.<< Children>><< are>> a commodity few    │
+│           │ women can afford.↵↵Hope 8.  via a focus on the "whole student"—including<< children>>'<<s>> mindsets, beliefs,           │
+│           │ attention, and 9. the eventuality of our (hypothetical)<< children>><< joining>> the mormon church is something j(wh 10. │
+│           │ _Table 3↵↵###### ↵↵Number of<< children>> who performed the challenges, per category.↵↵   11. _Table A1↵↵###### ↵↵Number │
+│           │ of<< children>> performing each challenge.↵↵  Category                                                                   │
+│           │ 12.  environment to perform healthy behaviours are also important predictors of<< children>>'<<s>> PA and nutrition      │
+│           │ behaviour. For instance, 13.  schools implemented the intervention in grade six to eight (<<children>> aged 9 to 12),    │
+│           │ except for 14.  or PA activities that much. The fact that younger<< children>> performed more PA activities is not       │
+│           │ surprising, given the 15. <<import>> com.google.protobuf.Descriptors;↵<<import>>                                         │
+│           │ com.google.protobuf.ProtocolMessageEnum;                                                                                 │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on references to "children" and related activities, interventions, or characteristics.             │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                     │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    14.375 │ t have moral values in common.↵↵that the<< children>><< of>> interfaith marriages should, obviously,<< be>> raised                           │
+│    14.125 │ the intervention. The same youth worker also informed the<< children>> about the intervention and monitored the progress of the intervention │
+│    14.125 │ -------------↵↵Note: *N* = number of<< children>>. PA = physical activity.↵↵ijerph-                                                          │
+│    14.125 │ were performed at home, or in the neighbourhood.<< Children>> and parents participated in the intervention voluntarily. Based on             │
+│    13.938 │ and more. But how does that translate to the<< children>>?↵↵I have to go back to my original                                                 │
+│    13.875 │ of a sports club (77.9%).<< Children>> preferred active activities slightly more (mean score:                                                │
+│    13.812 │ The Female Factory, procreation is big business.<< Children>><< are>> a commodity few women can afford.↵↵Hope                                │
+│    13.625 │ via a focus on the "whole student"—including<< children>>'<<s>> mindsets, beliefs, attention, and                                            │
+│    13.625 │ the eventuality of our (hypothetical)<< children>><< joining>> the mormon church is something j(wh                                           │
+│    13.562 │ _Table 3↵↵###### ↵↵Number of<< children>> who performed the challenges, per category.↵↵                                                      │
+│    12.875 │ _Table A1↵↵###### ↵↵Number of<< children>> performing each challenge.↵↵  Category                                                            │
+│    12.500 │ environment to perform healthy behaviours are also important predictors of<< children>>'<<s>> PA and nutrition behaviour. For instance,      │
+│    12.250 │ schools implemented the intervention in grade six to eight (<<children>> aged 9 to 12), except for                                           │
+│     9.438 │ or PA activities that much. The fact that younger<< children>> performed more PA activities is not surprising, given the                     │
+│     3.422 │ <<import>> com.google.protobuf.Descriptors;↵<<import>> com.google.protobuf.ProtocolMessageEnum;                                              │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "4, 5, 7, 9". Try not to be overly specific in your interpretation of the explanation. If you think there are no    │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on references to "children" and related activities, interventions, or         │
+│           │ characteristics.  Here are the examples:  1.  confidence to try again next time.↵↵Remember that children each progress   │
+│           │ at their own rate. It’s 2.  the absence of olefins to give 2,3,5,6-tetramethylpyrazine, 3.  hearth. (Photo: L.M.         │
+│           │ Anselmi)↵↵An ancient campsite where people were manufacturing tools 4.  challenges as more fun or as easier to perform.  │
+│           │ Children performed more or less the same percentage of PA child 5. <bos> in the US, so the Fires are of limited interest │
+│           │ to me aside from on a technical level. 6.  for centuries. However, PMR-associated hepatotoxicity is becoming a safety    │
+│           │ issue. In our previous 7.  of the home sewer today to compare to the stats of 1958. Though there has been 8. 8<eos>In    │
+│           │ news stories about the student debt crisis, we hear about American young adults delaying the typical milestones 9.       │
+│           │ tidomimetic analogs of PLG. Administration of 1 mg/kg PLG intraperitone 10.  be the force behind this exploitation of    │
+│           │ Michael & his children under the guise of a "tribute".↵↵ 11. distinction between legitimated and unlegitimated           │
+│           │ children,↵these classifications now have little import under state 12.  hearing, the People requested that↵↵  Trujillo   │
+│           │ be placed on a “long period of probation . . 13.  males and 702 females), 17-21 years old. Results indicate that males   │
+│           │ 14. , we record here two lemmas. For $x \in \R$, we denote by $[x]$                                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 1, 4, 10, 11                                                                                                             │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                                 │
+├───────────┼───────────┼──────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    13.688 │ Y         │ Y            │ confidence to try again next time.↵↵Remember that children each progress at their own rate. It’s                         │
+│     0.000 │           │              │ the absence of olefins to give 2,3,5,6-tetramethylpyrazine,                                                              │
+│     0.000 │           │              │ hearth. (Photo: L.M. Anselmi)↵↵An ancient campsite where people were manufacturing tools                                 │
+│    14.062 │ Y         │ Y            │ challenges as more fun or as easier to perform. Children performed more or less the same percentage of PA child          │
+│     0.000 │           │              │ <bos> in the US, so the Fires are of limited interest to me aside from on a technical level.                             │
+│     0.000 │           │              │ for centuries. However, PMR-associated hepatotoxicity is becoming a safety issue. In our previous                        │
+│     0.000 │           │              │ of the home sewer today to compare to the stats of 1958. Though there has been                                           │
+│     0.000 │           │              │ 8<eos>In news stories about the student debt crisis, we hear about American young adults delaying the typical milestones │
+│     0.000 │           │              │ tidomimetic analogs of PLG. Administration of 1 mg/kg PLG intraperitone                                                  │
+│    10.938 │ Y         │ Y            │ be the force behind this exploitation of Michael & his children under the guise of a "tribute".↵↵                        │
+│    11.312 │ Y         │ Y            │ distinction between legitimated and unlegitimated children,↵these classifications now have little import under state     │
+│     0.000 │           │              │ hearing, the People requested that↵↵  Trujillo be placed on a “long period of probation . .                              │
+│     0.000 │           │              │ males and 702 females), 17-21 years old. Results indicate that males                                                     │
+│     0.000 │           │              │ , we record here two lemmas. For $x \in \R$, we denote by $[x]$                                                          │
+└───────────┴───────────┴──────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

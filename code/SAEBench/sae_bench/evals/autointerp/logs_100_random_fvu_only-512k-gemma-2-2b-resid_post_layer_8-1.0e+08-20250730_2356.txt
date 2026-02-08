@@ -1,0 +1,298 @@
+Summary table:
+┌──────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────────────────────┬─────────────────┬──────────┐
+│   latent │ explanation                                                                                                          │ predictions              │ correct seqs    │    score │
+├──────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────────────────────┼─────────────────┼──────────┤
+│     8801 │ the word "and" in various contexts, linking concepts or items together                                               │ [1, 3, 7, 13]            │ [1, 4, 7, 14]   │ 0.714286 │
+│     8693 │ punctuation used to separate items or on unique symbols                                                              │ [2, 4, 11]               │ [3, 10, 11, 13] │ 0.642857 │
+│     8104 │ the word "Although" and its usage in contrastive or concessive contexts                                              │ [4, 11, 14]              │ [4, 7, 11, 14]  │ 0.928571 │
+│     8776 │ document references, mathematical formulas, citations, and specific notations                                        │ [2, 3, 10, 13, 14]       │ [5, 7, 12, 13]  │ 0.5      │
+│     9133 │ content related to personal finance, including budgeting, saving, debt management, and financial goals               │ [1, 10, 14]              │ [1, 5, 10, 14]  │ 0.928571 │
+│     9040 │ the presence of the word "there" in various contexts                                                                 │ [3, 8, 10]               │ [2, 3, 8, 10]   │ 0.928571 │
+│     8873 │ terms related to statistical significance and trends in data analysis                                                │ [2, 4, 8, 13]            │ [1, 5, 6, 7]    │ 0.428571 │
+│    10365 │ titles and academic degrees of individuals, such as "MD", "PhD", and "Dr"                                            │ [5, 3, 1, 14]            │ [3, 5, 11, 12]  │ 0.714286 │
+│    10340 │ the concept of activities or events happening throughout a process or journey                                        │ [4, 5, 8]                │ [1, 4, 10, 11]  │ 0.642857 │
+│     9143 │ text that includes quotations or specific phrases encapsulated by quotation marks                                    │ [4, 6, 12]               │ [6, 7, 11, 12]  │ 0.785714 │
+│     9511 │ the word "now" and its variations in contexts suggesting a change or shift in state                                  │ [1, 2]                   │ [1, 2, 5, 13]   │ 0.857143 │
+│     8635 │ the concept of "growth" in various contexts, particularly economic, biological, and demographic growth               │ [7, 9, 13]               │ [7, 9, 12, 13]  │ 0.928571 │
+│    10655 │ words related to teaching and education                                                                              │ [1, 14]                  │ [1, 4, 6, 14]   │ 0.857143 │
+│      212 │ text related to radio, news broadcasts, and media content                                                            │ []                       │ [5, 9, 11, 13]  │ 0.714286 │
+│     9635 │ military units, such as regiments, Highlanders, and battalions                                                       │ [4, 11]                  │ [4, 6, 11, 12]  │ 0.857143 │
+│     9136 │ words related to nationality, citizenship, or geopolitical concepts like "nation," "country," and "national."        │ [3, 9, 13]               │ [3, 8, 9, 13]   │ 0.928571 │
+│     8706 │ terms related to vitamin deficiencies                                                                                │ [9]                      │ [4, 5, 9, 14]   │ 0.785714 │
+│    11674 │ terms related to shipping, orders, and delivery services                                                             │ [3, 6, 14]               │ [3, 6, 13, 14]  │ 0.928571 │
+│    11988 │ text prompting the reader to pay attention or take note of specific information                                      │ [4, 6, 12]               │ [2, 4, 11, 12]  │ 0.785714 │
+│    11182 │ expressions of luck, fortune, and adaptation in various contexts                                                     │ [3, 4, 9]                │ [3, 4, 7, 8]    │ 0.785714 │
+│      820 │ words related to bacteria, infection, and transmission of diseases, especially conjunctivitis                        │ [13]                     │ [5, 6, 11, 13]  │ 0.785714 │
+│    11884 │ references to influential figures, quotes, or concepts associated with philosophy and public discourse               │ [7, 9]                   │ [2, 6, 7, 9]    │ 0.857143 │
+│    11303 │ words related to languages, scientific concepts, mathematical functions, and specialized technical terms             │ [4, 6, 8, 9, 11, 13]     │ [1, 6, 11, 14]  │ 0.571429 │
+│    11797 │ the word "invention" and related terms in technical or scientific contexts                                           │ [1, 3]                   │ [1, 4, 9, 14]   │ 0.714286 │
+│    12166 │ words related to "capital expenditures" and associated financial or legal obligations                                │ [8]                      │ [3, 4, 8, 10]   │ 0.785714 │
+│    11062 │ references to scientific journals and related citation formats                                                       │ [2, 5]                   │ [2, 3, 5, 7]    │ 0.857143 │
+│    11895 │ official documents, guidelines, and reports, focusing on policies, strategies, and procedures                        │ [7, 4]                   │ [2, 3, 4, 7]    │ 0.857143 │
+│      870 │ code-related syntax patterns and function definitions                                                                │ [1, 2, 8, 9, 10, 13]     │ [6, 8, 10, 14]  │ 0.571429 │
+│      978 │ terms related to optical technologies and devices                                                                    │ [7]                      │ [7, 8, 10, 14]  │ 0.785714 │
+│    12470 │ mentions of explosions, bombs, and incidents involving danger or violence                                            │ [2, 8]                   │ [2, 4, 7, 8]    │ 0.857143 │
+│    12492 │ text related to crime scenes, murder investigations, and the discovery of deceased individuals                       │ [1, 7, 13]               │ [1, 7, 13, 14]  │ 0.928571 │
+│     1053 │ discussing intervals, delays, gaps, and repetitions of various durations                                             │ [6, 7, 8]                │ [6, 7, 13, 14]  │ 0.785714 │
+│    12486 │ words related to various actions involving DNA manipulation                                                          │ [3, 10, 14]              │ [9, 10, 11, 12] │ 0.642857 │
+│     1043 │ phrases that include the words "at a" or "at the"                                                                    │ [7, 11, 12]              │ [2, 7, 11, 12]  │ 0.928571 │
+│    12440 │ instances of possessive punctuation ('s, 't) and conjunctions like "and" and "but"                                   │ [3, 5, 9, 12, 13]        │ [1, 2, 8, 13]   │ 0.5      │
+│     1503 │ words indicating additional information or options in various contexts                                               │ [2, 3, 7, 8, 11]         │ [1, 2, 10, 12]  │ 0.5      │
+│    13005 │ terms related to older adults and aging, especially age-related conditions or demographics                           │ [8, 9, 13]               │ [5, 8, 9, 13]   │ 0.928571 │
+│     1425 │ terms related to health, aging, exercise, bone density, and physical conditions in older adults                      │ []                       │ [3, 4, 6, 10]   │ 0.714286 │
+│     1835 │ text related to <<intravenous administration>> in medical contexts                                                   │ [10, 12]                 │ [2, 9, 10, 12]  │ 0.857143 │
+│    13128 │ words related to "Bush" and "tax cuts" in political contexts                                                         │ []                       │ [2, 3, 5, 13]   │ 0.714286 │
+│    13186 │ locations including cities, streets, and specific addresses                                                          │ [2, 8, 14]               │ [2, 6, 7, 14]   │ 0.785714 │
+│     2589 │ terms related to "ciguatera poisoning" and "mosquitoes carrying West Nile Virus"                                     │ []                       │ [4, 10, 11, 13] │ 0.714286 │
+│    13893 │ discussions about infections caused by Streptococcus pyogenes and the diseases they lead to                          │ []                       │ [1, 8, 10, 11]  │ 0.714286 │
+│    13870 │ phrases related to the purchase of a product (like "buy nureflex over the counter")                                  │ [2, 5, 10]               │ [1, 9, 10, 14]  │ 0.642857 │
+│     2345 │ words related to seasons, weather, and temperature conditions, especially winter                                     │ [1, 10]                  │ [1, 7, 9, 10]   │ 0.857143 │
+│     2285 │ mentions of political regimes or government authorities                                                              │ [3, 12]                  │ [3, 4, 12, 13]  │ 0.857143 │
+│    13790 │ references to time periods, particularly the phrase "early" followed by a decade or specific time                    │ [10, 11]                 │ [2, 5, 10, 11]  │ 0.857143 │
+│     2174 │ references to blood, blood samples, and related immune cell contexts in biological studies                           │ [2, 10, 11, 14]          │ [2, 4, 6, 10]   │ 0.714286 │
+│    14083 │ the presence of the word "one" in various contexts and structures                                                    │ [2, 4, 5, 6, 10, 12, 13] │ [2, 3, 4, 13]   │ 0.642857 │
+│    14766 │ references to gender, particularly terms like male, female, and gendered comparisons                                 │ [7, 12, 13]              │ [1, 7, 12, 13]  │ 0.928571 │
+│     2621 │ words related to hospitals, hospital stays, patients, staff, healthcare, and medical procedures                      │ [4, 5, 7]                │ [4, 5, 7, 8]    │ 0.928571 │
+│    14904 │ words related to programming languages, code syntax, or specific libraries and functions                             │ [2, 3, 14]               │ [2, 3, 5, 9]    │ 0.785714 │
+│     2855 │ names with double letters and titles/affiliations in news articles and emails                                        │ [3, 4, 5, 11]            │ [3, 4, 11, 12]  │ 0.857143 │
+│     3078 │ words related to kidney health, including creatinine levels, disease, renal failure, and dialysis                    │ [5, 6]                   │ [5, 6, 8, 9]    │ 0.857143 │
+│     3047 │ words related to criticism, disapproval, or critical thinking                                                        │ [9, 14]                  │ [3, 9, 12, 14]  │ 0.857143 │
+│    15101 │ discussions about financial markets, including bonds, bonds yields, and Treasury securities                          │ [9]                      │ [4, 7, 9, 13]   │ 0.785714 │
+│     3360 │ text related to software development, specifically on AWS <<Mobile>>Client                                           │ []                       │ [1, 3, 5, 13]   │ 0.714286 │
+│    15194 │ the substring "<<" and related formatting or code terms in technical contexts                                        │ [2, 11]                  │ [3, 6, 8]       │ 0.642857 │
+│    16618 │ words related to botanical collections and directories, especially those involving herbaria/herbariums               │ []                       │ [2, 3, 8, 11]   │ 0.714286 │
+│    16417 │ references to Russia and related terms                                                                               │ [11, 14]                 │ [5, 6, 11, 14]  │ 0.857143 │
+│    15082 │ words related to making adjustments or compensations for various factors in data analysis or experimental procedures │ [8, 10, 14]              │ [2, 8, 10, 14]  │ 0.928571 │
+│    16755 │ code snippets, specifically URLs, script tags, and technical references in programming or markup languages           │ [2, 4, 10]               │ [2, 4, 5, 10]   │ 0.928571 │
+│     3178 │ the words related to comparison, such as "compare," "compared," and related phrases                                  │ [1, 13]                  │ [1, 6, 11, 13]  │ 0.857143 │
+│     3319 │ words related to editing or modifying files and changes made to them                                                 │ [2, 4, 12, 13]           │ [2, 4, 10, 13]  │ 0.857143 │
+│     3369 │ the phrase "ground state" and related terms like "ground," "state," and "groundbreaking."                            │ [12, 14]                 │ [2, 9, 12, 14]  │ 0.857143 │
+│     4544 │ words related to legal citations, especially those containing "App" and "U"                                          │ [2, 7, 13]               │ [1, 7, 12]      │ 0.714286 │
+│     3659 │ references to "shooting" or "scoring" in sports contexts, especially related to basketball                           │ []                       │ [7, 11, 12, 13] │ 0.714286 │
+│    17725 │ the phrase "This is" and variations of it in different contexts                                                      │ [1, 2, 5, 9, 10, 14]     │ [2, 9, 10, 14]  │ 0.857143 │
+│     4587 │ computer programming code, particularly related to compiling and scripts                                             │ [7, 8, 13, 14]           │ [6, 9, 13, 14]  │ 0.714286 │
+│    17566 │ programming code syntax, especially related to data types, function calls, and specific language keywords            │ [2, 10, 12, 13]          │ [1, 2, 9, 10]   │ 0.714286 │
+│     4693 │ the concept of communication, specifically urging talking openly and honestly about various issues                   │ [9, 10]                  │ [4, 6, 9, 11]   │ 0.714286 │
+│    17635 │ text with technical or formal formatting and elements like capitalization and coding symbols                         │ [1, 3, 4, 5, 13, 14]     │ [2, 6, 8, 12]   │ 0.285714 │
+│     4584 │ text discussing requirements or necessities in various contexts                                                      │ [1, 3, 4, 14]            │ [1, 2, 4, 14]   │ 0.857143 │
+│     4102 │ the word "particular" and its context in various situations or cases                                                 │ [2, 3]                   │ [2, 3, 5, 11]   │ 0.857143 │
+│    18154 │ words related to fragility, sensitivity, and vulnerability                                                           │ [6, 9]                   │ [1, 6, 9, 12]   │ 0.857143 │
+│     5108 │ alphanumeric combinations of letters, numbers, and some specific names or terms                                      │ [1, 2, 4, 10, 11]        │ [2, 3, 4, 6]    │ 0.642857 │
+│    17935 │ the phrase "last year" or similar temporal markers indicating past events or time frames                             │ [3, 12]                  │ [1, 3, 10, 12]  │ 0.857143 │
+│    17921 │ the concept of "choice" or "options", especially when related to decision-making scenarios                           │ [1, 14]                  │ [1, 2, 10, 14]  │ 0.857143 │
+│     6318 │ mathematical notations, inequalities, and expressions involving variables and symbols                                │ [2, 5, 7, 11, 13]        │ [1, 3, 5, 11]   │ 0.642857 │
+│     5343 │ the concept of daytime sleepiness, including its presence in various populations and associated symptoms             │ []                       │ [4, 6, 7, 8]    │ 0.714286 │
+│    18315 │ texts discussing ways to enhance or optimize something, such as health, quality, or performance                      │ [2, 4, 8, 14]            │ [2, 5, 11, 14]  │ 0.714286 │
+│     5368 │ technical terms, code-like syntax, or concepts related to systems, structures, and processes                         │ [3, 6, 12, 13]           │ [1, 4, 11, 12]  │ 0.571429 │
+│     5245 │ scientific terms related to biological processes and chemical compounds                                              │ [4, 10, 11]              │ [2, 5, 13, 14]  │ 0.5      │
+│     6886 │ text related to consuming << water>> or << drinking>> in various experimental contexts                               │ [3, 11, 13]              │ [1, 3, 11, 13]  │ 0.928571 │
+│     6934 │ terms related to concrete, cement, and construction materials                                                        │ [13]                     │ [2, 5, 10, 13]  │ 0.785714 │
+│     6988 │ terms related to various types of radiation, spectroscopy, and light sources                                         │ [4, 10]                  │ [3, 4, 5, 10]   │ 0.857143 │
+│     7077 │ words related to similarity and comparisons between different things or concepts                                     │ [1, 6, 10, 14]           │ [1, 2, 6, 11]   │ 0.714286 │
+│     5622 │ phrases involving "enough" to indicate sufficiency or adequacy in various contexts                                   │ [4, 7, 9]                │ [4, 7, 9, 11]   │ 0.928571 │
+│     7186 │ quoted phrases and statements in a variety of contexts                                                               │ [4, 10, 14]              │ [1, 4, 8, 14]   │ 0.785714 │
+│     6534 │ abbreviations, technical terms, and specific concepts in various contexts                                            │ [2, 7, 10, 12]           │ [2, 3, 8, 12]   │ 0.714286 │
+│     7208 │ words related to "life", such as "life", "lives", and "life span"                                                    │ [2, 8]                   │ [2, 7, 8, 14]   │ 0.857143 │
+│     7245 │ terms related to investment, funding rounds, and venture capital                                                     │ [2, 5, 8]                │ [2, 5, 8, 14]   │ 0.928571 │
+│     7218 │ author names and affiliations in academic publications                                                               │ [3, 4, 7, 11]            │ [3, 4, 7, 11]   │ 1        │
+│     8044 │ technical or mathematical symbols, code fragments, and complex expressions                                           │ [1, 3, 4, 9, 11, 13]     │ [3, 8, 9, 13]   │ 0.714286 │
+│     7527 │ the word "surprisingly" and similar expressions like "interestingly" or "unsurprisingly"                             │ [3, 10]                  │ [2, 3, 10, 13]  │ 0.857143 │
+│     7489 │ pronouns (he, she, they) in sentences involving interactions or statements among individuals                         │ [3, 9, 12]               │ [2, 3, 12, 13]  │ 0.785714 │
+│     7645 │ terms related to authority, regulation, and decision-making in various formal contexts                               │ [8, 11, 13]              │ [4, 8, 11, 13]  │ 0.928571 │
+│     7650 │ text containing structured or technical symbols and values, especially in formats like code or data                  │ [1, 3, 4, 8, 12]         │ [5, 6, 7, 14]   │ 0.357143 │
+│     7336 │ variations of the word "divide," including its forms and related concepts                                            │ [1, 8, 12, 14]           │ [1, 8, 12, 14]  │ 1        │
+│     8047 │ terms related to myocardial activity, ionic currents, action potentials, and electrophysiological processes          │ [10, 13]                 │ [1, 2, 10, 13]  │ 0.857143 │
+└──────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────────────────────┴─────────────────┴──────────┘
+
+Worst scoring idx 17635, score = 0.2857142857142857
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1.  blocks out direct sunlight.↵↵By Richard Stenger<<↵>>CNN Interactive Staff │
+│           │ Writer<<↵↵>>March 1,  2. .↵↵By Susan Chaityn<< Le>>bovits<< |>><< THE>> BOSTON<< GLO>>BE<<↵↵>>Sew Easy opens new         │
+│           │ location 3. assembly: AssemblyTrademark<<("")] >>↵[assembly: AssemblyCulture<<("")] >>↵ ↵// Setting ComVisible to false  │
+│           │ makes the 4. ("Clojure")] ↵[assembly: AssemblyDescription<<("")] >>↵[assembly: AssemblyConfiguration("")] ↵[assembly 5.  │
+│           │ , <<2>>007|By Phillip McGowan<< |>> Phillip McGowan,sun<< reporter>><<↵↵>>Fort Meade is proposing 6.  revered and        │
+│           │ creativity is unleashed.↵↵By Bob Brown<< |>><< THE>> SWELLESLEY<< REPORT>><<↵↵>>Enriching 7. hamid II↵↵<<by>>            │
+│           │ kirbydog<<1>><<3>><< |>> March 27th, 201 8.  New Way To Battle MRSA↵↵<<by>> Sam Savage<<↵↵>>Experts from Queen's         │
+│           │ University Belfast have developed new 9. {R}_{4}$ converge to zero.↵↵<<<>>span style="<<font>>-variant:small-caps 10.    │
+│           │ blue; }↵           </style>↵<<             >><<<>>script language="JavaScript" type="text/javascript 11. base.py", line  │
+│           │ 17, in<< <>>module>↵    raise ImproperlyConfigured("Error 12.  the claim is forfeited.↵                                  │
+│           │ 2↵<< >>Cir. 2009).      In 13.  the prior foreclosure action.↵↵<<                      >>IV. Prosec<<utorial>>           │
+│           │ Misconduct↵↵¶ 32   Trujillo 14.  of Alamo, the Alamo EDC established the Alamo Small<< Business>> Micro-Loan Program     │
+│           │ (MLP) with assistance from 15. Bigl(T_sx\Bigr)(t<<)=(>>T_sy)(t)=y(t+                                                     │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on text with technical or formal formatting and elements like capitalization and coding symbols.   │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                       │
+├───────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     7.969 │ blocks out direct sunlight.↵↵By Richard Stenger<<↵>>CNN Interactive Staff Writer<<↵↵>>March 1,                 │
+│     5.281 │ .↵↵By Susan Chaityn<< Le>>bovits<< |>><< THE>> BOSTON<< GLO>>BE<<↵↵>>Sew Easy opens new location               │
+│     5.219 │ assembly: AssemblyTrademark<<("")]>>↵[assembly: AssemblyCulture<<("")]>>↵↵// Setting ComVisible to false makes the                                                                                                                │
+│     5.156 │ ("Clojure")]↵[assembly: AssemblyDescription<<("")]>>↵[assembly: AssemblyConfiguration("")]↵[assembly                                                                                                                │
+│     5.031 │ , <<2>>007|By Phillip McGowan<< |>> Phillip McGowan,sun<< reporter>><<↵↵>>Fort Meade is proposing              │
+│     4.875 │ revered and creativity is unleashed.↵↵By Bob Brown<< |>><< THE>> SWELLESLEY<< REPORT>><<↵↵>>Enriching          │
+│     4.688 │ hamid II↵↵<<by>> kirbydog<<1>><<3>><< |>> March 27th, 201                                                      │
+│     4.656 │ New Way To Battle MRSA↵↵<<by>> Sam Savage<<↵↵>>Experts from Queen's University Belfast have developed new      │
+│     4.562 │ {R}_{4}$ converge to zero.↵↵<<<>>span style="<<font>>-variant:small-caps                                       │
+│     4.500 │ blue; }↵		</style>↵<<		>><<<>>script language="JavaScript" type="text/javascript                                                                                                                │
+│     2.844 │ base.py", line 17, in<< <>>module>↵    raise ImproperlyConfigured("Error                                       │
+│     2.656 │ the claim is forfeited.↵                                            2↵<<>>Cir. 2009).      In                                                                                                                │
+│     2.094 │ the prior foreclosure action.↵↵<<                      >>IV. Prosec<<utorial>> Misconduct↵↵¶ 32   Trujillo     │
+│     1.547 │ of Alamo, the Alamo EDC established the Alamo Small<< Business>> Micro-Loan Program (MLP) with assistance from │
+│     1.531 │ Bigl(T_sx\Bigr)(t<<)=(>>T_sy)(t)=y(t+                                                                          │
+└───────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "5, 10, 11, 12". Try not to be overly specific in your interpretation of the explanation. If you think there are no │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on text with technical or formal formatting and elements like capitalization  │
+│           │ and coding symbols.  Here are the examples:  1.  the terms in 779 + 778 - 1582 - 7 2. . During direct examination, the   │
+│           │ prosecutor asked↵↵↵                                     8↵   the witness why the bank had 3.  nuclear norm of *M* sums   │
+│           │ the singular values of *M*, and can thus be written as ${ 4.                      = NIL;↵         mainWnd_titlebar       │
+│           │ = NIL;↵↵                btn_cancel               5.  for\ RDBS)$\↵$tx.begin();$\↵$Extent\ extent = pm. 6. ., and         │
+│           │ Jeanette Slover, of the first degree murder of Karen Slover. Michael, Jr., and 7.  a microcomputer.↵The direct data      │
+│           │ transfer from the random-access-memory (RAM) of one 8. 2-23↵↵By Janette Ewen↵↵Ever since Frank Gehry’s spectacular       │
+│           │ Guggenheim Bilbao 9. arsifying transform for transforming the measured data along the temporal domain. Other sparsifying │
+│           │ transforms, such as 10.  and [B](#F3){ref-type="fig"}, upper). The particles containing SS DNA were 11. a**2 - 4*a - 4.  │
+│           │ Let i(c) = -3* 12.  by Gary Quintal)↵↵By Howard Goldin↵↵BRONX, NEW YORK, OCTOBER 13 13. abc\], we get $$\sup_{f\in       │
+│           │ {\ensuremath {\mathscr{F}}}} \Big 14. : The fractional derivatives of the cubic B-spline $B_3$ for $\gamma$ ranging from │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 1, 3, 4, 5, 13, 14                                                                                                       │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                                │
+├───────────┼───────────┼──────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │ Y            │ the terms in 779 + 778 - 1582 - 7                                                                                       │
+│     2.969 │ Y         │              │ . During direct examination, the prosecutor asked↵↵↵                                     8↵  the witness why the bank had                                                                                                                         │
+│     0.000 │           │ Y            │ nuclear norm of *M* sums the singular values of *M*, and can thus be written as ${                                      │
+│     0.000 │           │ Y            │ = NIL;↵		mainWnd_titlebar	= NIL;↵↵		btn_cancel                                                                                                                         │
+│     0.000 │           │ Y            │ for\ RDBS)$\↵$tx.begin();$\↵$Extent\ extent = pm.                                                                       │
+│     3.031 │ Y         │              │ ., and Jeanette Slover, of the first degree murder of Karen Slover. Michael, Jr., and                                   │
+│     0.000 │           │              │ a microcomputer.↵The direct data transfer from the random-access-memory (RAM) of one                                    │
+│     4.938 │ Y         │              │ 2-23↵↵By Janette Ewen↵↵Ever since Frank Gehry’s spectacular Guggenheim Bilbao                                           │
+│     0.000 │           │              │ arsifying transform for transforming the measured data along the temporal domain. Other sparsifying transforms, such as │
+│     0.000 │           │              │ and [B](#F3){ref-type="fig"}, upper). The particles containing SS DNA were                                              │
+│     0.000 │           │              │ a**2 - 4*a - 4. Let i(c) = -3*                                                                                          │
+│     5.062 │ Y         │              │ by Gary Quintal)↵↵By Howard Goldin↵↵BRONX, NEW YORK, OCTOBER 13                                                         │
+│     0.000 │           │ Y            │ abc\], we get $$\sup_{f\in {\ensuremath {\mathscr{F}}}} \Big                                                            │
+│     0.000 │           │ Y            │ : The fractional derivatives of the cubic B-spline $B_3$ for $\gamma$ ranging from                                      │
+└───────────┴───────────┴──────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Best scoring idx 7218, score = 1.0
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1.  on a regular tree**↵↵by↵↵<<Yue>><<yun>><< Hu>><<                          │
+│           │ $\>><<;$>><<and>><<$\>><<;$>><< Zhan>><< Shi>><<↵↵>><<*>><<Université>> 2. R)<< (>><<2>>010).<< Yu>><<,>><< X>><<.,>><<  │
+│           │ et>><< al>><<.>><< [*>>Nature*]{} [** 3. 0.3   0↵↵[^<<1>><<]:>><< Jie>><< Xu>><< and>><< Jun>><< Shen>><<                │
+│           │ contre>><<bu>><<ted>><< equally>> to this<< work>> 4. /1/<<6>>>↵↵<<,>> [<<Xing>><<quan>><< Zhu>><<]{>><<},>><<           │
+│           │ [>><<Gong>><<->><<Qing>><< Wu>><<]{>><<},>><< [>> 5. <bos>3′ ends.↵↵We thank<< Zhu>><<ying>><< Chen>><< and>><<          │
+│           │ Xi>><<ur>><<ong>><< Peng>><< for>><< handling>> serum samples and 6. 96).<<↵>><<1>>2.<< X>><<inh>><<ui>><< Niu>><<,>><<  │
+│           │ xe>>2x80x9<<c>><<Spec>> 7. << M>><<.>> <<Zah>><<aria>><<,>><< M>><<.>><< >><<Chow>><<dhury>><<,>><<                      │
+│           │ M>><<.>><< >><<J>><<.>><< Franklin>><<,>><< S>><<.>> 8. bathymetric LiDAR↵↵<<Amar>><< Nay>><<eg>><<and>><<hi>><<,>><<    │
+│           │ Manager>><< of>> Elevation<< Technologies>><< at>> Dewberry<<,>> posted 9. ).<<↵>>10.<< B>><<.>><< K>><<.>><<            │
+│           │ Min>><<has>><< et>><< al>><<,>> xe2x80x9 10. ' contributions<<**>><<↵↵>><<Conception>><</>>Design<<:>><< Yan>><<ming>><< │
+│           │ Zhou>><<.>><< Provision>> of study materials<<:>><< Tao>><< Wan>><<,>><< Tian>> 11. 01 (2007).<< Li>><<,>><< G>><<.,>>   │
+│           │ et<< al>><<.>> [*Nature Communications<<*]>>{} [ 12. , Rot<<nitz>><<ky>><<,>><< and>><< Zhao>><< (>><<1>><<9>><<9>>4,<<  │
+│           │ >><<1>><<9>><<9>><<5>><<),>> Robins<< and>> 13. <<.,>> Fabri<<ka>><<,>><< S>><<.,>><< But>><<ke>><<vich>><<,>><<         │
+│           │ A>><<.,>><< Ab>><<ol>><<mas>><<ov>><<,>><< P>><<.>><< >>2 14. ,<<9>>01 and<< P>><<.>><< S>><<.>><< Lee>><<,>><< et>><<   │
+│           │ al>>.<< “>><<New>> Salicidation Technology with 15. << M>><<ng>><<eni>>, and hotel receptionist Monde<<                  │
+│           │ M>><<bol>><<ombo>> admitted to<< their>> involvement in an unintentionally  fatal robbery                                │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on author names and affiliations in academic publications.                                         │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                                    │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    21.500 │ on a regular tree**↵↵by↵↵<<Yue>><<yun>><< Hu>><< $\>><<;$>><<and>><<$\>><<;$>><< Zhan>><< Shi>><<↵↵>><<*>><<Université>>                                    │
+│    21.375 │ R)<< (>><<2>>010).<< Yu>><<,>><< X>><<.,>><< et>><< al>><<.>><< [*>>Nature*]{} [**                                                                          │
+│    21.375 │ 0.3   0↵↵[^<<1>><<]:>><< Jie>><< Xu>><< and>><< Jun>><< Shen>><< contre>><<bu>><<ted>><< equally>> to this<< work>>                                         │
+│    21.250 │ /1/<<6>>>↵↵<<,>> [<<Xing>><<quan>><< Zhu>><<]{>><<},>><< [>><<Gong>><<->><<Qing>><< Wu>><<]{>><<},>><< [>>                                                  │
+│    21.250 │ <bos>3′ ends.↵↵We thank<< Zhu>><<ying>><< Chen>><< and>><< Xi>><<ur>><<ong>><< Peng>><< for>><< handling>> serum samples and                                │
+│    21.125 │ 96).<<↵>><<1>>2.<< X>><<inh>><<ui>><< Niu>><<,>><< xe>>2x80x9<<c>><<Spec>>                                                                                  │
+│    21.000 │ << M>><<.>> <<Zah>><<aria>><<,>><< M>><<.>><< >><<Chow>><<dhury>><<,>><< M>><<.>><< >><<J>><<.>><< Franklin>><<,>><< S>><<.>>                               │
+│    20.500 │ bathymetric LiDAR↵↵<<Amar>><< Nay>><<eg>><<and>><<hi>><<,>><< Manager>><< of>> Elevation<< Technologies>><< at>> Dewberry<<,>> posted                       │
+│    20.500 │ ).<<↵>>10.<< B>><<.>><< K>><<.>><< Min>><<has>><< et>><< al>><<,>> xe2x80x9                                                                                 │
+│    20.375 │ ' contributions<<**>><<↵↵>><<Conception>><</>>Design<<:>><< Yan>><<ming>><< Zhou>><<.>><< Provision>> of study materials<<:>><< Tao>><< Wan>><<,>><< Tian>> │
+│    19.375 │ 01 (2007).<< Li>><<,>><< G>><<.,>> et<< al>><<.>> [*Nature Communications<<*]>>{} [                                                                         │
+│    14.688 │ , Rot<<nitz>><<ky>><<,>><< and>><< Zhao>><< (>><<1>><<9>><<9>>4,<< >><<1>><<9>><<9>><<5>><<),>> Robins<< and>>                                              │
+│    13.062 │ <<.,>> Fabri<<ka>><<,>><< S>><<.,>><< But>><<ke>><<vich>><<,>><< A>><<.,>><< Ab>><<ol>><<mas>><<ov>><<,>><< P>><<.>><< >>2                                  │
+│    13.000 │ ,<<9>>01 and<< P>><<.>><< S>><<.>><< Lee>><<,>><< et>><< al>>.<< “>><<New>> Salicidation Technology with                                                    │
+│     5.094 │ << M>><<ng>><<eni>>, and hotel receptionist Monde<< M>><<bol>><<ombo>> admitted to<< their>> involvement in an unintentionally  fatal robbery               │
+└───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a  │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example   │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron    │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look │
+│           │ like "5, 8, 12, 13". Try not to be overly specific in your interpretation of the explanation. If you think there are no │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your   │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                     │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on author names and affiliations in academic publications.  Here are the     │
+│           │ examples:  1.  Banach spaces. Given an ultrafilter ${\mathfrak U}$ on $I$ and a family of Banach spaces 2.              │
+│           │ +{\mkern2mu\underline{\mkern-2mu\smash{\phi }\mkern 3. uhn2010a; @Vasilev2010a; @Kuhn1 4. -caps;">Escanciano, J-C., D.  │
+│           │ Jacho-Cha'vez, and 5.  at the surface and subsurface regions, which may have a significant impact on the surface        │
+│           │ conductivity.](15 6. .getThreadMXBean();↵↵        long[] ids = proxyClient.findDeadlockedThreads();↵ 7. ↵↵A. Idris,     │
+│           │ A. Khan, Y. S. Lee, [Intelligent 8. 9 µg/ml, the D-dimer level could differentiate AAD from AMI \[[@cit0 9.  to the     │
+│           │ genome. We found that these were very different, with the interactors being about 60 10. , 22% experience psychological │
+│           │ distress \[[@B7-ijerph-17-00 11.  listed above, the second affiliation for Xinyuan Zhang is incorrect. The correct      │
+│           │ affiliation is as follows: 12.  per library) were removed using *samtools* version 0.1.18 [@pgen 13.  After             │
+│           │ quantification, each amplicon library was diluted to 20 pM and the same amount of the 14. 17 April 2015. They said they │
+│           │ would arrest Ramodibedi as↵                                                                                             │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 3, 4, 7, 11                                                                                                             │
+└───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                    │
+├───────────┼───────────┼──────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │              │ Banach spaces. Given an ultrafilter ${\mathfrak U}$ on $I$ and a family of Banach spaces                    │
+│     0.000 │           │              │ +{\mkern2mu\underline{\mkern-2mu\smash{\phi }\mkern                                                         │
+│    13.438 │ Y         │ Y            │ uhn2010a; @Vasilev2010a; @Kuhn1                                                                             │
+│    13.438 │ Y         │ Y            │ -caps;">Escanciano, J-C., D. Jacho-Cha'vez, and                                                             │
+│     0.000 │           │              │ at the surface and subsurface regions, which may have a significant impact on the surface conductivity.](15 │
+│     0.000 │           │              │ .getThreadMXBean();↵↵        long[] ids = proxyClient.findDeadlockedThreads();↵                             │
+│    20.250 │ Y         │ Y            │ ↵↵A. Idris, A. Khan, Y. S. Lee, [Intelligent                                                                │
+│     0.000 │           │              │ 9 µg/ml, the D-dimer level could differentiate AAD from AMI \[[@cit0                                        │
+│     0.000 │           │              │ to the genome. We found that these were very different, with the interactors being about 60                 │
+│     0.000 │           │              │ , 22% experience psychological distress \[[@B7-ijerph-17-00                                                 │
+│    20.625 │ Y         │ Y            │ listed above, the second affiliation for Xinyuan Zhang is incorrect. The correct affiliation is as follows: │
+│     0.000 │           │              │ per library) were removed using *samtools* version 0.1.18 [@pgen                                            │
+│     0.000 │           │              │ After quantification, each amplicon library was diluted to 20 pM and the same amount of the                 │
+│     0.000 │           │              │ 17 April 2015. They said they would arrest Ramodibedi as↵                                                   │
+└───────────┴───────────┴──────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,5 @@
+,absorption_fraction,absorption_full
+fvu_only-1024k-gemma-2-2b-resid_post_layer_8-5.0e+08-20250807_2023_resid_post_layer_8_trainer_0__custom_sae_eval_results,0.2554464645390144,0.048715416448792154
+fvu_only_BatchTopK-1024k-gemma-2-2b-resid_post_layer_8-5.0e+08-20250828_2222_resid_post_layer_8_trainer_0__custom_sae_eval_results,0.31600380330236694,0.09226975774144454
+100fvu_hsic_BatchTopK-1024k-gemma-2-2b-2000-resid_post_layer_8-5.0e+08-20250828_2228_resid_post_layer_8_trainer_0__custom_sae_eval_results,0.14010573188248424,0.002364932734550385
+100fvu_hsic-1024k-gemma-2-2b-2000-resid_post_layer_8-5.0e+08-20250812_2003_resid_post_layer_8_trainer_0__custom_sae_eval_results,0.10030469515886946,0.008237058341129264

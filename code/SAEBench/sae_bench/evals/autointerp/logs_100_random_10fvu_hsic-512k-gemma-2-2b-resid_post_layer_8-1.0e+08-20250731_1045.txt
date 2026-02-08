@@ -1,0 +1,311 @@
+Summary table:
+┌──────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────────────────────┬─────────────────┬──────────┐
+│   latent │ explanation                                                                                                                          │ predictions              │ correct seqs    │    score │
+├──────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────────────────────┼─────────────────┼──────────┤
+│     8674 │ instances of comparisons in various contexts                                                                                         │ [3, 10]                  │ [3, 4, 6, 10]   │ 0.857143 │
+│     8852 │ text related to public transportation stations, particularly metro, subway, and transit systems                                      │ [2, 5, 11, 14]           │ [2, 5, 11, 14]  │ 1        │
+│     9019 │ references to "dam," "bridge," "site," or related geographic structures and locations                                                │ [4, 11]                  │ [2, 4, 11, 13]  │ 0.857143 │
+│    10321 │ the phrase "sorry" and similar expressions of apology or explanation                                                                 │ [3, 10]                  │ [3, 4, 5, 10]   │ 0.857143 │
+│     9115 │ terms related to paleontology, fossils, evolution, and evolutionary biology                                                          │ [3]                      │ [2, 3, 5, 9]    │ 0.785714 │
+│     8686 │ names with double letters (<<POW>>, <<Finland>>, <<Hague>>, <<neutron>>, <<star>>, <<C                                               │ [5, 13]                  │ [6, 9, 13, 14]  │ 0.714286 │
+│     9613 │ the word "Well" and its use in conversational contexts                                                                               │ [7, 9]                   │ [2, 6, 7, 9]    │ 0.857143 │
+│     8780 │ the word "interpretation" and its variants in academic or scientific contexts                                                        │ [2, 6]                   │ [2, 4, 6, 10]   │ 0.857143 │
+│     9122 │ technical terms, specific symbols, code structures, and possibly references to software and data analysis                            │ [2, 4, 5, 10]            │ [5, 9, 11, 13]  │ 0.571429 │
+│     8755 │ the word "This" in a variety of contexts                                                                                             │ [1, 7, 10]               │ [1, 7, 9, 10]   │ 0.928571 │
+│     9489 │ phrases involving logical conditions and equivalences, often marked by "if and only if"                                              │ [9, 7, 5, 14]            │ [4, 5, 7, 8]    │ 0.714286 │
+│    10637 │ the word "as" connecting different parts of a sentence or explaining relationships                                                   │ [2, 5, 10, 12]           │ [2, 9, 10, 12]  │ 0.857143 │
+│     9112 │ words related to admitting or acknowledging something                                                                                │ [3, 4, 14]               │ [2, 3, 4, 6]    │ 0.785714 │
+│    11281 │ dates and times in various document contexts                                                                                         │ [3, 10]                  │ [3, 10, 11, 13] │ 0.857143 │
+│    11965 │ mathematical symbols, notations, and technical language related to scientific or engineering topics                                  │ [1, 6, 11, 14]           │ [4, 6, 7, 8]    │ 0.571429 │
+│    11872 │ terms related to dental and oral health, including specific conditions, procedures, and anatomy                                      │ [7, 12]                  │ [1, 5, 7, 12]   │ 0.857143 │
+│    10346 │ forms of the verb "be" and other auxiliary verbs or action-related words                                                             │ [2, 5, 11, 14]           │ [2, 6, 7, 14]   │ 0.714286 │
+│    11861 │ mathematical expressions, assumptions, and formal conditions often associated with statistical or mathematical models                │ [1, 3, 6]                │ [1, 3, 5, 11]   │ 0.785714 │
+│    11160 │ words related to food consumption, appetite, and meal-related behavior                                                               │ [1, 5, 14]               │ [1, 5, 10, 14]  │ 0.928571 │
+│    11040 │ text related to continuous variables or characteristics in various scientific contexts                                               │ [3, 5, 13]               │ [1, 3, 5, 13]   │ 0.928571 │
+│    11652 │ phrases indicating appropriate, acceptable, correct, sufficient, and proper levels or amounts                                        │ [11, 13]                 │ [1, 3, 11, 13]  │ 0.857143 │
+│    11774 │ words related to "chess," "players," "events," and "ratings."                                                                        │ [6, 14]                  │ [1, 6, 11, 14]  │ 0.857143 │
+│    12141 │ descriptions of fantastical or surreal elements in various contexts, such as creatures gaining abilities or sentient trucks fighting │ []                       │ [3, 6, 13, 14]  │ 0.714286 │
+│    12460 │ references to specific body parts and developmental stages in insects                                                                │ [1, 6, 13]               │ [1, 6, 11, 13]  │ 0.928571 │
+│    12444 │ technical terms related to cryptography, quantum mechanics, mathematics, and scientific concepts                                     │ [1, 3, 5, 10, 11]        │ [1, 5, 6, 7]    │ 0.642857 │
+│      976 │ the term "civil" and related legal terms, especially in the context of formal legal procedures or actions                            │ [7, 8]                   │ [7, 8, 10, 14]  │ 0.857143 │
+│     1423 │ words related to "green," "presence," or specific concepts like "golf," "green belt," and certain formal terminology                 │ [4, 9]                   │ [4, 7, 9, 13]   │ 0.857143 │
+│      819 │ text related to legal terms, court cases, and references to U.S. District Courts                                                     │ [5, 8, 9, 11]            │ [1, 5, 8, 9]    │ 0.857143 │
+│      869 │ words related to conservatism, conservative views, and conservative positions                                                        │ [10, 14]                 │ [6, 8, 10, 14]  │ 0.857143 │
+│     1041 │ words related to the concept of common diseases and disorders                                                                        │ [7, 10, 11]              │ [2, 7, 11, 12]  │ 0.785714 │
+│    13098 │ requests for help or advice in various contexts                                                                                      │ [2, 3, 8, 14]            │ [2, 7, 8, 14]   │ 0.857143 │
+│     1051 │ words related to functionality, improvement, or optimization, particularly in technology, performance, or user experience contexts   │ [1, 5, 9]                │ [3, 5, 11, 12]  │ 0.642857 │
+│    12414 │ terms related to pulmonary conditions, such as "pulmonary embolism" and "sequestration."                                             │ [11, 13]                 │ [4, 10, 11, 13] │ 0.857143 │
+│     1501 │ words or phrases involving the concept of "someone" or "anyone" in various contexts                                                  │ [3, 12]                  │ [2, 3, 12, 13]  │ 0.857143 │
+│    12466 │ phrases related to driving, alcohol, and hands-free operation                                                                        │ []                       │ [3, 8, 9, 13]   │ 0.714286 │
+│    13758 │ mentions of individuals, their roles, and statements made in official or professional contexts                                       │ [2, 5, 8, 14]            │ [2, 5, 8, 14]   │ 1        │
+│     1832 │ the word "subject," and related terms like "topic" and "species," often in academic or formal contexts                               │ [3, 10]                  │ [2, 3, 10, 13]  │ 0.857143 │
+│     2280 │ specific time indications, such as event start times and meal times                                                                  │ [2, 10]                  │ [1, 2, 10, 12]  │ 0.857143 │
+│     2340 │ variations of the word "shelf" and related concepts like "storage" and "holding"                                                     │ [1, 9, 11]               │ [4, 7, 9, 11]   │ 0.785714 │
+│    13156 │ sequences of names, academic terms, and formal structures in documents                                                               │ [3, 4, 7]                │ [1, 4, 7, 14]   │ 0.785714 │
+│    14051 │ specific universities, colleges, and related keywords in various contexts                                                            │ [3, 4, 7]                │ [2, 3, 4, 7]    │ 0.928571 │
+│    13837 │ words related to the brain, brain areas, brain stem, cerebral cortex, and neurotrophic factors                                       │ [1, 10, 14]              │ [1, 9, 10, 14]  │ 0.928571 │
+│    13860 │ terms related to medical treatments, medications, or healthcare procedures                                                           │ [3, 7]                   │ [3, 4, 7, 8]    │ 0.857143 │
+│     2583 │ the word "minority" and related concepts like "divide" and "differences"                                                             │ [6, 9]                   │ [1, 6, 9, 12]   │ 0.857143 │
+│    14732 │ programming-related terms, especially those related to object management and method calls (e.g., dispose, close, session)            │ [6, 7, 12]               │ [6, 7, 11, 12]  │ 0.928571 │
+│     2615 │ historical or geographic locations, often combined with dates or significant events related to those places                          │ [6, 7, 14]               │ [5, 6, 7, 14]   │ 0.928571 │
+│     3071 │ words related to <<memory>> processes and <<retention>> in various contexts                                                          │ [5, 6]                   │ [5, 6, 8, 9]    │ 0.857143 │
+│    14870 │ the phrase "one or" in various contexts                                                                                              │ [4, 11, 12]              │ [2, 4, 11, 12]  │ 0.928571 │
+│     2849 │ words related to asking questions, making requests, and communicating indirectly or politely                                         │ [3, 4, 11]               │ [3, 4, 11, 12]  │ 0.928571 │
+│    15160 │ calls for submissions, requests for information, and job openings in various fields                                                  │ [8]                      │ [2, 4, 7, 8]    │ 0.785714 │
+│    12975 │ dates and legal documents, such as letters, judgments, deeds, and decisions                                                          │ [2, 8, 9, 10, 11, 14]    │ [2, 8, 10, 14]  │ 0.857143 │
+│     3040 │ mathematical expressions and symbols commonly used in equations and formulas                                                         │ [6, 9, 10, 12]           │ [9, 10, 11, 12] │ 0.857143 │
+│    15067 │ technical terms, programming code, and certain structured document elements                                                          │ [5, 8, 12]               │ [2, 6, 8, 12]   │ 0.785714 │
+│     2169 │ terms related to microscopy, including different types of microscopes, slides, and magnification techniques                          │ [2, 10, 13]              │ [2, 5, 10, 13]  │ 0.928571 │
+│    16372 │ references to programming languages, libraries, and code elements related to Tencent or software development                         │ [8, 13]                  │ [5, 8, 9, 13]   │ 0.857143 │
+│     3170 │ phrases that signal a change or continuation from a particular point onward                                                          │ []                       │ [1, 4, 9, 14]   │ 0.714286 │
+│     3311 │ the substring "natural" in various contexts                                                                                          │ [13, 14]                 │ [1, 7, 13, 14]  │ 0.857143 │
+│    15048 │ words related to uncertainty or knowledge, especially in the context of questioning or speculation                                   │ []                       │ [4, 6, 9, 11]   │ 0.714286 │
+│     3360 │ words related to mobile development, specifically focusing on AWS Mobile platform and Microsoft Phone controls                       │ [12, 14]                 │ [2, 9, 12, 14]  │ 0.857143 │
+│    17587 │ mentions of biological family names and related taxonomic classifications                                                            │ [2, 3]                   │ [2, 3, 5, 11]   │ 0.857143 │
+│     3351 │ code snippets, technical terms, and specific symbols used in programming or software development                                     │ [2, 4, 10, 12]           │ [3, 9, 12, 14]  │ 0.571429 │
+│    17872 │ technical or professional terms related to engineering, advertising, and commerce                                                    │ []                       │ [2, 5, 10, 11]  │ 0.714286 │
+│    17677 │ mathematical notation and code-related syntax involving special characters like brackets, integrals, and derivatives                 │ [2, 3, 4, 8, 10, 11, 13] │ [2, 3, 4, 13]   │ 0.785714 │
+│     3650 │ phrases involving government ministries or departments, especially when linked to specific nations or functions                      │ [2, 5, 10, 11]           │ [5, 10, 11, 14] │ 0.857143 │
+│     4685 │ titles, roles, and affiliations of individuals in various fields and organizations                                                   │ [9]                      │ [4, 5, 9, 14]   │ 0.785714 │
+│    16574 │ the word "color" and related concepts like color change, variation, and its perception in different contexts                         │ [2, 3, 8]                │ [2, 3, 8, 11]   │ 0.928571 │
+│    18106 │ expressions of disagreement or differing opinions among colleagues, judges, or authors                                               │ [3, 9, 11]               │ [4, 6, 11, 12]  │ 0.642857 │
+│     4575 │ the word "prokary" or variations of it, and "Python" in technical contexts                                                           │ [1, 14]                  │ [1, 2, 4, 14]   │ 0.857143 │
+│     4092 │ technical symbols, mathematical notations, and specific terms like "Borough" and "Durians"                                           │ []                       │ [1, 2, 8, 13]   │ 0.714286 │
+│    17518 │ regulatory language, legal terms, and references to rules, policies, and legislation                                                 │ [1, 3, 8, 9, 13]         │ [3, 8, 9, 13]   │ 0.928571 │
+│     5100 │ words related to financial ability, academic contexts, and formal or technical terms                                                 │ [2, 8, 12]               │ [1, 2, 6, 11]   │ 0.642857 │
+│     4578 │ terms related to biochemical processes and molecular structures, especially involving fatty acids, energy production, and proteins   │ [3, 4, 11, 14]           │ [4, 7, 11, 14]  │ 0.857143 │
+│    18268 │ words related to nature, prophecy, and technical or scientific terms, especially in reference to biological processes                │ [7, 9, 13]               │ [3, 4, 7, 11]   │ 0.642857 │
+│    17886 │ terms related to scientific concepts, functions, mathematical structures, and technical terms                                        │ [3, 9, 10, 14]           │ [1, 3, 10, 12]  │ 0.714286 │
+│    18408 │ terms related to medical institutions, procedures, and settings, particularly those involving tertiary or specialized centers        │ [2, 8]                   │ [2, 3, 8, 12]   │ 0.857143 │
+│     5360 │ text related to website protocols, rules, policies, and meta tags                                                                    │ [3, 6]                   │ [3, 6, 8, 11]   │ 0.857143 │
+│     5237 │ the word "attached" and related concepts                                                                                             │ [11]                     │ [1, 8, 10, 11]  │ 0.785714 │
+│     5335 │ terms related to diabetes, particularly Type 1 and Type 2, and related health conditions                                             │ [3, 8, 10]               │ [3, 4, 8, 10]   │ 0.928571 │
+│    18412 │ text related to the creation of Israel, Israeli flag, Lucifer worship, and Palestine-Israel conflict                                 │ [9, 13]                  │ [7, 9, 12, 13]  │ 0.857143 │
+│     6919 │ geographical locations and landmarks                                                                                                 │ [1, 4, 10]               │ [1, 4, 10, 11]  │ 0.928571 │
+│     6306 │ words related to <<attention>> and focusing on specific stimuli or tasks                                                             │ [3, 7]                   │ [3, 4, 12, 13]  │ 0.714286 │
+│     6973 │ discussions about debunking racial and gender stereotypes                                                                            │ [11, 14]                 │ [5, 6, 11, 14]  │ 0.857143 │
+│     6521 │ the words related to knowledge or awareness, particularly when questioning familiarity or understanding                              │ [1, 2, 10, 14]           │ [1, 2, 10, 14]  │ 1        │
+│     7061 │ references to institutions, locations, and entities related to academic, medical, or corporate settings                              │ [2, 3, 4, 8, 13]         │ [2, 3, 5, 7]    │ 0.642857 │
+│     7202 │ references to companies, prices, percentages, and changes in services or products                                                    │ [6, 14]                  │ [1, 4, 6, 14]   │ 0.857143 │
+│     7473 │ text indicating a brief or summarized explanation or situation                                                                       │ [2, 5, 8, 10]            │ [1, 2, 5, 13]   │ 0.714286 │
+│     7170 │ the presence of scientific symbols, terms related to coupling or parameters, and technical jargon                                    │ [4, 5, 11, 13, 14]       │ [1, 4, 8, 14]   │ 0.642857 │
+│     5613 │ references to email systems, servers, or related concepts like mail servers and email functions                                      │ [2, 10]                  │ [1, 2, 9, 10]   │ 0.857143 │
+│     7229 │ the word "routine" and concepts related to regular, standard procedures or processes                                                 │ [7, 12]                  │ [1, 7, 12, 13]  │ 0.857143 │
+│     7192 │ text related to Tailoring, professions, crafting materials, and specific file types (like json)                                      │ []                       │ [2, 4, 5, 10]   │ 0.714286 │
+│     7320 │ words related to information, links, contact details, and referencing external resources                                             │ [1, 8, 12]               │ [1, 8, 12, 14]  │ 0.928571 │
+│     7629 │ variations in the spelling of names and meanings associated with those names                                                         │ [8, 11, 12]              │ [4, 8, 11, 13]  │ 0.785714 │
+│     8087 │ text related to graves, memorials, cemeteries, and related structures or honors                                                      │ [2, 9, 10]               │ [2, 9, 10, 14]  │ 0.928571 │
+│     6871 │ variations of the word "diet" and related concepts like "eating" or "dietary" in health-related contexts                             │ [7, 13]                  │ [5, 7, 12, 13]  │ 0.857143 │
+│      212 │ words and substrings related to specific terms, such as names, math, science, or technical jargon                                    │ [2, 5, 7, 8, 12]         │ [2, 5, 13, 14]  │ 0.642857 │
+│     7634 │ references to genomic sequencing, particularly in the context of sequencing methodologies, genome analysis, and related terms        │ [4, 13]                  │ [2, 4, 10, 13]  │ 0.857143 │
+│     8027 │ numbers and symbols in scientific and mathematical contexts                                                                          │ [1, 3, 4, 6, 12, 13, 14] │ [1, 4, 11, 12]  │ 0.642857 │
+│     8030 │ words related to power dynamics, authority, and political influence, particularly in historical or global contexts                   │ []                       │ [1, 2, 10, 13]  │ 0.714286 │
+│     8616 │ regulatory and approval processes by FDA, EMA, and PMDA in pharmaceutical products                                                   │ [5, 13]                  │ [2, 3, 5, 13]   │ 0.857143 │
+│     7511 │ the word "and" and other connectors in sentences that include explanations, proposals, or comparisons                                │ [4, 5, 12]               │ [6, 7, 13, 14]  │ 0.5      │
+└──────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────────────────────┴─────────────────┴──────────┘
+
+Worst scoring idx 7511, score = 0.5
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1. <<.'>><< And>> they<<'>>re special people because of                       │
+│           │ that<<.”>><<↵↵>><<The>> winners of the fourth annual awards included Tammy 2. <<.>> We just don’t have it for            │
+│           │ this<<.”>><<↵↵>>On Wednesday, Schatz said he had convened a 3.  going to end up being on as they grow up<<.”>><<↵↵>>“The │
+│           │ evidence tells us now you’re 4. s the No. 1 responsibility of our offense<<.”>>↵↵The NFC playoff picture is hard to      │
+│           │ predict, 5. . But<< I>> think we are better than people think<<.">>↵↵The Cardinals deserve a lot of credit with wins 6.  │
+│           │ ’ve asked several members of our community to attend<<.”>><<↵↵>>Strickland proposed that Jerol Kiv 7.  disgruntled       │
+│           │ employee versus<< actually>> recognizing themes that multiple people feel<<,”>> explains Sean.↵↵While they also use      │
+│           │ regular surveys 8. ison<<.>><< “>>And he’s exceptionally quick too<<.”>>↵↵In their rookie year<<,>> Collison and         │
+│           │ Thornton 9.  path as me, and competing against them was huge<<.">>↵↵Mitchell has been well-known in Charlotte circles    │
+│           │ 10.  other, and we'll↵see what happens<<.">>↵↵The New York Giants did no favors by losing 11. . "It just doesn't make    │
+│           │ any sense<<.">><<↵↵>>Phillips in her testimony questions assertions<< by>> MDE 12.  and Odenton.↵↵"This is               │
+│           │ ridiculous<<,">> said Ray Smallwood, president of the Maryland City 13.  video for you with the WebEx network recording  │
+│           │ player<<.…>>↵↵To locate your meeting recording manually, if<<…>> 14. Statement": [{↵        "Effect": "Allow<<",>>↵      │
+│           │ "Action": "firehose:Put 15. … a full year before Black Panther hits screens.<<↵↵>>And now we reach the crowning glory of │
+│           │ diversity in                                                                                                             │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on the word "and" and other connectors in sentences that include explanations, proposals, or       │
+│           │ comparisons.                                                                                                             │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                        │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    11.188 │ <<.'>><< And>> they<<'>>re special people because of that<<.”>><<↵↵>><<The>> winners of the fourth annual awards included Tammy                 │
+│    11.062 │ <<.>> We just don’t have it for this<<.”>><<↵↵>>On Wednesday, Schatz said he had convened a                                                     │
+│    10.562 │ going to end up being on as they grow up<<.”>><<↵↵>>“The evidence tells us now you’re                                                           │
+│    10.375 │ s the No. 1 responsibility of our offense<<.”>>↵↵The NFC playoff picture is hard to predict,                                                    │
+│    10.312 │ . But<< I>> think we are better than people think<<.">>↵↵The Cardinals deserve a lot of credit with wins                                        │
+│    10.188 │ ’ve asked several members of our community to attend<<.”>><<↵↵>>Strickland proposed that Jerol Kiv                                              │
+│    10.062 │ disgruntled employee versus<< actually>> recognizing themes that multiple people feel<<,”>> explains Sean.↵↵While they also use regular surveys │
+│    10.062 │ ison<<.>><< “>>And he’s exceptionally quick too<<.”>>↵↵In their rookie year<<,>> Collison and Thornton                                          │
+│    10.000 │ path as me, and competing against them was huge<<.">>↵↵Mitchell has been well-known in Charlotte circles                                        │
+│     9.938 │ other, and we'll↵see what happens<<.">>↵↵The New York Giants did no favors by losing                                                            │
+│     7.188 │ . "It just doesn't make any sense<<.">><<↵↵>>Phillips in her testimony questions assertions<< by>> MDE                                          │
+│     4.094 │ and Odenton.↵↵"This is ridiculous<<,">> said Ray Smallwood, president of the Maryland City                                                      │
+│     2.547 │ video for you with the WebEx network recording player<<.…>>↵↵To locate your meeting recording manually, if<<…>>                                 │
+│     1.500 │ Statement": [{↵        "Effect": "Allow<<",>>↵        "Action": "firehose:Put                                                                   │
+│     1.086 │ … a full year before Black Panther hits screens.<<↵↵>>And now we reach the crowning glory of diversity in                                       │
+└───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "3, 7, 9, 14". Try not to be overly specific in your interpretation of the explanation. If you think there are no   │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on the word "and" and other connectors in sentences that include              │
+│           │ explanations, proposals, or comparisons.  Here are the examples:  1. ."↵↵When Mitchell plays with the Chris Paul All-    │
+│           │ Stars, he's more likely to aim for 2.  adamant about government spending which was creating a deficit that was           │
+│           │ untenable, despite the fact that the Bush administration had 3.  a yes) shove him at their daughters lol.↵↵I loved how   │
+│           │ real and well developed the characters were 4.  velocity field and the ensemble average $\langle\dots\rangle$ is taken   │
+│           │ over disk positions and time ( 5. 15 months were estimated to be 14 months old, and the three largest sponges on the  6. │
+│           │ 'm so happy we're doing that today.”↵↵The winners of the fourth annual awards included a 7.  at times. This year, I just │
+│           │ keep playing."<eos>#include "ExtractionOptionsJsonObject.h" 8.  proving ground for possible future additions to          │
+│           │ java.time. You may find some useful classes here such as Interval 9.  won't do that, well, there's this:                 │
+│           │ http://arstechnica.com/ 10.  with two structures of AdoHcyase complexed with cyclic sugar Ado analogues. The DEA-        │
+│           │ complexed 11. c**2 - 38*c**2 - 59*c**2 -  12.  for theft and criminal mischief. Because we conclude↵↵  that the trial    │
+│           │ court did not abuse its discretion in 13. .dispose();↵      throw e;↵    }↵  }↵↵  // Returns true if module 14.  get out │
+│           │ in there and do a lot of work."↵↵The Stanislaus National Forest is taking the brunt                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 4, 5, 12                                                                                                                 │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                                             │
+├───────────┼───────────┼──────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │              │ ."↵↵When Mitchell plays with the Chris Paul All-Stars, he's more likely to aim for                                                   │
+│     0.000 │           │              │ adamant about government spending which was creating a deficit that was untenable, despite the fact that the Bush administration had │
+│     0.000 │           │              │ a yes) shove him at their daughters lol.↵↵I loved how real and well developed the characters were                                    │
+│     0.000 │           │ Y            │ velocity field and the ensemble average $\langle\dots\rangle$ is taken over disk positions and time (                                │
+│     0.000 │           │ Y            │ 15 months were estimated to be 14 months old, and the three largest sponges on the                                                   │
+│    10.375 │ Y         │              │ 'm so happy we're doing that today.”↵↵The winners of the fourth annual awards included a                                             │
+│    10.312 │ Y         │              │ at times. This year, I just keep playing."<eos>#include "ExtractionOptionsJsonObject.h"                                              │
+│     0.000 │           │              │ proving ground for possible future additions to java.time. You may find some useful classes here such as Interval                    │
+│     0.000 │           │              │ won't do that, well, there's this: http://arstechnica.com/                                                                           │
+│     0.000 │           │              │ with two structures of AdoHcyase complexed with cyclic sugar Ado analogues. The DEA-complexed                                        │
+│     0.000 │           │              │ c**2 - 38*c**2 - 59*c**2 -                                                                                                           │
+│     0.000 │           │ Y            │ for theft and criminal mischief. Because we conclude↵↵  that the trial court did not abuse its discretion in                         │
+│     2.344 │ Y         │              │ .dispose();↵      throw e;↵    }↵  }↵↵  // Returns true if module                                                                    │
+│     9.875 │ Y         │              │ get out in there and do a lot of work."↵↵The Stanislaus National Forest is taking the brunt                                          │
+└───────────┴───────────┴──────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Best scoring idx 8852, score = 1.0
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1. << used>><<.>><<↵↵>><<K>>ralingse Zoom<< is>><< the>><< metro>><< stop>><< │
+│           │ to>><< get>><< to>><< the>> Erasmus University<< and>><< to>><< the>> 2. 5}↵<eos>Richtweg (<<Hamburg>><<                 │
+│           │ U>><<->><<Bahn>><< station>><<)>><<↵↵>><<Richt>><<weg>><< is>><< a>><< public>><< transport>><< station>> 3. <<          │
+│           │ metro>><< station>><<↵↵>><<K>><<ral>>ingse<< Zoom>><< is>><< a>><< subway>><< station>><< on>><< lines>><< A>><<,>><<    │
+│           │ B>><<,>><< and>><< C>><< of>> 4. << lines>><< A>><<,>><< B>><<,>><< and>><< C>><< of>><< the>><< Rotterdam>><<           │
+│           │ Metro>><<,>><< in>><< the>> Kralingen neighbourhood<< of>><< eastern>> Rotterdam<<.>> 5. << is>> a complete<< guide>>    │
+│           │ to<< getting>><< around>> San Franciscos<< transit>><< service>><< that>> lets<< you>> know<< when>><< bus>><<ses>><<    │
+│           │ or>><< street>> 6. << service>><< that>> lets<< you>> know<< when>><< bus>><<ses>><< or>><< street>><< cars>><< will>><< │
+│           │ be>><< arriving>><< as>><< well>><< as>><< assisting>><< you>><< in>><< getting>> 7. 012 Olympic torch to a full-size<<  │
+│           │ Tube>><< car>>, is free to<< view>>. Another area museum 8. se<< Zoom>><< station>><<,>><< transfer>><< is>><<           │
+│           │ available>><< to>><< several>><< bus>><< lines>><<,>><< as>><< well>><< as>><< to>><< the>><< Park>><<Shuttle>><<,>><<   │
+│           │ a>> 9. << station>><< for>><< the>><< rapid>><< transit>><< trains>><< of>><< Hamburg>><<'>><<s>><< underground>><<      │
+│           │ railway>><< line>><< U>><<1>><<,>><< located>><< in>> Norders<<tedt>> 10. ↵↵<<See>> also<< >>↵<<Hamburger>><<            │
+│           │ Verkehrs>><<ver>><<bund>><< Public>><< transport>> association in<< Hamburg>>↵<<Hamburger>><< Hoch>><<bahn>><<           │
+│           │ Operator>> of<< the>> 11. www.hr.nl↵↵Category:<<Rot>>terdam<< Metro>><eos><<Javier>> Hernández Carrera↵↵Javier "Javi"    │
+│           │ 12. << served>><< by>><< hourly>><< St>><<.>><< Gallen>><< S>><<->><<Bahn>><< service>><< S>><<4>><<,>><< which>><<      │
+│           │ operates>><< in>><< both>><< directions>><< around>> a<< loop>> 13.  toilet block and a substantial corrugated iron<<    │
+│           │ ticket>><< office>> and<< waiting>><< room>> with a canopy on<< the>> northern side of<< the>> 14. ullu goes to the      │
+│           │ city, where he gets<< in>> touch with the doctor who'd educated him about 15. -material"}) according to the form,where   │
+│           │ *<<y>>~i~* is the observed allele frequencies of                                                                         │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on text related to public transportation stations, particularly metro, subway, and transit         │
+│           │ systems.                                                                                                                 │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                                                                │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    36.750 │ << used>><<.>><<↵↵>><<K>>ralingse Zoom<< is>><< the>><< metro>><< stop>><< to>><< get>><< to>><< the>> Erasmus University<< and>><< to>><< the>>                                        │
+│    35.500 │ 5}↵<eos>Richtweg (<<Hamburg>><< U>><<->><<Bahn>><< station>><<)>><<↵↵>><<Richt>><<weg>><< is>><< a>><< public>><< transport>><< station>>                                               │
+│    34.250 │ << metro>><< station>><<↵↵>><<K>><<ral>>ingse<< Zoom>><< is>><< a>><< subway>><< station>><< on>><< lines>><< A>><<,>><< B>><<,>><< and>><< C>><< of>>                                  │
+│    33.500 │ << lines>><< A>><<,>><< B>><<,>><< and>><< C>><< of>><< the>><< Rotterdam>><< Metro>><<,>><< in>><< the>> Kralingen neighbourhood<< of>><< eastern>> Rotterdam<<.>>                     │
+│    31.500 │ << is>> a complete<< guide>> to<< getting>><< around>> San Franciscos<< transit>><< service>><< that>> lets<< you>> know<< when>><< bus>><<ses>><< or>><< street>>                      │
+│    30.875 │ << service>><< that>> lets<< you>> know<< when>><< bus>><<ses>><< or>><< street>><< cars>><< will>><< be>><< arriving>><< as>><< well>><< as>><< assisting>><< you>><< in>><< getting>> │
+│    30.625 │ 012 Olympic torch to a full-size<< Tube>><< car>>, is free to<< view>>. Another area museum                                                                                             │
+│    30.125 │ se<< Zoom>><< station>><<,>><< transfer>><< is>><< available>><< to>><< several>><< bus>><< lines>><<,>><< as>><< well>><< as>><< to>><< the>><< Park>><<Shuttle>><<,>><< a>>           │
+│    29.750 │ << station>><< for>><< the>><< rapid>><< transit>><< trains>><< of>><< Hamburg>><<'>><<s>><< underground>><< railway>><< line>><< U>><<1>><<,>><< located>><< in>> Norders<<tedt>>      │
+│    26.875 │ ↵↵<<See>> also<< >>↵<<Hamburger>><< Verkehrs>><<ver>><<bund>><< Public>><< transport>> association in<< Hamburg>>↵<<Hamburger>><< Hoch>><<bahn>><< Operator>> of<< the>>                │
+│    25.875 │ www.hr.nl↵↵Category:<<Rot>>terdam<< Metro>><eos><<Javier>> Hernández Carrera↵↵Javier "Javi"                                                                                             │
+│    25.250 │ << served>><< by>><< hourly>><< St>><<.>><< Gallen>><< S>><<->><<Bahn>><< service>><< S>><<4>><<,>><< which>><< operates>><< in>><< both>><< directions>><< around>> a<< loop>>         │
+│    18.625 │ toilet block and a substantial corrugated iron<< ticket>><< office>> and<< waiting>><< room>> with a canopy on<< the>> northern side of<< the>>                                         │
+│     4.125 │ ullu goes to the city, where he gets<< in>> touch with the doctor who'd educated him about                                                                                              │
+│     1.250 │ -material"}) according to the form,where *<<y>>~i~* is the observed allele frequencies of                                                                                               │
+└───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "3, 4, 8, 11". Try not to be overly specific in your interpretation of the explanation. If you think there are no   │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on text related to public transportation stations, particularly metro,        │
+│           │ subway, and transit systems.  Here are the examples:  1. d\nu}{d\nu_0}$ from the continuous observation of a Lévy        │
+│           │ process $(X 2.  around San Franciscos transit service that lets you know when busses or street cars will be arriving as  │
+│           │ well 3.  Greater Poland Voivodeship, in west-central Poland. It lies approximately  south of Środa 4. diff_shear_md3;    │
+│           │ @diff_shear_md4], further studies of different numerical models 5. ↵↵Getting Around & Accommodations↵↵Left: MobileMuni - │
+│           │ Right: TripAdvisor↵↵MobileMuni↵What 6.  there are literally millions of telephones on the market that do not have this   │
+│           │ option.↵Until now, the 7. ",↵  "name": "Create React App Sample",↵  "icons": [↵    { 8.                                  │
+│           │ WebDriver:FindElement",{"using":"partial link text","value":"Accounts "}]↵154 9.  present in sandfly                     │
+│           │ gut.<eos>Q:↵↵Rapidshare premium download (c#)↵↵Is there 10. 98 - Futurewise↵↵Marriage and children↵↵Marriage will become │
+│           │ less fashionable but the dominant household pattern for 11.  in Hamburg↵Hamburger Hochbahn Operator of the Hamburg       │
+│           │ U-Bahn↵↵References↵↵External links ↵↵ Network 12.  contrast, little is known about these physiological and molecular     │
+│           │ processes in other groups of marine silicifiers. Because di 13.  third period at 165 with each wrestler having secured   │
+│           │ an escape. Like O'Dor, Ford 14.  you know when busses or street cars will be arriving as well as assisting you in        │
+│           │ getting around the city                                                                                                  │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 2, 5, 11, 14                                                                                                             │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                                      │
+├───────────┼───────────┼──────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │              │ d\nu}{d\nu_0}$ from the continuous observation of a Lévy process $(X                                                          │
+│    31.500 │ Y         │ Y            │ around San Franciscos transit service that lets you know when busses or street cars will be arriving as well                  │
+│     0.000 │           │              │ Greater Poland Voivodeship, in west-central Poland. It lies approximately  south of Środa                                     │
+│     0.000 │           │              │ diff_shear_md3; @diff_shear_md4], further studies of different numerical models                                               │
+│    27.500 │ Y         │ Y            │ ↵↵Getting Around & Accommodations↵↵Left: MobileMuni - Right: TripAdvisor↵↵MobileMuni↵What                                     │
+│     0.000 │           │              │ there are literally millions of telephones on the market that do not have this option.↵Until now, the                         │
+│     0.000 │           │              │ ",↵  "name": "Create React App Sample",↵  "icons": [↵    {                                                                    │
+│     0.000 │           │              │ WebDriver:FindElement",{"using":"partial link text","value":"Accounts "}]↵154                                                 │
+│     0.000 │           │              │ present in sandfly gut.<eos>Q:↵↵Rapidshare premium download (c#)↵↵Is there                                                    │
+│     0.000 │           │              │ 98 - Futurewise↵↵Marriage and children↵↵Marriage will become less fashionable but the dominant household pattern for          │
+│    33.500 │ Y         │ Y            │ in Hamburg↵Hamburger Hochbahn Operator of the Hamburg U-Bahn↵↵References↵↵External links ↵↵ Network                           │
+│     0.000 │           │              │ contrast, little is known about these physiological and molecular processes in other groups of marine silicifiers. Because di │
+│     0.000 │           │              │ third period at 165 with each wrestler having secured an escape. Like O'Dor, Ford                                             │
+│    30.875 │ Y         │ Y            │ you know when busses or street cars will be arriving as well as assisting you in getting around the city                      │
+└───────────┴───────────┴──────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

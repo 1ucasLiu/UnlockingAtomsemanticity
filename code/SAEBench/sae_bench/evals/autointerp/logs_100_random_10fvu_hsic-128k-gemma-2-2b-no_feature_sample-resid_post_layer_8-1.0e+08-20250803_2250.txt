@@ -1,0 +1,307 @@
+Summary table:
+┌──────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────────────────────────┬─────────────────┬──────────┐
+│   latent │ explanation                                                                                                                         │ predictions                 │ correct seqs    │    score │
+├──────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────────────────────────┼─────────────────┼──────────┤
+│     8718 │ phrases discussing conflicts of interest in various cases or situations                                                             │ []                          │ [3, 10, 11, 13] │ 0.714286 │
+│     8824 │ expressions of gratitude and appreciation in various contexts, including thanks and loyalty                                         │ [1, 7, 13, 14]              │ [1, 4, 7, 14]   │ 0.857143 │
+│     8660 │ words related to sweetness, especially in food and beverages, including sugar and sweetened items                                   │ [9, 13]                     │ [7, 9, 12, 13]  │ 0.857143 │
+│     9159 │ text with interactive elements like "Read More" and "View this post."                                                               │ [5, 14]                     │ [1, 5, 10, 14]  │ 0.857143 │
+│     9066 │ words related to infrequent events or actions, like "occasional", "sometimes", and "occurrence"                                     │ [3, 8, 14]                  │ [2, 3, 8, 10]   │ 0.785714 │
+│     8730 │ words related to positive descriptors such as "beautiful," "pure," and "classical."                                                 │ [4, 9, 14]                  │ [4, 5, 9, 14]   │ 0.928571 │
+│     9162 │ the concept of simplicity, often in the context of complex or profound ideas                                                        │ [2, 3, 8, 9, 14]            │ [3, 8, 9, 13]   │ 0.785714 │
+│     8896 │ the word "issue" in contexts discussing problems, challenges, or topics of concern                                                  │ [1, 5, 7]                   │ [1, 5, 6, 7]    │ 0.928571 │
+│     8129 │ references to academic institutions and publishers, particularly "Cambridge University Press" and similar entities                  │ [4]                         │ [4, 7, 11, 14]  │ 0.785714 │
+│     8799 │ technical programming syntax, code structures, and specific function/variable names in software development contexts                │ [2, 3, 7, 9, 13]            │ [5, 7, 12, 13]  │ 0.642857 │
+│    10395 │ the concept of attempts that did not succeed or were refused                                                                        │ [3, 11]                     │ [3, 5, 11, 12]  │ 0.857143 │
+│    11093 │ pairs or twos in various contexts, like "both men," "both dogs," "both of us."                                                      │ [2, 5, 7, 12]               │ [2, 3, 5, 7]    │ 0.857143 │
+│    10370 │ scientific terms related to data reporting, such as "mean", "standard deviation", and "error bars"                                  │ [1, 4, 10]                  │ [1, 4, 10, 11]  │ 0.928571 │
+│    11338 │ the term "lung" in medical contexts, especially related to cancer and tumor research                                                │ [6, 14]                     │ [1, 6, 11, 14]  │ 0.857143 │
+│    11710 │ the word "write" or related terms in the context of writing, manuscript, and creation                                               │ [3, 14]                     │ [3, 6, 13, 14]  │ 0.857143 │
+│    10687 │ words related to fear, anxiety, and emotional responses to fear                                                                     │ [1, 4, 14]                  │ [1, 4, 6, 14]   │ 0.928571 │
+│     9169 │ the word "also" and related variations like "been" or "usually," signaling inclusion or addition                                    │ [6, 7, 11, 12]              │ [6, 7, 11, 12]  │ 1        │
+│    11832 │ Activates on words related to improvement, success, and making a difference in various contexts                                     │ [4, 9, 13, 14]              │ [1, 4, 9, 14]   │ 0.857143 │
+│    11919 │ forms of the verb "keep" or related concepts like "leave," "had," and "soon."                                                       │ [3, 9, 12]                  │ [2, 6, 7, 9]    │ 0.642857 │
+│    11214 │ the word "comprising" and similar words like "includes" and "consists" in technical contexts                                        │ [3, 7, 8]                   │ [3, 4, 7, 8]    │ 0.928571 │
+│     9663 │ the word "coverage" in contexts related to healthcare, insurance, or media                                                          │ [5, 11]                     │ [4, 6, 11, 12]  │ 0.714286 │
+│     9538 │ long sequences of dashes and spaces in the documents                                                                                │ [1, 2, 13]                  │ [1, 2, 5, 13]   │ 0.928571 │
+│      824 │ affirmations or agreements expressed strongly in sentences                                                                          │ [5, 6, 11, 13]              │ [5, 6, 11, 13]  │ 1        │
+│    12025 │ the word "node" and related terms like "nodes," often in technical or scientific contexts                                           │ [2, 4, 12]                  │ [2, 4, 11, 12]  │ 0.928571 │
+│     1049 │ phrases related to the transportation of liquids through pipelines                                                                  │ [3, 7, 11]                  │ [2, 7, 11, 12]  │ 0.785714 │
+│    12506 │ text related to data analysis, coding, reviews, and discrepancies between research findings                                         │ [4, 5, 8]                   │ [2, 4, 7, 8]    │ 0.785714 │
+│    12202 │ words related to physical objects or anatomical parts, particularly those involving structure or form                               │ [3, 8]                      │ [3, 4, 8, 10]   │ 0.857143 │
+│    12528 │ references to random walks and processes in stochastic and probabilistic contexts                                                   │ []                          │ [1, 7, 13, 14]  │ 0.714286 │
+│    12476 │ the substring "PhD" and related academic titles or qualifications                                                                   │ [2, 7, 10, 13]              │ [1, 2, 8, 13]   │ 0.714286 │
+│     1511 │ the words "honored," "honour," and related concepts such as "honors" in various contexts                                            │ [1, 2]                      │ [1, 2, 10, 12]  │ 0.857143 │
+│     1433 │ terms related to Mormonism, LDS beliefs, and associated concepts like temple, women, and marriage                                   │ [3, 4, 6, 10]               │ [3, 4, 6, 10]   │ 1        │
+│     1059 │ words related to movement, travel, or passing by locations                                                                          │ [6, 7, 13, 14]              │ [6, 7, 13, 14]  │ 1        │
+│    12522 │ words related to proving or establishing claims, facts, or correctness                                                              │ [9, 10, 14]                 │ [9, 10, 11, 12] │ 0.785714 │
+│     1842 │ mathematical expressions involving pi and mathematical operations                                                                   │ [2, 9, 10, 12]              │ [2, 9, 10, 12]  │ 1        │
+│    11930 │ terms related to alcohol use disorder (AUD) and its treatment, especially pharmacological interventions                             │ [4, 7]                      │ [2, 3, 4, 7]    │ 0.857143 │
+│    13163 │ specific words or phrases related to technical terms, single words, and certain syntactical structures                              │ [1, 4, 5, 6, 7, 10]         │ [2, 3, 5, 13]   │ 0.428571 │
+│    13040 │ the word "happy" and its variations in contexts related to positive emotions or states                                              │ [5, 9, 13]                  │ [5, 8, 9, 13]   │ 0.928571 │
+│      875 │ variations of the word "Saint" and its abbreviations, such as "St."                                                                 │ [6, 10, 14]                 │ [6, 8, 10, 14]  │ 0.928571 │
+│    13827 │ text related to employee rights, specifically related to taking leave under the Family and Medical Leave Act (FMLA)                 │ [10, 11]                    │ [2, 5, 10, 11]  │ 0.857143 │
+│     2292 │ the concept of "cousins" and "second story" locations in various contexts                                                           │ [12]                        │ [3, 4, 12, 13]  │ 0.785714 │
+│    14121 │ words related to the process of loading images, files, fonts, and data                                                              │ [3, 13]                     │ [2, 3, 4, 13]   │ 0.857143 │
+│    13222 │ the phrase "List of" in various contexts                                                                                            │ []                          │ [2, 6, 7, 14]   │ 0.714286 │
+│     2596 │ references to "skin" and related concepts such as skin damage, conditions, and treatments                                           │ [4, 10, 11, 13]             │ [4, 10, 11, 13] │ 1        │
+│     2180 │ the word "tropical" in contexts related to environments, climates, or regions                                                       │ []                          │ [2, 4, 6, 10]   │ 0.714286 │
+│    13930 │ words related to controlling, suppressing, inhibiting, and subduing actions                                                         │ [10, 11]                    │ [1, 8, 10, 11]  │ 0.857143 │
+│    13907 │ the phrase "such a" in various contexts, often indicating examples or specific cases                                                │ [1, 9, 10, 14]              │ [1, 9, 10, 14]  │ 1        │
+│      983 │ expressions related to prime factors, greatest common factors, remainders, and division problems                                    │ [8, 10, 14]                 │ [7, 8, 10, 14]  │ 0.928571 │
+│     2352 │ the word "compound" and its variations in contexts related to scientific or technical descriptions                                  │ [1, 10]                     │ [1, 7, 9, 10]   │ 0.857143 │
+│    14947 │ technical syntax, code structures, and mathematical or scientific notations                                                         │ [3, 5, 8, 9, 10, 14]        │ [2, 3, 5, 9]    │ 0.714286 │
+│     2628 │ text related to groundwater, water movement, and related environmental processes                                                    │ [7, 14]                     │ [4, 5, 7, 8]    │ 0.714286 │
+│     2864 │ the concept of investing time and effort into various tasks                                                                         │ [4, 11, 12]                 │ [3, 4, 11, 12]  │ 0.928571 │
+│    14809 │ phrases related to time periods, especially durations like "hours a day" or "year-round"                                            │ [1, 7, 13]                  │ [1, 7, 12, 13]  │ 0.928571 │
+│     3057 │ text related to the introduction of concepts, features, or items                                                                    │ [3, 9, 14]                  │ [3, 9, 12, 14]  │ 0.928571 │
+│    15125 │ phrases related to specific measurements, dimensions, or quantities of objects                                                      │ [2, 8, 10, 14]              │ [2, 8, 10, 14]  │ 1        │
+│     3088 │ text related to receiving and responding to communications, including forms, emails, and messages                                   │ [5, 6, 9]                   │ [5, 6, 8, 9]    │ 0.928571 │
+│    15237 │ measurements of distance, length, height, or elevation, often accompanied by units                                                  │ [6, 8]                      │ [3, 6, 8, 11]   │ 0.857143 │
+│     3189 │ words related to conditions, certainty, and actions tied to outcomes or decisions                                                   │ [2, 7, 11, 13]              │ [1, 6, 11, 13]  │ 0.714286 │
+│    15144 │ phrases related to different time periods or epochs, such as "era," "age," and "age of."                                            │ [4, 7, 9]                   │ [4, 7, 9, 13]   │ 0.928571 │
+│    16659 │ words related to allergies, allergic reactions, credit scores, and inflammatory responses                                           │ [3, 8]                      │ [2, 3, 8, 11]   │ 0.857143 │
+│    16457 │ the word "life" and its variations in diverse contexts, often related to human experience or existence                              │ [5, 6, 11, 14]              │ [5, 6, 11, 14]  │ 1        │
+│    16796 │ terms related to menstruation, menstrual cycles, and associated health issues                                                       │ [2, 4, 5, 10]               │ [2, 4, 5, 10]   │ 1        │
+│     3372 │ sentences containing the word "seems" and related expressions indicating uncertainty or observation                                 │ [1, 3, 5, 13, 14]           │ [1, 3, 5, 13]   │ 0.928571 │
+│     3381 │ references to "paint" or related activities like painting and painted surfaces                                                      │ [9, 12, 14]                 │ [2, 9, 12, 14]  │ 0.928571 │
+│     3672 │ the word "here" and related contextual cues                                                                                         │ [7, 11, 12, 13]             │ [7, 11, 12, 13] │ 1        │
+│     4118 │ the concept of variety or multiple options presented                                                                                │ [3, 5, 10]                  │ [2, 3, 5, 11]   │ 0.785714 │
+│    17608 │ words related to humor, jokes, and lightheartedness                                                                                 │ [2, 10]                     │ [1, 2, 9, 10]   │ 0.857143 │
+│     3331 │ specific dates, typically involving legal, procedural, or administrative events                                                     │ [2, 4, 10, 13, 14]          │ [2, 4, 10, 13]  │ 0.928571 │
+│     4564 │ fashion-related terms like "Homecoming Dress", "sassy style", and "Printed Fit and Flare"                                           │ []                          │ [1, 5, 7, 12]   │ 0.714286 │
+│    17771 │ words related to filtering or selection processes                                                                                   │ [2, 10, 11]                 │ [2, 9, 10, 14]  │ 0.785714 │
+│    17679 │ the phrase "kind of" or "sort of" followed by a noun or noun phrase                                                                 │ [2, 6, 8, 12]               │ [2, 6, 8, 12]   │ 1        │
+│     5129 │ various variations of square-shaped objects and their materials/entities                                                            │ []                          │ [2, 3, 4, 6]    │ 0.714286 │
+│    18203 │ the word "Common" across various contexts                                                                                           │ [1, 6, 9]                   │ [1, 6, 9, 12]   │ 0.928571 │
+│     4604 │ the substring "Ch" in various contexts, including names, software, and scientific references                                        │ [2, 4, 6, 8]                │ [1, 2, 4, 14]   │ 0.714286 │
+│    18364 │ words related to managing or taking control, like "care," "hold," "aware," and "rid."                                               │ [2, 11]                     │ [2, 5, 11, 14]  │ 0.857143 │
+│     4713 │ references to geographic locations or political entities like cities, counties, or countries                                        │ [7, 11]                     │ [4, 6, 9, 11]   │ 0.714286 │
+│    17970 │ the word "with" in a variety of contexts                                                                                            │ [1, 2, 10, 12, 14]          │ [1, 2, 10, 14]  │ 0.928571 │
+│    17984 │ titles or formal ranks such as "Duke," "King," "Earl," or "Baronet."                                                                │ [1, 3, 12]                  │ [1, 3, 10, 12]  │ 0.928571 │
+│     5266 │ time-related expressions, particularly those involving hours, minutes, and AM/PM notation                                           │ [2, 13]                     │ [2, 5, 13, 14]  │ 0.857143 │
+│     4607 │ instances of the word "wrong" or related concepts indicating mistakes or errors                                                     │ [9, 13, 14]                 │ [6, 9, 13, 14]  │ 0.928571 │
+│     5645 │ procedural steps involving incubating, washing, precipitating, or manipulating substances                                           │ [1, 3, 11]                  │ [4, 7, 9, 11]   │ 0.642857 │
+│     5390 │ words related to disagreement, confusion, or negative reactions such as uproar, backlash, and doubt                                 │ [1, 4, 12]                  │ [1, 4, 11, 12]  │ 0.928571 │
+│     6958 │ population figures from various locations and time periods                                                                          │ [2, 4, 10, 13]              │ [2, 5, 10, 13]  │ 0.857143 │
+│     6342 │ code, mathematical expressions, and technical terms related to programming or scientific content                                    │ [1, 3, 5, 6, 8, 10, 11, 12] │ [1, 3, 5, 11]   │ 0.714286 │
+│     6910 │ the words or concepts related to categories, sections, and types of content in publications                                         │ [1, 11]                     │ [1, 3, 11, 13]  │ 0.857143 │
+│     6557 │ terms related to cooking techniques, particularly frying and preparing chicken or fried foods                                       │ [3, 8]                      │ [2, 3, 8, 12]   │ 0.857143 │
+│     7100 │ text related to prime numbers and factors in mathematical contexts                                                                  │ [2, 5, 11]                  │ [1, 2, 6, 11]   │ 0.785714 │
+│     7241 │ the word "Guinness" and variations of it, particularly in contexts related to records                                               │ [7, 11]                     │ [3, 4, 7, 11]   │ 0.857143 │
+│     7209 │ the word "secondary" and related terms in various contexts, often linked to categories or factors                                   │ [4, 12, 14]                 │ [1, 4, 8, 14]   │ 0.785714 │
+│     7012 │ the word "shale" and terms related to railroads or transportation infrastructure                                                    │ [3, 4, 10]                  │ [3, 4, 5, 10]   │ 0.928571 │
+│     7268 │ words related to science fiction, science, and scientific concepts                                                                  │ [7, 8, 5, 14]               │ [2, 5, 8, 14]   │ 0.857143 │
+│      213 │ words related to loss, including "lost," "loss," and similar terms                                                                  │ [11, 13]                    │ [5, 9, 11, 13]  │ 0.857143 │
+│     7552 │ references to scientific journals, publications, and authors in microbiology and biotechnology                                      │ [3, 10, 11]                 │ [2, 3, 10, 13]  │ 0.785714 │
+│     7361 │ text containing multiple instances of "witness" and "testified", often related to legal proceedings and statements given under oath │ [11, 12]                    │ [1, 8, 12, 14]  │ 0.714286 │
+│     7231 │ references to architectural features, particularly windows and doorways                                                             │ [2, 8, 11]                  │ [2, 7, 8, 14]   │ 0.785714 │
+│     7514 │ words related to eligibility, qualifications, and criteria for inclusion or participation                                           │ [3, 12]                     │ [2, 3, 12, 13]  │ 0.857143 │
+│     7671 │ the phrase "as published by the Free Software Foundation" and similar expressions                                                   │ [11]                        │ [4, 8, 11, 13]  │ 0.785714 │
+│     5365 │ terms related to institutions, institutes, and academic contexts, particularly those with abbreviations or specific names           │ [2, 7, 8, 11]               │ [4, 6, 7, 8]    │ 0.714286 │
+│     7676 │ the concept of singularity or individuality, focusing on occurrences of "one" or specific unique instances                          │ [5, 7, 10]                  │ [5, 6, 7, 14]   │ 0.785714 │
+│     8072 │ mentions of different types of <<hepatitis>> viruses - specifically <<hepatitis B>> and <<hepatitis C>>                             │ [1, 2, 10, 13]              │ [1, 2, 10, 13]  │ 1        │
+│     8069 │ references to God, faith, and religious concepts like love, grace, and divine will                                                  │ [8, 9]                      │ [3, 8, 9, 13]   │ 0.857143 │
+└──────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────────────────────────┴─────────────────┴──────────┘
+
+Worst scoring idx 13163, score = 0.42857142857142855
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1. pInstance->GetData(TYPE_BUG_TR<<IO>>) != DONE)↵        {↵            m 2.  │
+│           │ , but it looks like Blender<< only>> comes with a<< single>> font<< and>><< it>> doesn'<<t>> turn<< to>> bold<<.>> 3.    │
+│           │ 1.<< preferring>><< to>><< remain>> single<< oneself>><< until>><< one>><< can>><< marry>><< in>> the temple; or 2.      │
+│           │ preferring 4.  respondent's alleged theft. In<<ferences>><< can>><< be>><< drawn>><< that>> the church<<,>> through its  │
+│           │ agents,<< was>> carrying 5.  of fire crews<<.>> "There's<< not>> a<< lot>><< of>> real<< good>><< areas>><< to>> get out │
+│           │ in there and 6. $ square lattices<< which>><< contact>><< the>><< other>><< sub>>-nets<< via>><< four>><< contact>><<    │
+│           │ points>>. Note, for the stack- 7. <<Officials>> said crews<< on>><< the>> southeast flank in Yosemite were<<             │
+│           │ planning>><< to>><< conduct>> extensive<< back>>fires<<,>> a dangerous tactic in 8.                                      │
+│           │ pInstance->GetData(TYPE_BUG_TR<<IO>>) != DONE)↵        {↵            m 9.  those<< open>> issues.<< Some>><<             │
+│           │ were>><<,>><< and>><< some>> were<< not>><<,>><< and>> after consideration of the positions and proposals of 10.  in an  │
+│           │ effort to show that Officer Haskins<< could>><< not>><< have>> seen into the car carrying Gibson and Hagans 11.          │
+│           │ (I;H^{\tilde \mu}(\Omega<<))}>> :=<< \>>bigl \| \|v(<<t>>,\<<cdot>> 12. {\rm or}\qquad↵    \le <<0>>,↵                   │
+│           │ \label{monotonie}$$ 13. 000 in punitive damages. Judgment was entered<< for>> Allard and against the Church of           │
+│           │ Scientology on the 14. 6 is the adaptor protein to bind to STAT3<< and>> interact with KPNB1<< for>> the nuclear         │
+│           │ translocation 15. Hi!"↵    pass (*<< >>2<<)>>↵↵<<Then>> when<< you>>'re done connecting things with<< this>> restricted  │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on specific words or phrases related to technical terms, single words, and certain syntactical     │
+│           │ structures.                                                                                                              │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                                    │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     8.688 │ pInstance->GetData(TYPE_BUG_TR<<IO>>) != DONE)↵        {↵            m                                                                                      │
+│     8.625 │ , but it looks like Blender<< only>> comes with a<< single>> font<< and>><< it>> doesn'<<t>> turn<< to>> bold<<.>>                                          │
+│     8.438 │ 1.<< preferring>><< to>><< remain>> single<< oneself>><< until>><< one>><< can>><< marry>><< in>> the temple; or 2. preferring                              │
+│     8.438 │ respondent's alleged theft. In<<ferences>><< can>><< be>><< drawn>><< that>> the church<<,>> through its agents,<< was>> carrying                           │
+│     8.125 │ of fire crews<<.>> "There's<< not>> a<< lot>><< of>> real<< good>><< areas>><< to>> get out in there and                                                    │
+│     7.969 │ $ square lattices<< which>><< contact>><< the>><< other>><< sub>>-nets<< via>><< four>><< contact>><< points>>. Note, for the stack-                        │
+│     7.656 │ <<Officials>> said crews<< on>><< the>> southeast flank in Yosemite were<< planning>><< to>><< conduct>> extensive<< back>>fires<<,>> a dangerous tactic in │
+│     7.625 │ pInstance->GetData(TYPE_BUG_TR<<IO>>) != DONE)↵        {↵            m                                                                                      │
+│     7.594 │ those<< open>> issues.<< Some>><< were>><<,>><< and>><< some>> were<< not>><<,>><< and>> after consideration of the positions and proposals of              │
+│     7.531 │ in an effort to show that Officer Haskins<< could>><< not>><< have>> seen into the car carrying Gibson and Hagans                                           │
+│     4.938 │ (I;H^{\tilde \mu}(\Omega<<))}>> :=<< \>>bigl \| \|v(<<t>>,\<<cdot>>                                                                                         │
+│     2.984 │ {\rm or}\qquad↵    \le <<0>>,↵    \label{monotonie}$$                                                                                                       │
+│     2.797 │ 000 in punitive damages. Judgment was entered<< for>> Allard and against the Church of Scientology on the                                                   │
+│     2.672 │ 6 is the adaptor protein to bind to STAT3<< and>> interact with KPNB1<< for>> the nuclear translocation                                                     │
+│     2.641 │ Hi!"↵    pass (*<< >>2<<)>>↵↵<<Then>> when<< you>>'re done connecting things with<< this>> restricted                                                       │
+└───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "1, 3, 6, 10". Try not to be overly specific in your interpretation of the explanation. If you think there are no   │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on specific words or phrases related to technical terms, single words, and    │
+│           │ certain syntactical structures.  Here are the examples:  1. a}{\mkern2mu\underline{\mkern-2mu\smash{C}\mkern 2. our      │
+│           │ response rate, the primary efficacy end point, was measured according to WHO criteria and evaluated by the ER 3.  and    │
+│           │ employing people regardless of their religious affiliation, to offer health insurance that includes access to birth      │
+│           │ control:↵↵ 4.  easier than swapping the MSA70 controller or RAID controller card... but I guess you can get another MSA  │
+│           │ 5.  locales coupled with decreased inter-specific competition is a novel environment for *D. melanogaster* that has 6.   │
+│           │ measured by Western blot in membrane and cytoplasm did not show statistically significant differences in relation to     │
+│           │ duration of MV ([ 7. _n) u_j - c_{13} u_j^a $ and $\lambda 8.  sit.↵↵Talking Points: One of the secrets of punch making  │
+│           │ is to use the fragrant, sweet oil 9.  Vasa, King of Poland and Grand Duke of Lithuania and at the same time the city was │
+│           │ granted burger 10. ,T_n]} \longmapsto \bigg(\hat X_{t} := \sum_{i 11. rung Royal Theatre and Sala Chalermbure Royal      │
+│           │ Theatre. The film was directed by Prateb G 12. ↵on-board."↵↵As per the legislation, 51 per cent of her crew - as 13. ,”  │
+│           │ because even if “most unmarried↵fathers are unsuitable and neglectful parents . . . some are↵ 14. 7594-bib-0052){ref-    │
+│           │ type="ref"}, [53                                                                                                         │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 1, 4, 5, 6, 7, 10                                                                                                        │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                                               │
+├───────────┼───────────┼──────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │ Y            │ a}{\mkern2mu\underline{\mkern-2mu\smash{C}\mkern                                                                                       │
+│     3.656 │ Y         │              │ our response rate, the primary efficacy end point, was measured according to WHO criteria and evaluated by the ER                      │
+│     2.828 │ Y         │              │ and employing people regardless of their religious affiliation, to offer health insurance that includes access to birth control:↵↵     │
+│     0.000 │           │ Y            │ easier than swapping the MSA70 controller or RAID controller card... but I guess you can get another MSA                               │
+│     9.000 │ Y         │ Y            │ locales coupled with decreased inter-specific competition is a novel environment for *D. melanogaster* that has                        │
+│     0.000 │           │ Y            │ measured by Western blot in membrane and cytoplasm did not show statistically significant differences in relation to duration of MV ([ │
+│     0.000 │           │ Y            │ _n) u_j - c_{13} u_j^a $ and $\lambda                                                                                                  │
+│     0.000 │           │              │ sit.↵↵Talking Points: One of the secrets of punch making is to use the fragrant, sweet oil                                             │
+│     0.000 │           │              │ Vasa, King of Poland and Grand Duke of Lithuania and at the same time the city was granted burger                                      │
+│     0.000 │           │ Y            │ ,T_n]} \longmapsto \bigg(\hat X_{t} := \sum_{i                                                                                         │
+│     0.000 │           │              │ rung Royal Theatre and Sala Chalermbure Royal Theatre. The film was directed by Prateb G                                               │
+│     0.000 │           │              │ ↵on-board."↵↵As per the legislation, 51 per cent of her crew - as                                                                      │
+│     8.312 │ Y         │              │ ,” because even if “most unmarried↵fathers are unsuitable and neglectful parents . . . some are↵                                       │
+│     0.000 │           │              │ 7594-bib-0052){ref-type="ref"}, [53                                                                                                    │
+└───────────┴───────────┴──────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Best scoring idx 9169, score = 1.0
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1. ↵↵For a time, Hartge said, it<< also>> meant that supplies ranging from    │
+│           │ workbook materials to art supplies 2. , then reconsideration should be granted. This test has<< also>><< been>> used as  │
+│           │ the test for materiality of ex 3.  and highlight blogs on the front page. There has<< also>><< been>><< a>> recent re-   │
+│           │ brand and the existing site 4.  in a warm sea of disassociation. There is<< also>> WIC, which at 4.8 billion in 5.  form │
+│           │ of an aqueous emulsion. Many tin compounds may<< also>> undergo hydrolysis during prolonged storage and revert to        │
+│           │ catalytically 6.  compared to matrilocal societies. Patrilocal societies are<< also>><< usually>> polygynous. Therefore, │
+│           │ the larger numbers 7.  between groups more than men were.↵↵There is<< also>> something very important to consider that   │
+│           │ dramatically influenced human behavior 8.  of the↵online crochet community. This book would<< also>> make a              │
+│           │ delightful↵gift for anyone in a helping 9. things.↵↵In this particular case, it is<< also>><< quite>> peculiar that the  │
+│           │ author fails to↵point out 10. s not the entirety of it. i’ve<< also>> always been struck by the absence of celebration   │
+│           │ during these 11.  measured previously in Monte Carlo lattice simulations. They have<< also>> been approximated           │
+│           │ analytically, with moderate success, by large 12. . Botox has provided amazing and effective results that are<< also>>   │
+│           │ safe and convenient for many individuals. Facial lines and 13.  to cope with the problems at work. They were<< also>>    │
+│           │ responsible for coordinating and organizing work in the unit as 14.  member base of Milton Freewater singles and that    │
+│           │ we<< also>> cater to members of the many backgrounds.↵↵Still 15. ----------------------↵↵Along with physical activity,   │
+│           │ current smoking<< also>> predicted enlistment into MS. The logistic regression analysis after                            │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on the word "also" and related variations like "been" or "usually," signaling inclusion or         │
+│           │ addition.                                                                                                                │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                            │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    19.500 │ ↵↵For a time, Hartge said, it<< also>> meant that supplies ranging from workbook materials to art supplies                                          │
+│    19.125 │ , then reconsideration should be granted. This test has<< also>><< been>> used as the test for materiality of ex                                    │
+│    19.000 │ and highlight blogs on the front page. There has<< also>><< been>><< a>> recent re-brand and the existing site                                      │
+│    18.625 │ in a warm sea of disassociation. There is<< also>> WIC, which at 4.8 billion in                                                                     │
+│    18.500 │ form of an aqueous emulsion. Many tin compounds may<< also>> undergo hydrolysis during prolonged storage and revert to catalytically                │
+│    18.125 │ compared to matrilocal societies. Patrilocal societies are<< also>><< usually>> polygynous. Therefore, the larger numbers                           │
+│    17.750 │ between groups more than men were.↵↵There is<< also>> something very important to consider that dramatically influenced human behavior              │
+│    17.500 │ of the↵online crochet community. This book would<< also>> make a delightful↵gift for anyone in a helping                                            │
+│    17.375 │ things.↵↵In this particular case, it is<< also>><< quite>> peculiar that the author fails to↵point out                                              │
+│    17.125 │ s not the entirety of it. i’ve<< also>> always been struck by the absence of celebration during these                                               │
+│    15.000 │ measured previously in Monte Carlo lattice simulations. They have<< also>> been approximated analytically, with moderate success, by large          │
+│    13.938 │ . Botox has provided amazing and effective results that are<< also>> safe and convenient for many individuals. Facial lines and                     │
+│    11.062 │ to cope with the problems at work. They were<< also>> responsible for coordinating and organizing work in the unit as                               │
+│     8.000 │ member base of Milton Freewater singles and that we<< also>> cater to members of the many backgrounds.↵↵Still                                       │
+│     7.094 │ ----------------------↵↵Along with physical activity, current smoking<< also>> predicted enlistment into MS. The logistic regression analysis after │
+└───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "3, 5, 6, 14". Try not to be overly specific in your interpretation of the explanation. If you think there are no   │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on the word "also" and related variations like "been" or "usually," signaling │
+│           │ inclusion or addition.  Here are the examples:  1.  the amendment. As a result, we↵↵  vacate the sentence for the theft  │
+│           │ conviction and remand for 2. ↵#elif defined(__GNUC__)↵#pragma GCC diagnostic pop↵#elif defined(__clang__)↵ 3.            │
+│           │ carbonate.↵As will be appreciated, copper diammine carbonate (CDC) can be relatively easily prepared by 4.               │
+│           │ 1551946003534,↵          "parent_id": 5. ().containsKey("charset")){↵            charset =                               │
+│           │ mediaType.getParameters().get("charset");↵        } 6.  to empty the recycling bins weekly. Their efforts were also a    │
+│           │ great help to the program. This semester, 7.  meaning of life. Gary’s world view has also improved remarkably since      │
+│           │ meeting Lissa, but all that 8.  ring of phenol has *ortho* and *para* positions capable of reaction with formaldehyde    │
+│           │ under certain conditions, 9.  theory that res ipsa loquitur did not apply as other parties had access to the area of the │
+│           │ 10.  // No temporary↵  * \endcode↵  *↵  * The range of inputs that can 11. , in general terms, improve competition. It   │
+│           │ could also serve audit quality by reducing the number of instances where 12. board for the European tuning scene.        │
+│           │ This↵presentation also represents the GLK premiere on the North↵American 13. , 2003 13:13 IST↵↵An uneasy calm prevails   │
+│           │ in Assam with 14.  have configured my PayPal account in my Magento website. But even after I publish my website, there   │
+│           │ were no                                                                                                                  │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 6, 7, 11, 12                                                                                                             │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                             │
+├───────────┼───────────┼──────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │              │ the amendment. As a result, we↵↵  vacate the sentence for the theft conviction and remand for                        │
+│     0.000 │           │              │ ↵#elif defined(__GNUC__)↵#pragma GCC diagnostic pop↵#elif defined(__clang__)↵                                        │
+│     0.000 │           │              │ carbonate.↵As will be appreciated, copper diammine carbonate (CDC) can be relatively easily prepared by              │
+│     0.000 │           │              │ 1551946003534,↵          "parent_id":                                                                                │
+│     0.000 │           │              │ ().containsKey("charset")){↵            charset = mediaType.getParameters().get("charset");↵        }                │
+│    17.375 │ Y         │ Y            │ to empty the recycling bins weekly. Their efforts were also a great help to the program. This semester,              │
+│    17.250 │ Y         │ Y            │ meaning of life. Gary’s world view has also improved remarkably since meeting Lissa, but all that                    │
+│     0.000 │           │              │ ring of phenol has *ortho* and *para* positions capable of reaction with formaldehyde under certain conditions,      │
+│     0.000 │           │              │ theory that res ipsa loquitur did not apply as other parties had access to the area of the                           │
+│     0.000 │           │              │ // No temporary↵  * \endcode↵  *↵  * The range of inputs that can                                                    │
+│    15.250 │ Y         │ Y            │ , in general terms, improve competition. It could also serve audit quality by reducing the number of instances where │
+│     4.906 │ Y         │ Y            │ board for the European tuning scene. This↵presentation also represents the GLK premiere on the North↵American        │
+│     0.000 │           │              │ , 2003 13:13 IST↵↵An uneasy calm prevails in Assam with                                                              │
+│     0.000 │           │              │ have configured my PayPal account in my Magento website. But even after I publish my website, there were no          │
+└───────────┴───────────┴──────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,96 @@
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1.  countless cultural and artistic institutions. Need help fitting it<<      │
+│           │ all>> into one vacation? You might need an app for 2.  and mindful that you begin to be seduced by it<< all>>. So        │
+│           │ reason, the questions of markings of slippery 3.  able to do cities—that’s when it<< all>><< got>> really diverse,       │
+│           │ because you can’t do 4.  do enjoy that. And then the author lays it<< all>> out and it's just perfect. A little 5.       │
+│           │ surprise, I was wrong, very wrong about it<< all>> and what I never thought of doing in my life 6.  your own clothing,   │
+│           │ baking your own bread, it<< all>><< seems>> to fit in the trend I think I see 7.  another to make that change in the     │
+│           │ midst of it<< all>>.↵↵ps – I know it’s hard 8.  moment that I leave this plane and mentally let it<< all>><< hang>> out. │
+│           │ I don’t have to dumb 9.  be the most user-friendly, and yet it<< all>> works anyway,” Schatz said. “We have best 10.     │
+│           │ attractions, the greater Raleigh metropolitan area truly has it<< all>>. See for yourself why so many families and       │
+│           │ businesses 11.  in the door↵And one who been through it<< all>>, anything go↵Rather give it to you straight 12.  can     │
+│           │ teleport non-classical light..↵↵and it<< all>> uses ANCILLAS... which store VALUES, and 13.  it will help them in their  │
+│           │ lives. How this<< all>> comes about will happen one step at a time. 14.  can increase the level of it. There are two<<   │
+│           │ main>> reasons, they are non-disease factors and pathological 15. y wax, leaving no powder residue or ugly white<<       │
+│           │ stains>> on rubber or plastic. This unique carnauba                                                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on the word all and related phrases implying completeness or entirety                              │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                      │
+├───────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    15.812 │ countless cultural and artistic institutions. Need help fitting it<< all>> into one vacation? You might need an app for       │
+│    15.625 │ and mindful that you begin to be seduced by it<< all>>. So reason, the questions of markings of slippery                      │
+│    15.375 │ able to do cities—that’s when it<< all>><< got>> really diverse, because you can’t do                                         │
+│    14.812 │ do enjoy that. And then the author lays it<< all>> out and it's just perfect. A little                                        │
+│    14.750 │ surprise, I was wrong, very wrong about it<< all>> and what I never thought of doing in my life                               │
+│    14.625 │ your own clothing, baking your own bread, it<< all>><< seems>> to fit in the trend I think I see                              │
+│    14.438 │ another to make that change in the midst of it<< all>>.↵↵ps – I know it’s hard                                                │
+│    14.375 │ moment that I leave this plane and mentally let it<< all>><< hang>> out. I don’t have to dumb                                 │
+│    14.062 │ be the most user-friendly, and yet it<< all>> works anyway,” Schatz said. “We have best                                       │
+│    14.062 │ attractions, the greater Raleigh metropolitan area truly has it<< all>>. See for yourself why so many families and businesses │
+│    13.250 │ in the door↵And one who been through it<< all>>, anything go↵Rather give it to you straight                                   │
+│    12.625 │ can teleport non-classical light..↵↵and it<< all>> uses ANCILLAS... which store VALUES, and                                   │
+│     7.281 │ it will help them in their lives. How this<< all>> comes about will happen one step at a time.                                │
+│     6.562 │ can increase the level of it. There are two<< main>> reasons, they are non-disease factors and pathological                   │
+│     0.871 │ y wax, leaving no powder residue or ugly white<< stains>> on rubber or plastic. This unique carnauba                          │
+└───────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "8, 10, 11, 13". Try not to be overly specific in your interpretation of the explanation. If you think there are no │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on the word all and related phrases implying completeness or entirety.  Here  │
+│           │ are the examples:  1.  have to ask yourself what is the point of it all. Nikki Lauda.↵↵When I saw him 2.  in the United  │
+│           │ States.↵↵We know how it all came out… or, do we? I wonder 3. , claimed that the change in the law occasioned by the      │
+│           │ Supreme Court's decision in United States v. 4. $ is recurrent $\Rightarrow \rho_{xx} = 1$ where $\rho_{xy}\equiv 5.     │
+│           │ android:layout_weight="1"↵        android:orientation="vertical">↵↵        <TextView 6.                                  │
+│           │ (instancetype)initWithFromAnyone;↵↵///↵/// Initializes union class with tag state of "other". 7. , whereas missense      │
+│           │ mutations are presumed to be probable pathogenic variants based on results of prediction software for evaluation of 8.   │
+│           │ uses, including adhesives, impregnating resins, and plastics. The excellent properties of PF resin include high          │
+│           │ mechanical 9. &{Z_{j-1, \theta}^{(x)} \over \E(Z_{j 10.  in the work as installed, and the record is that Enders did, in │
+│           │ fact, start-up 11.  mind, I wasn’t sure what would happen next.↵↵We finally got to the birthing center 12.  the managers │
+│           │ had announced the stock sale before filing a registration statement with the SEC, a violation of the law 13.  typically  │
+│           │ 12 (for the LHS)↵or 4 (for the RHS). That's 14.  Bob Brown | THE SWELLESLEY REPORT↵↵Enriching Fabric of Their            │
+│           │ Lives↵↵Lauren Johnston says                                                                                              │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 1, 2                                                                                                                     │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                                               │
+├───────────┼───────────┼──────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    14.375 │ Y         │ Y            │ have to ask yourself what is the point of it all. Nikki Lauda.↵↵When I saw him                                                         │
+│    15.875 │ Y         │ Y            │ in the United States.↵↵We know how it all came out… or, do we? I wonder                                                                │
+│     0.000 │           │              │ , claimed that the change in the law occasioned by the Supreme Court's decision in United States v.                                    │
+│     0.000 │           │              │ $ is recurrent $\Rightarrow \rho_{xx} = 1$ where $\rho_{xy}\equiv                                                                      │
+│     0.000 │           │              │ android:layout_weight="1"↵        android:orientation="vertical">↵↵        <TextView                                                   │
+│     0.000 │           │              │ (instancetype)initWithFromAnyone;↵↵///↵/// Initializes union class with tag state of "other".                                          │
+│     0.000 │           │              │ , whereas missense mutations are presumed to be probable pathogenic variants based on results of prediction software for evaluation of │
+│     0.949 │ Y         │              │ uses, including adhesives, impregnating resins, and plastics. The excellent properties of PF resin include high mechanical             │
+│     0.000 │           │              │ &{Z_{j-1, \theta}^{(x)} \over \E(Z_{j                                                                                                  │
+│     0.000 │           │              │ in the work as installed, and the record is that Enders did, in fact, start-up                                                         │
+│     1.070 │ Y         │              │ mind, I wasn’t sure what would happen next.↵↵We finally got to the birthing center                                                     │
+│     0.000 │           │              │ the managers had announced the stock sale before filing a registration statement with the SEC, a violation of the law                  │
+│     0.000 │           │              │ typically 12 (for the LHS)↵or 4 (for the RHS). That's                                                                                  │
+│     0.000 │           │              │ Bob Brown | THE SWELLESLEY REPORT↵↵Enriching Fabric of Their Lives↵↵Lauren Johnston says                                               │
+└───────────┴───────────┴──────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

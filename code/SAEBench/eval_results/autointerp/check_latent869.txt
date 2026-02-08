@@ -1,0 +1,98 @@
+Generation phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. The activating words in each document are indicated with << ... >>. We will give you a list of documents │
+│           │ on which the neuron activates, in order from most strongly activating to least strongly activating. Look at the parts of │
+│           │ the document the neuron activates for and summarize in a single sentence what the neuron is activating on. Try not to be │
+│           │ overly specific in your explanation. Note that some neurons will activate only on specific words or substrings, but      │
+│           │ others will activate on most/all words in a sentence provided that sentence contains some particular concept. Your       │
+│           │ explanation should cover most or all activating words (for example, don't give an explanation which is specific to a     │
+│           │ single word if all words in a sentence cause the neuron to activate). Pay attention to things like the capitalization    │
+│           │ and punctuation of the activating words or concepts, if that seems relevant. Keep the explanation as short and simple as │
+│           │ possible, limited to 20 words or less. Omit punctuation and formatting. You should avoid giving long lists of words.     │
+│           │ Some examples: "This neuron activates on the word 'knows' in rhetorical questions", and "This neuron activates on verbs  │
+│           │ related to decision-making and preferences", and "This neuron activates on the substring 'Ent' at the start of words",   │
+│           │ and "This neuron activates on text about government economic policy".                                                    │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ The activating documents are given below:  1. ---↵↵KDM2B can bind throughout the<< genome>><< by>> its CxxC-binding      │
+│           │ domain<<,>>^ 2.  any retail to speak of in that part of the<< country>> back then. Not for fashionable teenagers         │
+│           │ anyways. When 3. , any stochastic demographic event would affect SNPs throughout the<< genome>><< with>> equal           │
+│           │ probability. Many aspects of our data clearly 4. . After accounting for heterogeneity in recombination rate throughout<< │
+│           │ the>><< genome>> (see [Materials and Methods](#s3){ 5. material"}).↵↵Seasonal SNPs are spread throughout the<< genome>>  │
+│           │ ([Fig. 3A](#pgen- 6.  used as a labour force in different projects around the<< country>>.↵↵The Finns did not pay much   │
+│           │ attention to 7.  If seasonal SNPs are homogeneously distributed throughout<< the>><< genome>>, the rate of seasonal      │
+│           │ SNPs/100 8.  other school districts and a few other jobs around the<< state>> and this week I have to make time to start │
+│           │ 9.  whether<< seasonal>> SNPs were homogeneously distributed throughout<< the>><< genome>>. To do so, we grouped the<<   │
+│           │ genome>><< into>> 10. . The overdispersion of seasonal SNPs throughout the<< genome>> could be caused by several factors │
+│           │ including variation in the 11. 4.83% among rural men in eastern<< China>>; body mass index was inversely and             │
+│           │ independently associated with 12.  migration can plausibly explain the extent of<< genome>>-<<wide>> genetic             │
+│           │ differentiation through time, the observed number of seasonal 13.  on the entire<< campus>><< in>> previous years. The   │
+│           │ entire<< campus>> now recycles about 11% of total 14. <<Step>> GMM Under Weak Dependence”, *Journal of<< Econ>>ometrics* │
+│           │ 189, 16 15.  "cross-validation" procedure was undertaken. Initially<<,>> five spectra were randomly chosen and excluded  │
+│           │ from the training                                                                                                        │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ This neuron activates on the words genome country state and china referring to large geographical or biological areas    │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Sequence                                                                                                                                    │
+├───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│    14.750 │ ---↵↵KDM2B can bind throughout the<< genome>><< by>> its CxxC-binding domain<<,>>^                                                          │
+│    14.562 │ any retail to speak of in that part of the<< country>> back then. Not for fashionable teenagers anyways. When                               │
+│    14.125 │ , any stochastic demographic event would affect SNPs throughout the<< genome>><< with>> equal probability. Many aspects of our data clearly │
+│    14.062 │ . After accounting for heterogeneity in recombination rate throughout<< the>><< genome>> (see [Materials and Methods](#s3){                 │
+│    13.750 │ material"}).↵↵Seasonal SNPs are spread throughout the<< genome>> ([Fig. 3A](#pgen-                                                          │
+│    13.562 │ used as a labour force in different projects around the<< country>>.↵↵The Finns did not pay much attention to                               │
+│    13.375 │ If seasonal SNPs are homogeneously distributed throughout<< the>><< genome>>, the rate of seasonal SNPs/100                                 │
+│    13.250 │ other school districts and a few other jobs around the<< state>> and this week I have to make time to start                                 │
+│    13.000 │ whether<< seasonal>> SNPs were homogeneously distributed throughout<< the>><< genome>>. To do so, we grouped the<< genome>><< into>>        │
+│    12.750 │ . The overdispersion of seasonal SNPs throughout the<< genome>> could be caused by several factors including variation in the               │
+│     6.312 │ 4.83% among rural men in eastern<< China>>; body mass index was inversely and independently associated with                                 │
+│     5.469 │ migration can plausibly explain the extent of<< genome>>-<<wide>> genetic differentiation through time, the observed number of seasonal     │
+│     4.469 │ on the entire<< campus>><< in>> previous years. The entire<< campus>> now recycles about 11% of total                                       │
+│     1.500 │ <<Step>> GMM Under Weak Dependence”, *Journal of<< Econ>>ometrics* 189, 16                                                                  │
+│     0.680 │ "cross-validation" procedure was undertaken. Initially<<,>> five spectra were randomly chosen and excluded from the training                │
+└───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Scoring phase
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ system    │ We're studying neurons in a neural network. Each neuron activates on some particular word/words/substring/concept in a   │
+│           │ short document. You will be given a short explanation of what this neuron activates for, and then be shown 14 example    │
+│           │ sequences in random order. You will have to return a comma-separated list of the examples where you think the neuron     │
+│           │ should activate at least once, on ANY of the words or substrings in the document. For example, your response might look  │
+│           │ like "3, 4, 5, 6". Try not to be overly specific in your interpretation of the explanation. If you think there are no    │
+│           │ examples where the neuron will activate, you should just respond with "None". You should include nothing else in your    │
+│           │ response other than comma-separated numbers or the word "None" - this is important.                                      │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ user      │ Here is the explanation: this neuron fires on the words genome country state and china referring to large geographical   │
+│           │ or biological areas.  Here are the examples:  1. OrUpdate request. The method will close the↵// http.Response Body if it │
+│           │ receives an error.↵ 2.  to the change in the surface charge of the bilayer [@bb0085; @bb0 3.                      if     │
+│           │ (visited[j]) {↵                         deadlockedThread = -1;↵                     } else 4.  for Sunderland in the     │
+│           │ Premier League prior to his transfer.) Before being sent off for a second bookable offence 5.  headaches were not        │
+│           │ located in any particular part of the head or side-locked (71.7%); 6. OH is located on genomic region with a scarcity of │
+│           │ heterozygous SNP calls. **a** Sample 6 7.  have been made in connectivity to the Internet (for example) and now it is    │
+│           │ routine for users to be 8.  recovery of presumed or punitive damages, at least when liability is not based on a showing  │
+│           │ of knowledge of fals 9. b_net.h"↵↵#include "mantis_common.h"↵#include " 10. 9/11, no other pocket of the country knew of │
+│           │ such.↵↵My question: outside of 11.  home to Union sympathizers. Our side of the state voted against secession.           │
+│           │ Greeneville was the home of 12.  threshold of affine subschemes defined by homogeneous equations of the same degree. We  │
+│           │ prove the following↵↵Let 13. ly it's possible?↵↵~~~↵icebraining↵All of those are strictly client-to 14.  the↵    //      │
+│           │ `Message` and `Message+*Additions` files in the SwiftProtobuf library for↵                                               │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ assistant │ 6, 10, 11                                                                                                                │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───────────┬───────────┬──────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│   Top act │ Active?   │ Predicted?   │ Sequence                                                                                                         │
+├───────────┼───────────┼──────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│     0.000 │           │              │ OrUpdate request. The method will close the↵// http.Response Body if it receives an error.↵                      │
+│     2.344 │ Y         │              │ to the change in the surface charge of the bilayer [@bb0085; @bb0                                                │
+│     0.000 │           │              │ if (visited[j]) {↵                         deadlockedThread = -1;↵                     } else                    │
+│     0.000 │           │              │ for Sunderland in the Premier League prior to his transfer.) Before being sent off for a second bookable offence │
+│     5.812 │ Y         │              │ headaches were not located in any particular part of the head or side-locked (71.7%);                            │
+│     0.000 │           │ Y            │ OH is located on genomic region with a scarcity of heterozygous SNP calls. **a** Sample 6                        │
+│     0.000 │           │              │ have been made in connectivity to the Internet (for example) and now it is routine for users to be               │
+│     0.000 │           │              │ recovery of presumed or punitive damages, at least when liability is not based on a showing of knowledge of fals │
+│     0.000 │           │              │ b_net.h"↵↵#include "mantis_common.h"↵#include "                                                                  │
+│    13.812 │ Y         │ Y            │ 9/11, no other pocket of the country knew of such.↵↵My question: outside of                                      │
+│    16.500 │ Y         │ Y            │ home to Union sympathizers. Our side of the state voted against secession. Greeneville was the home of           │
+│     0.000 │           │              │ threshold of affine subschemes defined by homogeneous equations of the same degree. We prove the following↵↵Let  │
+│     0.000 │           │              │ ly it's possible?↵↵~~~↵icebraining↵All of those are strictly client-to                                           │
+│     0.000 │           │              │ the↵    // `Message` and `Message+*Additions` files in the SwiftProtobuf library for↵                            │
+└───────────┴───────────┴──────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

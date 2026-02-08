@@ -56,12 +56,10 @@ EXPECTED_RESULTS = {
 
 DEVICE = "cuda:0"
 SAVE_DIR = "./test_data"
-MODEL_NAME = "openai-community/gpt2" #"EleutherAI/pythia-70m-deduped"
+MODEL_NAME = "openai-community/gpt2" 
 RANDOM_SEED = 42
 LAYER = 8
-DATASET_NAME = "EleutherAI/fineweb-edu-dedup-10b"# "/home/liubo/.cache/huggingface/datasets/splited/EleutherAI_fineweb-edu-dedup-10b_val_set"
-# #"/home/liubo/.cache/huggingface/datasets/splited/EleutherAI_fineweb-edu-dedup-10b_train_set" #"monology/pile-uncopyrighted"
-
+DATASET_NAME = "EleutherAI/fineweb-edu-dedup-10b"
 EVAL_TOLERANCE_PERCENT = 0.005
 
 
@@ -303,7 +301,6 @@ def sae_training():
     # topk sae training parameters
     decay_start = None
     auxk_alpha = 1 / 32
-    #import ipdb;ipdb.set_trace()
     submodule = model.transformer.h[LAYER]
     submodule_name = f"resid_post_layer_{LAYER}"
     sub_dir = f"{k}k"

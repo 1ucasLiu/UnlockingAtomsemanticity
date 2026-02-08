@@ -125,10 +125,8 @@ class BatchTopKTrainer(SAETrainer):
         self.threshold_beta = threshold_beta
         self.threshold_start_step = threshold_start_step
 
-        # CODE added
         self.loss_type = loss_type
         self.term_coff = term_coff
-        #
 
         if seed is not None:
             t.manual_seed(seed)

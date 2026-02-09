@@ -13,7 +13,7 @@ from dictionary_learning.utils import (
     get_nested_folders,
     load_dictionary,
 )
-from dictionary_learning.buffer import ActivationBuffer,MainDeviceActivationBuffer
+from dictionary_learning.buffer import ActivationBuffer
 from dictionary_learning.dictionary import (
     AutoEncoder,
     GatedAutoEncoder,
@@ -26,12 +26,13 @@ from datasets import load_from_disk
 
 
 DEVICE = "cuda:0"
-SAVE_DIR ="gemma_2-2b-layer4_extra" 
+SAVE_DIR ="gemma_2-2b-layer4" 
 MODEL_NAME = "google/gemma-2-2b" 
+#MODEL_PATH = ""
 RANDOM_SEED = 42
 LAYER = 4  
 DATASET_NAME = "EleutherAI/fineweb-edu-dedup-10b"
-
+#DATASET_PATH =""
 #EVAL_TOLERANCE_PERCENT = 0.005
 
 def sae_training():
@@ -46,10 +47,11 @@ def sae_training():
     t.manual_seed(RANDOM_SEED)
 
     model = LanguageModel(MODEL_NAME, dispatch=True, device_map=DEVICE)
-
-    context_length = 1024   #1024
-    llm_batch_size =  16 # 3090-16  
-    sae_batch_size = 8192 #2048# 4096 #8192
+    #model = LanguageModel(MODEL_PATH, dispatch=True, device_map=DEVICE)
+    
+    context_length = 1024   
+    llm_batch_size =  16 
+    sae_batch_size = 8192 
     num_contexts_per_sae_batch = sae_batch_size // context_length
 
     num_inputs_in_buffer = num_contexts_per_sae_batch * 20
@@ -57,18 +59,16 @@ def sae_training():
     num_tokens = 500_000_000
 
     # sae training parameters
-    k = 1024 #1024
-    loss_type = "fvu_loss" # ['fvu_loss','nce_loss','hsic_loss','linear_loss']
+    k = 1024 
+    loss_type = "linear_loss" # ['fvu_loss','nce_loss','hsic_loss','linear_loss']
     term_coff = 10 
     expansion_factor = 8
-    use_wandb = True 
-    wandb_project_name ="9b-layer25"
+    # wandb
+    use_wandb = False 
+    wandb_project_name ="test"
+    
     steps = int(num_tokens / sae_batch_size)  # Total number of batches to train
     save_steps = [12207,24414,36621,48828]
-    #warmup_steps = 1000  # Warmup period at start of training and after each resample
-    #resample_steps = None
-
-    # standard sae training parameters
     learning_rate = 1e-4
 
     # topk sae training parameters
@@ -88,16 +88,18 @@ def sae_training():
     time_str = datetime.now(tz).strftime("%Y%m%d_%H%M")
     short_model_name = MODEL_NAME.split("/")[1]
     
-    if loss_type == "fvu_only":
+    if loss_type == "fvu_loss":
         sub_dir = f"{loss_type}-k{k}-TopK-{short_model_name}-{submodule_name}-{num_tokens:0.1e}-{time_str}"
     elif loss_type in ["hsic_loss","linear_loss",'nce_loss']:
         sub_dir = f"{term_coff}{loss_type}-k{k}-TopK-{short_model_name}-{submodule_name}-{num_tokens:0.1e}-{time_str}"
-
+    else:
+        sub_dir="test"
+        
     io = "out"
     activation_dim = model.config.hidden_size
 
     generator = hf_dataset_to_generator(DATASET_NAME)
-
+    #generator = hf_dataset_to_generator(DATASET_PATH)
     activation_buffer = ActivationBuffer(
         generator,
         model,

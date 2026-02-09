@@ -29,10 +29,12 @@ from datasets import load_from_disk
 DEVICE = "cuda:0"
 SAVE_DIR = "gemma_2-2b-layer4"
 MODEL_NAME =  "google/gemma-2-2b"
+#MODEL_PATH = ""
 RANDOM_SEED = 42
 LAYER = 4
 DATASET_NAME = "EleutherAI/fineweb-edu-dedup-10b"
-#DATASET_PATH = ""
+#DATASET_PATH =""
+
 
 
 
@@ -49,9 +51,9 @@ def sae_training():
     t.manual_seed(RANDOM_SEED)
 
     model = LanguageModel(MODEL_NAME, dispatch=True, device_map=DEVICE)
-
+    #model = LanguageModel(MODEL_PATH, dispatch=True, device_map=DEVICE)
     context_length = 1024
-    llm_batch_size = 16 # 64  
+    llm_batch_size = 16 
     sae_batch_size = 8192
     num_contexts_per_sae_batch = sae_batch_size // context_length
 
@@ -61,7 +63,7 @@ def sae_training():
 
     # sae training parameters
     k =1024 
-    loss_type = "fvu_loss" # ['fvu_loss','nce_loss','hsic_loss','linear_loss']
+    loss_type = "linear_loss" # ['fvu_loss','nce_loss','hsic_loss','linear_loss']
     sae_type = "BatchTopK"
     term_coff = 10
     expansion_factor = 8
@@ -71,10 +73,7 @@ def sae_training():
 
     steps = int(num_tokens / sae_batch_size)  # Total number of batches to train
     save_steps = [12207,24414,36621,48828]
-    #warmup_steps = 1000  # Warmup period at start of training and after each resample
-    #resample_steps = None
-
-    # standard sae training parameters
+    
     learning_rate = 1e-4
 
     # topk sae training parameters
@@ -90,15 +89,16 @@ def sae_training():
     tz = timezone(timedelta(hours=8))
     time_str = datetime.now(tz).strftime("%Y%m%d_%H%M")
     short_model_name = MODEL_NAME.split("/")[1]
-    if loss_type == "fvu_only":
+    if loss_type == "fvu_loss":
         sub_dir = f"{loss_type}-k{k}-{sae_type}-{short_model_name}-{submodule_name}-{num_tokens:0.1e}-{time_str}"
     elif loss_type in ["hsic_loss","linear_loss",'nce_loss']:
         sub_dir = f"{term_coff}{loss_type}-k{k}-{sae_type}-{short_model_name}-{submodule_name}-{num_tokens:0.1e}-{time_str}"
-
+    else:
+        sub_dir="test"
     io = "out"
     activation_dim = model.config.hidden_size
 
-    # generator = hf_dataset_to_generator(DATASET_PATH)
+    #generator = hf_dataset_to_generator(DATASET_PATH)
     generator = hf_dataset_to_generator(DATASET_NAME)
     
     activation_buffer = ActivationBuffer(

@@ -1041,7 +1041,7 @@ def multiple_evals(
     for sae_release, sae_object_or_id in tqdm(
         selected_saes, desc="Running SAE evaluation on all selected SAEs"
     ):
-        print("******",sae_release,"******")
+        print("*",sae_release,"*")
         
         sae_id, sae, sparsity = general_utils.load_and_format_sae(
             sae_release, sae_object_or_id, device

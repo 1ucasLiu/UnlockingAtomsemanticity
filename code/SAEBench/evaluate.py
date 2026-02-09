@@ -2,7 +2,6 @@ import time
 import torch 
 import os
 
-
 import sae_bench.custom_saes.topk_sae as topk_sae
 import sae_bench.custom_saes.relu_sae as relu_sae
 import sae_bench.custom_saes.batch_topk_sae as batch_topk_sae
@@ -13,7 +12,6 @@ import sae_bench.evals.sparse_probing.main as sparse_probing
 import sae_bench.evals.scr_and_tpp.main as scr_and_tpp
 import sae_bench.evals.mdl.main as mdl
 import sae_bench.evals.ravel.main as ravel
-
 
 from sae_bench.evals.absorption.eval_config import AbsorptionEvalConfig
 from sae_bench.evals.scr_and_tpp.eval_config import ScrAndTppEvalConfig
@@ -44,7 +42,6 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
         )
     elif sae_type == "topk":
     # TopK
-  
         sae = topk_sae.load_dictionary_learning_topk_sae(
             repo_id,
             filename,
@@ -268,22 +265,21 @@ def evaluate(repo_id,filename,layer,model_name,sae_type,sae_local_dir,eval_folde
         except Exception as e:
             print(f"Wrong!/n  {e}")
 
-layer = 4 
-rootdir = "sae_2b/fvu_hsic_full_hsic/topk_layer4"
+layer = 8
+rootdir = "train_results"
 
-for _,dirnames,filenames in os.walk(rootdir):
-    for sae_name in dirnames:
-        print(" ",sae_name)
-        evaluate(repo_id = sae_name,#"0.0-8ef-750k" ,
-                filename =  f"resid_post_layer_{layer}/trainer_0/ae.pt",   #
+for sae_name in os.listdir(rootdir):
+    if os.path.isdir(os.path.join(rootdir, sae_name)):
+        print(" * ",sae_name)
+        evaluate(repo_id = sae_name,
+                filename =  f"resid_post_layer_{layer}/trainer_0/ae.pt",   
                 layer = layer,
-                model_name = "google/gemma-2-2b",#"openai-community/gpt2",   # 
+                model_name = "google/gemma-2-2b",#"openai-community/gpt2"
                 sae_local_dir=rootdir,
-                sae_type='topk',#  ['topk','batchTopk']
-                eval_folder ="eval_results_2b_layer4-1024k",
+                sae_type='batchTopk',#  ['topk','batchTopk']
+                eval_folder ="eval_results",
                 eval_types =['tpp','scr','core',"absorption",'sparse_probing','ravel','unlearning'],
                 device = "cuda" if torch.cuda.is_available() else "cpu",
                 dtype = torch.float32,#
                 llm_dtype = torch.bfloat16)
     
-    break

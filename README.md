@@ -50,7 +50,7 @@ python SAEBench/evaluate.py
 
 #### Experiment
 
-![Experiment Results](SAEBench/result_table.png)
+![Experiment Results](code/SAEBench/result_table.png)
 
 #### To do Empirical observations indicating latent degeneration in SAEs, run:
 ```bash
@@ -60,9 +60,9 @@ python SAEBench/evaluate.py
 
 ```
 
-## [Paper ](../paper/main.pdf)
+## [Paper ](paper/main.pdf)
 
- ![Empirical observations indicating latent degeneration in SAEs](SAEBench/plots.png)
+ ![Empirical observations indicating latent degeneration in SAEs](code/SAEBench/plots.png)
 
 
 ---

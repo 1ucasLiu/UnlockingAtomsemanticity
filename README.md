@@ -29,7 +29,7 @@ conda env create -f environment.yml
 #### To train the model with default settings:
 
 ```bash
-python dictionary_learning/train.py 
+python code/dictionary_learning/train.py 
 ```
 
 
@@ -40,7 +40,7 @@ python dictionary_learning/train.py
 #### To evaluate the trained model by SAEBench, run:
 
 ```bash
-python SAEBench/evaluate.py
+python code/SAEBench/evaluate.py
 ```
 
 #### Evaluation Type
@@ -54,9 +54,9 @@ python SAEBench/evaluate.py
 
 #### To do Empirical observations indicating latent degeneration in SAEs, run:
 ```bash
-1. dictionary_learning/evaluate/scripts/cos_sim_across_layers_gemma-scope.ipynb
-2. dictionary_learning/evaluate/scripts/Layer-wise_Similarity.ipynb
-3. dictionary_learning/evaluate/scripts/svd_projection.ipynb
+ code/dictionary_learning/evaluate/scripts/cos_sim_across_layers_gemma-scope.ipynb
+ code/dictionary_learning/evaluate/scripts/Layer-wise_Similarity.ipynb
+ code/dictionary_learning/evaluate/scripts/svd_projection.ipynb
 
 ```
 
